@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Gablestones</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_toolbar">Toolbar</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="intro_title">Gable Stones in Amsterdam</string>
+    <string name="about_gable_stones">Explore Amsterdam, stroll around the city and discover unique details of the rich history. Historic houses and mansions were often decorated with gable stones, which are carved and painted stone tablets. They gave information about the owner or the business, sometimes straightforward, sometimes through subtle hints or even riddles. Before street names and house numbers were established the location of a house was referred by the gable stone.</string>
+    <string name="topic_tour">Scavenger Hunt: Look for the rabbits</string>
+    <string name="explanation">Start the tour and search for specific gable stones. Your missions consists of 10 clues, to discover gable stones and/or other parts of a house that are linked to rabbits. Complete the items, discover hidden gems and emerge in the history of Amsterdam. Explore Amsterdam in an unique and memorable way.</string>
+    <string name="intro_instruction1"> - Find your clues in Mission</string>
+    <string name="intro_instruction2"> - Locate the gable stones in Map</string>
+    <string name="intro_instruction3"> - Solve the clues</string>
+    <string name="intro_enjoy">Explore and Enjoy!</string>
+</resources>
