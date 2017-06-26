@@ -43,7 +43,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap mGoogleMap;
     MapView mMapView;
     View mView;
-    FloatingActionButton mFab3;
+    //private FloatingActionButton fab3;
 
 
 
@@ -54,7 +54,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView =inflater.inflate(R.layout.map_fragment,container,false);
-
+        FloatingActionButton FAB3;
+        FAB3 = (FloatingActionButton) mView.findViewById(R.id.fab3);
+        FAB3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "TESTING FAB locate me",Toast.LENGTH_SHORT).show();
+            }
+        });
         return mView;
     }
 
@@ -90,13 +97,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
     }
 
-
-
-
-
-//
-//
-//    private FloatingActionButton mapFab;
 
 
 }
