@@ -96,10 +96,6 @@ public class MapFragment extends Fragment implements
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
-        //show the map
-        //SupportMapFragment mapFragment =((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
-        //mapFragment.getMapAsync(this);
-
     }
 
     @Override
