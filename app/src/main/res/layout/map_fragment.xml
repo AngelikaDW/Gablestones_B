@@ -5,18 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/ic_menu_mylocation" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:src="@android:drawable/ic_menu_mylocation" />-->
 
 
-    <com.google.android.gms.maps.MapView
+    <fragment
         android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         />
