@@ -159,7 +159,7 @@ public class MapFragment extends Fragment implements
      }
      @Override
      public boolean onMyLocationButtonClick() {
-         Toast.makeText(getActivity(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+         Toast.makeText(getActivity(), "The blue circle shows your current location on the map", Toast.LENGTH_SHORT).show();
      // Return false so that we don't consume the event and teh default behavior still occurs
          // (the camera animates to the user's current position).
          return false;
