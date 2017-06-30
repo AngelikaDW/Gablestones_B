@@ -49,19 +49,11 @@ public class MapFragment extends Fragment implements
          {
 
     private static final String TAG = "MapFragment";
-    private static final int MY_PERMISSIONS_REQUEST = 1;
     private final String LOG_TAG = AppCompatActivity.class.getSimpleName();
-    boolean mapReady = false;
     GoogleMap mGoogleMap;
-    MapView mMapView;
     View mView;
-    Marker marker;
-    TextView txtOutput;
-    ArrayList<String[]> coordinates = new ArrayList<>();
+             MapView mMapView;
 
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private FusedLocationProviderClient mFusedLocationClient;
  /**
   * Request code for location permission request.
   *
@@ -79,7 +71,6 @@ public class MapFragment extends Fragment implements
     public MapFragment() {
         //Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -99,17 +90,16 @@ public class MapFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mMapView = (MapView) mView.findViewById(R.id.map);
+        if (mMapView != null) {
+            mMapView.onCreate(null);
+            mMapView.onResume();
+            mMapView.getMapAsync(this);
+        }
         //show the map
-        SupportMapFragment mapFragment =((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
-        mapFragment.getMapAsync(this);
+        //SupportMapFragment mapFragment =((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
+        //mapFragment.getMapAsync(this);
 
-//        mMapView = (MapView) mView.findViewById(R.id.map);
-//        if (mMapView != null) {
-//            mMapView.onCreate(null);
-//            mMapView.onResume();
-//            mMapView.getMapAsync(this);
-//        }
     }
 
     @Override
@@ -144,8 +134,9 @@ public class MapFragment extends Fragment implements
         enableMyLocation();
     }
      /**
-          * Enables the My Location layer if the fine location permission has been granted.
-          */
+      * Enables the My Location layer if the fine location permission has been granted.
+      * */
+
      private void enableMyLocation() {
          if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                  != PackageManager.PERMISSION_GRANTED) {
@@ -179,15 +170,15 @@ public class MapFragment extends Fragment implements
              mPermissionDenied = true;
          }
      }
-//     @Override
-//     protected void onResumeFragments() {
-//         super.onResume();
-//         if (mPermissionDenied) {
-//             // Permission was not granted, display error dialog.
-//             showMissingPermissionError();
-//             mPermissionDenied = false;
-//         }
-//     }
+
+     public void onResume() {
+         super.onResume();
+         if (mPermissionDenied) {
+             // Permission was not granted, display error dialog.
+             showMissingPermissionError();
+             mPermissionDenied = false;
+         }
+     }
          /**
           * Displays a dialog with error message explaining that the location permission is missing.
           */
