@@ -66,8 +66,6 @@ public class MapFragment extends Fragment implements
   */
      private boolean mPermissionDenied = false;
 
-
-
     public MapFragment() {
         //Required empty public constructor
     }
