@@ -12,23 +12,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class MissionFragment extends Fragment {
+public class MissionFragment extends ListFragment {
     private static final String TAG = "MissionFragment";
 
     private Button btnTEST;
     private Cursor c = null;
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.mission_fragment, container, false);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         final DatabaseHelper myDbHelper = new DatabaseHelper(getActivity());
         try {
             myDbHelper.createDataBase();
@@ -42,32 +42,49 @@ public class MissionFragment extends Fragment {
         }
         Toast.makeText(getActivity(), "DB Successfully Imported", Toast.LENGTH_SHORT).show();
 
-        btnTEST = (Button) view.findViewById(R.id.btnTEST2);
+        ArrayList<String> addresslist = new ArrayList<String>();
+        ArrayList<String> description = new ArrayList<String>();
 
-        btnTEST.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                c = myDbHelper.query("STONES", null, null, null, null, null, null);
-                if (c.moveToFirst()) {
-                    do {
-                        Toast.makeText(getActivity(),
-                                "_id: " + c.getString(0) + "\n" +
-                                        "ADDRESS: " + c.getString(1) + "\n" +
-                                        "CATEGORY: " + c.getString(2) + "\n" +
-                                        "HOUSENR:  " + c.getString(3),
-                                Toast.LENGTH_LONG).show();
-                    } while (c.moveToNext());
-                }
-            }
+        c = myDbHelper.query("STONES", null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            do {
+                addresslist.add(c.getString(1)); //this adds an element to the list.
+                description.add(c.getString(4));
+                Toast.makeText(getActivity(),
+                        "_id: " + c.getString(0) + "\n" +
+                                "ADDRESS: " + c.getString(1) + "\n" +
+                                "CATEGORY: " + c.getString(2) + "\n" +
+                                "HOUSENR:  " + c.getString(3),
+                        Toast.LENGTH_SHORT).show();
 
-        });
-        // Find ListView to populate
-        ListView lvItems = (ListView) view.findViewById(R.id.list);
-        // Setup cursor adapter using cursor from last step
-        StonesCursorAdapter stonesAdapter = new StonesCursorAdapter(getActivity(), c);
-        // Attach cursor adapter to the ListView
-        lvItems.setAdapter(stonesAdapter);
-        return view;
+            } while (c.moveToNext());
+        }
+//
+//        String[] values = new String[] {
+//                "Android " + c.getColumnName(2), "iPhone", "WindowsMobile",
+//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+//                "Linux", "OS/2"};
+
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.list_item, R.id.street, description);
+                //android.R.layout.simple_list_item_1, addresslist);
+        setListAdapter(adapter);
+
+//        ArrayAdapter<String> addressAdapter = new ArrayAdapter<String>(getActivity(),
+//                R.layout.list_item, R.id.category);
+//        setListAdapter(addressAdapter);
+
+
     }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // TODO implement some logic
+    }
+
+
+//    }
 
 }
