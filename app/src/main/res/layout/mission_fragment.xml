@@ -9,22 +9,15 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
     <TextView
+        android:id="@+id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="25sp"
-        android:text="Mission"
-        android:layout_marginTop="40dp"
-        android:id="@+id/textTab2"/>
+        android:text="no stones in sight"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnTEST2"
-        android:text="TESTBTN 2"/>
+
 
 
 </RelativeLayout>

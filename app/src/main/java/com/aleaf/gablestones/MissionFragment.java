@@ -1,5 +1,6 @@
 package com.aleaf.gablestones;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,6 +24,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+
 public class MissionFragment extends ListFragment {
     private static final String TAG = "MissionFragment";
 
@@ -27,8 +33,10 @@ public class MissionFragment extends ListFragment {
     private Cursor c = null;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onActivityCreated(Bundle icicle) {
+        //super.onActivityCreated(savedInstanceState);
+        super.onActivityCreated(icicle);
+
         final DatabaseHelper myDbHelper = new DatabaseHelper(getActivity());
         try {
             myDbHelper.createDataBase();
@@ -50,41 +58,34 @@ public class MissionFragment extends ListFragment {
             do {
                 addresslist.add(c.getString(1)); //this adds an element to the list.
                 description.add(c.getString(4));
-                Toast.makeText(getActivity(),
-                        "_id: " + c.getString(0) + "\n" +
-                                "ADDRESS: " + c.getString(1) + "\n" +
-                                "CATEGORY: " + c.getString(2) + "\n" +
-                                "HOUSENR:  " + c.getString(3),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),
+//                        "_id: " + c.getString(0) + "\n" +
+//                                "ADDRESS: " + c.getString(1) + "\n" +
+//                                "CATEGORY: " + c.getString(2) + "\n" +
+//                                "HOUSENR:  " + c.getString(3),
+//                        Toast.LENGTH_SHORT).show();
 
             } while (c.moveToNext());
         }
-//
-//        String[] values = new String[] {
-//                "Android " + c.getColumnName(2), "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2"};
 
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item, R.id.street, description);
+        MyStonesAdapter adapter = new MyStonesAdapter(getContext(), addresslist);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+          //      R.layout.list_item, R.id.street, description);
                 //android.R.layout.simple_list_item_1, addresslist);
         setListAdapter(adapter);
-
-//        ArrayAdapter<String> addressAdapter = new ArrayAdapter<String>(getActivity(),
-//                R.layout.list_item, R.id.category);
-//        setListAdapter(addressAdapter);
 
 
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO implement some logic
+        // TODO implement INTEND new Activity to open
+        String item = (String) getListAdapter().getItem(position);
+        Toast.makeText(getActivity(), item + " selected", Toast.LENGTH_SHORT).show();
+        Intent clueDetailIntent = new Intent(getContext(), ClueDetailActiviy.class);
+        startActivity(clueDetailIntent);
     }
 
-
-//    }
 
 }

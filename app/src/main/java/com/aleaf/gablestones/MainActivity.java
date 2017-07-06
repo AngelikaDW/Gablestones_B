@@ -11,6 +11,7 @@ package com.aleaf.gablestones;
 
 
 
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Starting.");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
