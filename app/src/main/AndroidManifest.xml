@@ -44,6 +44,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aleaf.gablestones.MainActivity"/>
             </activity>
+        <provider
+            android:authorities="com.aleaf.gablestones"
+            android:name=".data.StoneProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

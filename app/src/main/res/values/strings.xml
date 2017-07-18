@@ -17,4 +17,13 @@
     <string name="permission_required_toast">Location permission is required to show your location on the map.</string>
     <string name="title_activity_clue_detail_activiy">Clues Details</string>
 
+    <!--Gable Stones-->
+    <string name="street_address_1">Anjelierstraat 40</string>
+    <string name="street_address_2">Westermarkt 1</string>
+    <string name="street_address_3">Damrak 15</string>
+    <string name="gablestone_1">Reading Chicken</string>
+    <string name="gablestone_2">Weather Chicken</string>
+    <string name="gablestone_3">Golden Egg</string>
+
+
 </resources>

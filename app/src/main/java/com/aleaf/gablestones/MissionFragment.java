@@ -1,91 +1,104 @@
 package com.aleaf.gablestones;
 
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import android.app.LoaderManager;
 
 
 
-public class MissionFragment extends ListFragment {
-    private static final String TAG = "MissionFragment";
+import com.aleaf.gablestones.data.StoneContract;
+
+
+public class MissionFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor>{
+    private static final String TAG = "IntroFragment";
+
+    /** Identifier for the pet data loader */
+    private static final int STONE_LOADER = 0;
+
+    /** Adapter for the ListView */
+    StoneCursorAdapter mCursorAdapter;
 
     private Button btnTEST;
-    private Cursor c = null;
+    private Cursor c=null;
+
 
     @Override
-    public void onActivityCreated(Bundle icicle) {
-        //super.onActivityCreated(savedInstanceState);
-        super.onActivityCreated(icicle);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.mission_fragment,container,false);
+        // Find the ListView which will be populated with the pet data
+        ListView stoneListView = (ListView) view.findViewById(R.id.list);
+        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
+        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
+        stoneListView.setAdapter(mCursorAdapter);
+        // Setup the item click listener
+//        stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                // Create new intent to go to {@link EditorActivity}
+//                Intent intent = new Intent(MainActivity.this, ClueActivity.class);
+//
+//                // Form the content URI that represents the specific pet that was clicked on,
+//                // by appending the "id" (passed as input to this method) onto the
+//                // {@link PetEntry#CONTENT_URI}.
+//                // For example, the URI would be "content://com.example.android.pets/pets/2"
+//                // if the pet with ID 2 was clicked on.
+//                Uri currentPetUri = ContentUris.withAppendedId(StoneContract.StoneEntry.CONTENT_URI, id);
+//
+//                // Set the URI on the data field of the intent
+//                intent.setData(currentPetUri);
+//
+//                // Launch the {@link EditorActivity} to display the data for the current pet.
+//                startActivity(intent);
+//            }
+//        });
 
-        final DatabaseHelper myDbHelper = new DatabaseHelper(getActivity());
-        try {
-            myDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
-        try {
-            myDbHelper.openDataBase();
-        } catch (SQLException sqle) {
-            throw sqle;
-        }
-        Toast.makeText(getActivity(), "DB Successfully Imported", Toast.LENGTH_SHORT).show();
+        // Kick off the loader
+        getLoaderManager().initLoader(STONE_LOADER, null, this);
 
-        ArrayList<String> addresslist = new ArrayList<String>();
-        ArrayList<String> description = new ArrayList<String>();
-
-        c = myDbHelper.query("STONES", null, null, null, null, null, null);
-        if (c.moveToFirst()) {
-            do {
-                addresslist.add(c.getString(1)); //this adds an element to the list.
-                description.add(c.getString(4));
-//                Toast.makeText(getActivity(),
-//                        "_id: " + c.getString(0) + "\n" +
-//                                "ADDRESS: " + c.getString(1) + "\n" +
-//                                "CATEGORY: " + c.getString(2) + "\n" +
-//                                "HOUSENR:  " + c.getString(3),
-//                        Toast.LENGTH_SHORT).show();
-
-            } while (c.moveToNext());
-        }
-
-
-        MyStonesAdapter adapter = new MyStonesAdapter(getContext(), addresslist);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-          //      R.layout.list_item, R.id.street, description);
-                //android.R.layout.simple_list_item_1, addresslist);
-        setListAdapter(adapter);
+        return view;
+    }
 
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                StoneContract.StoneEntry._ID,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME,
+                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS };
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(getContext(),   // Parent activity context
+                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO implement INTEND new Activity to open
-        String item = (String) getListAdapter().getItem(position);
-        Toast.makeText(getActivity(), item + " selected", Toast.LENGTH_SHORT).show();
-        Intent clueDetailIntent = new Intent(getContext(), ClueDetailActiviy.class);
-        startActivity(clueDetailIntent);
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        mCursorAdapter.swapCursor(data);
     }
 
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        // Callback called when the data needs to be deleted
+        mCursorAdapter.swapCursor(null);
+    }
 
 }
+
+
