@@ -1,14 +1,17 @@
 package com.aleaf.gablestones;
 
-import android.content.CursorLoader;
+import android.content.ContentUris;
+import android.net.Uri;
+import android.support.v4.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.app.LoaderManager;
@@ -19,7 +22,7 @@ import com.aleaf.gablestones.data.StoneContract;
 
 
 public class MissionFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<Cursor>{
+        android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "IntroFragment";
 
     /** Identifier for the pet data loader */
@@ -42,26 +45,26 @@ public class MissionFragment extends Fragment implements
         mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
         stoneListView.setAdapter(mCursorAdapter);
         // Setup the item click listener
-//        stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                // Create new intent to go to {@link EditorActivity}
-//                Intent intent = new Intent(MainActivity.this, ClueActivity.class);
-//
-//                // Form the content URI that represents the specific pet that was clicked on,
-//                // by appending the "id" (passed as input to this method) onto the
-//                // {@link PetEntry#CONTENT_URI}.
-//                // For example, the URI would be "content://com.example.android.pets/pets/2"
-//                // if the pet with ID 2 was clicked on.
-//                Uri currentPetUri = ContentUris.withAppendedId(StoneContract.StoneEntry.CONTENT_URI, id);
-//
-//                // Set the URI on the data field of the intent
-//                intent.setData(currentPetUri);
-//
-//                // Launch the {@link EditorActivity} to display the data for the current pet.
-//                startActivity(intent);
-//            }
-//        });
+        stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Create new intent to go to {@link EditorActivity}
+                Intent intent = new Intent(getActivity(), ClueDetailActiviy.class);
+
+                // Form the content URI that represents the specific pet that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link PetEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.android.pets/pets/2"
+                // if the pet with ID 2 was clicked on.
+                Uri currentPetUri = ContentUris.withAppendedId(StoneContract.StoneEntry.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                intent.setData(currentPetUri);
+
+                // Launch the {@link EditorActivity} to display the data for the current pet.
+                startActivity(intent);
+            }
+        });
 
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
@@ -79,7 +82,7 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_NAME,
                 StoneContract.StoneEntry.COLUMN_STONE_ADDRESS };
         // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(getContext(),   // Parent activity context
+        return new CursorLoader(getActivity(),   // Parent activity context
                 StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
