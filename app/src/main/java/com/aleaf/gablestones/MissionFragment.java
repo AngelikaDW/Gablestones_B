@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.app.LoaderManager;
-
 
 
 import com.aleaf.gablestones.data.StoneContract;
@@ -25,7 +23,7 @@ public class MissionFragment extends Fragment implements
         android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "IntroFragment";
 
-    /** Identifier for the pet data loader */
+    /** Identifier for the stone data loader */
     private static final int STONE_LOADER = 0;
 
     /** Adapter for the ListView */
@@ -49,17 +47,18 @@ public class MissionFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create new intent to go to {@link EditorActivity}
-                Intent intent = new Intent(getActivity(), ClueDetailActiviy.class);
+                Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
 
                 // Form the content URI that represents the specific pet that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link PetEntry#CONTENT_URI}.
                 // For example, the URI would be "content://com.example.android.pets/pets/2"
                 // if the pet with ID 2 was clicked on.
-                Uri currentPetUri = ContentUris.withAppendedId(StoneContract.StoneEntry.CONTENT_URI, id);
+                Uri currentStoneUri = ContentUris.withAppendedId(
+                        StoneContract.StoneEntry.CONTENT_URI, id);
 
                 // Set the URI on the data field of the intent
-                intent.setData(currentPetUri);
+                intent.setData(currentStoneUri);
 
                 // Launch the {@link EditorActivity} to display the data for the current pet.
                 startActivity(intent);
@@ -80,7 +79,10 @@ public class MissionFragment extends Fragment implements
         String[] projection = {
                 StoneContract.StoneEntry._ID,
                 StoneContract.StoneEntry.COLUMN_STONE_NAME,
-                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS };
+                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
+                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER
+         };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context
                 StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query

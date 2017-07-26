@@ -45,17 +45,32 @@ public class StoneCursorAdapter extends CursorAdapter{
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
+        TextView runNbrTextView = (TextView) view.findViewById(R.id.runningNumber);
         TextView addressTextView = (TextView) view.findViewById(R.id.address);
-        // Find the columns of pet attributes that we're interested in
+        TextView housenumberTextView = (TextView) view.findViewById(R.id.housenumber);
+
+        // Find the columns of stone attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
-        int addressColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
-        // Read the pet attributes from the Cursor for the current pet
+        int runNbrColumnIndex = cursor.getColumnIndex(
+                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
+        int addressColumnIndex = cursor.getColumnIndex(
+                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
+        int housenumberColumnIdex = cursor.getColumnIndex(
+                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER);
+
+        // Read the pet attributes from the Cursor for the current stone
         String stoneName = cursor.getString(nameColumnIndex);
+        String stoneRunNbr = cursor.getString(runNbrColumnIndex);
         String stoneAddress = cursor.getString(addressColumnIndex);
+        String stoneHousenumber = cursor.getString(housenumberColumnIdex);
+
         // Update the TextViews with the attributes for the current pet
         nameTextView.setText(stoneName);
+        runNbrTextView.setText(stoneRunNbr);
         addressTextView.setText(stoneAddress);
+        housenumberTextView.setText(stoneHousenumber);
     }
 }

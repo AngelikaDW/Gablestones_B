@@ -20,7 +20,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * API Contract for the Pets app.
+ * API Contract for the Gablestones app.
  */
 
 public class StoneContract {
@@ -104,6 +104,22 @@ public class StoneContract {
          * Type: INTEGER
          */
         public final static String COLUMN_STONE_HOUSENUMBER = "housenumber";
+
+        /**
+         * Description of the stone
+         * <p>
+         *     Type: Text
+         * </p>
+         */
+        public final static String COLUMN_STONE_DESCRIPTION = "description";
+
+        /*
+        * running Number of the stone
+        * <p>
+        *     Type: INTEGER
+        *     */
+        public final static String COLUMN_STONE_RUNNINGNUMBER ="runningNumber";
+
 
     }
 

@@ -36,7 +36,7 @@
         </activity>
         <!--A Child of the main activity-->
         <activity
-            android:name=".ClueDetailActiviy"
+            android:name=".ClueDetailActivity"
             android:label="@string/title_activity_clue_detail_activiy"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity">

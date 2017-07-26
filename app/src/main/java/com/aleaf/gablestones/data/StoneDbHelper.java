@@ -28,7 +28,7 @@ public class StoneDbHelper extends SQLiteAssetHelper {
     private static final String TAG = StoneDbHelper.class.getSimpleName();
 
     /** Name of the database file */
-    private static final String DATABASE_NAME = "questPopulated.db"; //"shelter.db";
+    private static final String DATABASE_NAME = "quest1.db";
     /**
      * Database version. If you change the database schema, you must increment the database version.
      */
