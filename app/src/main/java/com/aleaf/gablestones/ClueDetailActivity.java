@@ -14,13 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.v4.app.LoaderManager;
-
-
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
-
-
-
 
 /*
 * Shows the user information about the stone
@@ -38,12 +32,13 @@ public class ClueDetailActivity extends AppCompatActivity implements
      */
     private Uri mCurrentStoneUri;
 
-    /*Textfield for address*/
+    /*Textfield for name, address, housenumber, description and running Number*/
     private TextView mNameText;
     private TextView mAddressText;
     private TextView mHousenumberText;
     private TextView mDescriptionText;
     private TextView mRunningNumberText;
+    private ImageView mClueImage;
 
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
@@ -63,8 +58,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
             setTitle("Clue Detail");
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         }
-        // Kick off the loader
-//        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
 
 
         // Find all relevant views that we will need to read user input from
@@ -79,10 +72,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image_clue_detail);
-        imageView.setImageResource(R.drawable.image2);
-
-
+        mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -141,6 +131,18 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mDescriptionText.setText(description);
             mAddressText.setText(addres);
             mHousenumberText.setText(Integer.toString(housenumber));
+
+            //Integer imageRessource = Integer.parseInt("R.drawable.image" +run);
+
+
+
+
+            String uri = "@drawable/image"+Integer.toString(run);
+
+            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+            mClueImage.setImageResource(imageResource);
+
+
         }
     }
 
