@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.LoaderManager;
 
@@ -59,11 +60,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mCurrentStoneUri = intent.getData();
 
         if (mCurrentStoneUri != null) {
-            //setTitle("Clue Detail");
+            setTitle("Clue Detail");
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         }
-//        Log.d("CLuedetail", "was ist da bloss los");
-
         // Kick off the loader
 //        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
 
@@ -79,6 +78,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ImageView imageView = (ImageView) findViewById(R.id.image_clue_detail);
+        imageView.setImageResource(R.drawable.image2);
+
+
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
