@@ -2,6 +2,7 @@ package com.aleaf.gablestones;
 
 import android.content.ContentUris;
 import android.net.Uri;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.support.v4.content.Loader;
@@ -21,7 +22,7 @@ import com.aleaf.gablestones.data.StoneContract;
 
 public class MissionFragment extends Fragment implements
         android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "IntroFragment";
+    private static final String TAG = "MissionFragment";
 
     /** Identifier for the stone data loader */
     private static final int STONE_LOADER = 0;
@@ -42,12 +43,14 @@ public class MissionFragment extends Fragment implements
         // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
         stoneListView.setAdapter(mCursorAdapter);
+
         // Setup the item click listener
         stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
+                intent.putExtra("fragmentName", 2);
 
                 // Form the content URI that represents the specific pet that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
@@ -60,13 +63,19 @@ public class MissionFragment extends Fragment implements
                 // Set the URI on the data field of the intent
                 intent.setData(currentStoneUri);
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
             }
         });
 
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.commit();
+
+
 
         return view;
     }

@@ -1,6 +1,10 @@
 package com.aleaf.gablestones;
+
+    import android.content.Intent;
     import android.support.design.widget.FloatingActionButton;
     import android.support.design.widget.TabLayout;
+    import android.support.v4.app.FragmentManager;
+    import android.support.v4.app.FragmentTransaction;
     import android.support.v7.app.AppCompatActivity;
     import android.support.v4.view.ViewPager;
     import android.os.Bundle;
@@ -8,7 +12,7 @@ package com.aleaf.gablestones;
     import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
-    import android.support.v4.app.Fragment;
+
 
 
 
@@ -41,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .commit();
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -72,8 +81,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
 }

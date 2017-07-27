@@ -67,6 +67,7 @@
             android:id="@+id/image_clue_detail"
             android:layout_width="match_parent"
             android:layout_height="220dp"
+            android:layout_marginTop="8dp"
             tools:layout_editor_absoluteY="0dp"
             tools:layout_editor_absoluteX="8dp"
             />
@@ -75,8 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif"
-            android:textAppearance="?android:textAppearanceMedium"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
             android:textColor="#424242"
             android:text="description of Stone"
 

@@ -1,11 +1,13 @@
 package com.aleaf.gablestones;
 
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -83,6 +85,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+
     }
 
 
@@ -132,17 +136,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mAddressText.setText(addres);
             mHousenumberText.setText(Integer.toString(housenumber));
 
-            //Integer imageRessource = Integer.parseInt("R.drawable.image" +run);
-
-
-
-
-            String uri = "@drawable/image"+Integer.toString(run);
+            // Set image in the detail view from drawable folder, based on the running Number
+            // as extracted from the database
+            String uri = "@drawable/image" + Integer.toString(run);
 
             int imageResource = getResources().getIdentifier(uri, null, getPackageName());
             mClueImage.setImageResource(imageResource);
-
-
         }
     }
 
@@ -154,4 +153,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mAddressText.setText("");
     }
 
+    @Override
+    public void onBackPressed() {
+        getFragmentManager().popBackStackImmediate();
+    }
 }
+
