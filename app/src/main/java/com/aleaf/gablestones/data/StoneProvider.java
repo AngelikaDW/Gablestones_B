@@ -22,7 +22,11 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.util.Locale;
 
 
 /**
@@ -33,11 +37,13 @@ public class StoneProvider extends ContentProvider {
     /** Tag for the log messages */
     public static final String LOG_TAG = StoneProvider.class.getSimpleName();
 
-    /** URI matcher code for the content URI for the pets table */
+    /** URI matcher code for the content URI for the stones table */
     private static final int STONES = 100;
+    private static final int STONES_EN = 102;
 
-    /** URI matcher code for the content URI for a single pet in the pets table */
+    /** URI matcher code for the content URI for a single stone in the stones table */
     private static final int STONE_ID = 101;
+    private static final int STONE_EN_ID = 103;
 
     /**
      * UriMatcher object to match a content URI to a corresponding code.
@@ -53,8 +59,8 @@ public class StoneProvider extends ContentProvider {
         // when a match is found.
 
         // The content URI of the form "content://com.example.android.pets/pets" will map to the
-        // integer code {@link #PETS}. This URI is used to provide access to MULTIPLE rows
-        // of the pets table.
+        // integer code {@link #PETS}. !!!!This URI is used to provide access to MULTIPLE rows
+        // of the pets table.!!!!
         sUriMatcher.addURI(StoneContract.CONTENT_AUTHORITY, StoneContract.PATH_STONES, STONES);
 
         // The content URI of the form "content://com.example.android.pets/pets/#" will map to the
@@ -90,14 +96,15 @@ public class StoneProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case STONES:
-                // For the PETS code, query the pets table directly with the given
+                // For the STONES code, query the stones table directly with the given
                 // projection, selection, selection arguments, and sort order. The cursor
                 // could contain multiple rows of the pets table.
-                cursor = database.query(StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = database.query(
+                        StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case STONE_ID:
-                // For the PET_ID code, extract out the ID from the URI.
+                // For the STONE_ID code, extract out the ID from the URI.
                 // For an example URI such as "content://com.example.android.pets/pets/3",
                 // the selection will be "_id=?" and the selection argument will be a
                 // String array containing the actual ID of 3 in this case.
@@ -110,7 +117,8 @@ public class StoneProvider extends ContentProvider {
 
                 // This will perform a query on the pets table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
-                cursor = database.query(StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs,
+                cursor = database.query(
+                        StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             default:
@@ -126,145 +134,29 @@ public class StoneProvider extends ContentProvider {
         return cursor;
     }
 
+    @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues) {
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case STONES:
-                return insertStone(uri, contentValues);
-            default:
-                throw new IllegalArgumentException("Insertion is not supported for " + uri);
-        }
+    public String getType(@NonNull Uri uri) {
+        return null;
     }
 
-    /**
-     * Insert a pet into the database with the given content values. Return the new content URI
-     * for that specific row in the database.
-     */
-    private Uri insertStone(Uri uri, ContentValues values) {
-        // Check that the name is not null
-        String name = values.getAsString(StoneContract.StoneEntry.COLUMN_STONE_NAME);
-        if (name == null) {
-            throw new IllegalArgumentException("Stone requires a name");
-        }
-
-        // Get writeable database
-        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        // Insert the new pet with the given values
-        long id = database.insert(StoneContract.StoneEntry.TABLE_NAME, null, values);
-        // If the ID is -1, then the insertion failed. Log an error and return null.
-        if (id == -1) {
-            Log.e(LOG_TAG, "Failed to insert row for " + uri);
-            return null;
-        }
-
-        // Notify all listeners that the data has changed for the pet content URI
-        getContext().getContentResolver().notifyChange(uri, null);
-
-        // Return the new URI with the ID (of the newly inserted row) appended at the end
-        return ContentUris.withAppendedId(uri, id);
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        return null;
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String selection,
-                      String[] selectionArgs) {
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case STONES:
-                return updateStone(uri, contentValues, selection, selectionArgs);
-            case STONE_ID:
-                // For the PET_ID code, extract out the ID from the URI,
-                // so we know which row to update. Selection will be "_id=?" and selection
-                // arguments will be a String array containing the actual ID.
-                selection = StoneContract.StoneEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                return updateStone(uri, contentValues, selection, selectionArgs);
-            default:
-                throw new IllegalArgumentException("Update is not supported for " + uri);
-        }
-    }
-    /**
-     * Update pets in the database with the given content values. Apply the changes to the rows
-     * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
-     * Return the number of rows that were successfully updated.
-     */
-    private int updateStone(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // If the {@link PetEntry#COLUMN_PET_NAME} key is present,
-        // check that the name value is not null.
-        if (values.containsKey(StoneContract.StoneEntry.COLUMN_STONE_NAME)) {
-            String name = values.getAsString(StoneContract.StoneEntry.COLUMN_STONE_NAME);
-            if (name == null) {
-                throw new IllegalArgumentException("Stone requires a name");
-            }
-        }
-
-        // If there are no values to update, then don't try to update the database
-        if (values.size() == 0) {
-            return 0;
-        }
-
-        // Otherwise, get writeable database to update the data
-        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        // Perform the update on the database and get the number of rows affected
-        int rowsUpdated = database.update(StoneContract.StoneEntry.TABLE_NAME, values, selection, selectionArgs);
-
-        // If 1 or more rows were updated, then notify all listeners that the data at the
-        // given URI has changed
-        if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
-
-        // Return the number of rows updated
-        return rowsUpdated;
+    public int delete(@NonNull Uri uri, @Nullable String selection,
+                      @Nullable String[] selectionArgs) {
+        return 0;
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Get writeable database
-        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-
-        // Track the number of rows that were deleted
-        int rowsDeleted;
-
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case STONES:
-                // Delete all rows that match the selection and selection args
-                rowsDeleted = database.delete(StoneContract.StoneEntry.TABLE_NAME, selection, selectionArgs);
-                break;
-            case STONE_ID:
-                // Delete a single row given by the ID in the URI
-                selection = StoneContract.StoneEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-                rowsDeleted = database.delete(StoneContract.StoneEntry.TABLE_NAME, selection, selectionArgs);
-                break;
-            default:
-                throw new IllegalArgumentException("Deletion is not supported for " + uri);
-        }
-
-        // If 1 or more rows were deleted, then notify all listeners that the data at the
-        // given URI has changed
-        if (rowsDeleted != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
-
-        // Return the number of rows deleted
-        return rowsDeleted;
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
+                      @Nullable String[] selectionArgs) {
+        return 0;
     }
 
-    @Override
-    public String getType(Uri uri) {
-        final int match = sUriMatcher.match(uri);
-        switch (match) {
-            case STONES:
-                return StoneContract.StoneEntry.CONTENT_LIST_TYPE;
-            case STONE_ID:
-                return StoneContract.StoneEntry.CONTENT_ITEM_TYPE;
-            default:
-                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
-        }
-    }
 
 }

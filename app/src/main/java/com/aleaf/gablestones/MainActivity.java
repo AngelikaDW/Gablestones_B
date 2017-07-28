@@ -13,8 +13,7 @@ package com.aleaf.gablestones;
     import android.view.Menu;
     import android.view.MenuItem;
 
-
-
+    import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
+    private static final String TAG_MISSION_FRAGMENT = "mission_fragment";
+
+    private MissionFragment mMissionFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Starting.");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
@@ -45,10 +46,25 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        //Attempt to go back to Mission Fragment from ClueDetail Activity TODO: get it working!
+     /*   FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .addToBackStack(null)
-                .commit();
+                .commit();*/
+/*
+        FragmentManager fm = getSupportFragmentManager();
+        mMissionFragment = (MissionFragment) fm.findFragmentByTag(TAG_MISSION_FRAGMENT);
+
+        // If the Fragment is non-null, then it is currently being
+        // retained across a configuration change.
+        if (mMissionFragment == null) {
+            mMissionFragment = new MissionFragment();
+            fm.beginTransaction().add(mMissionFragment, TAG_MISSION_FRAGMENT).commit();
+        }*/
+
+        //Get the system language of user's device
+        String language = Locale.getDefault().getDisplayLanguage();
+        Log.i("Device language", language);
 
     }
 

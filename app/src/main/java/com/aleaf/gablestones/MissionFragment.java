@@ -9,6 +9,7 @@ import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.ListView;
 
 
 import com.aleaf.gablestones.data.StoneContract;
+
+import java.util.Locale;
 
 
 public class MissionFragment extends Fragment implements
@@ -30,8 +33,6 @@ public class MissionFragment extends Fragment implements
     /** Adapter for the ListView */
     StoneCursorAdapter mCursorAdapter;
 
-    private Button btnTEST;
-    private Cursor c=null;
 
 
     @Override
@@ -44,15 +45,21 @@ public class MissionFragment extends Fragment implements
         mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
         stoneListView.setAdapter(mCursorAdapter);
 
+        //Get the system language of user's device
+        String language = Locale.getDefault().getDisplayLanguage();
+        Log.i("Device MissionFrg", language);
+
         // Setup the item click listener
         stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
-                intent.putExtra("fragmentName", 2);
 
-                // Form the content URI that represents the specific pet that was clicked on,
+                /*// Attempt to go back to Mission Fragment TODO
+                intent.putExtra("fragmentName", 2);*/
+
+                // Form the content URI that represents the specific stone that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
                 // {@link PetEntry#CONTENT_URI}.
                 // For example, the URI would be "content://com.example.android.pets/pets/2"
@@ -71,11 +78,10 @@ public class MissionFragment extends Fragment implements
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        // Attempt to go back to MainActivity/Mission Fragment upon click on Back Arrow TODO
+        /*FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.addToBackStack(null);
-        ft.commit();
-
-
+        ft.commit();*/
 
         return view;
     }
