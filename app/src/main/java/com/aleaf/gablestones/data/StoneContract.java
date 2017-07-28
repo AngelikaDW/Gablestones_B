@@ -52,11 +52,6 @@ public class StoneContract {
      */
     public static final String PATH_STONES = "stones"; //String PATH_PETS = "pets";
 
-    public static final String PATH_STONES_EN = "stones_en";
-    public static final String PATH_STONES_DE = "stones_de";
-    public static final String PATH_STONES_NL = "stones_nl";
-
-
     /**
      * Inner class that defines constant values for the stones database table.
      * Each entry in the table represents a single pet.
@@ -74,7 +69,7 @@ public class StoneContract {
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_STONES;
 
         /**
-         * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         * The MIME type of the {@link #CONTENT_URI} for a single stone.
          */
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_STONES;
@@ -84,22 +79,6 @@ public class StoneContract {
          * Name of database table for stones
          */
         public final static String TABLE_NAME = "stones";
-
-
-        /*
-        * Name of database table for stones_en
-        * */
-        public final static String TABLE_NAME_EN = "stones_en";
-
-        /*
-        * Name of database table for stones german translation
-        * */
-        public final static String TABLE_NAME_DE = "stones_de";
-
-        /*
-        * Name of database table for stones dutch translation
-        * */
-        public final static String TABLE_NAME_NL = "stones_nl";
 
 
         /**
@@ -115,6 +94,8 @@ public class StoneContract {
          * Type: TEXT
          */
         public final static String COLUMN_STONE_NAME = "name";
+        public final static String COLUMN_STONE_NAME_DE = "nameDE";
+        public final static String COLUMN_STONE_NAME_NL = "nameNL";
         /**
          * Address of the stone.
          * <p>
@@ -136,6 +117,8 @@ public class StoneContract {
          * </p>
          */
         public final static String COLUMN_STONE_DESCRIPTION = "description";
+        public final static String COLUMN_STONE_DESCRIPTION_DE = "descriptionDE";
+        public final static String COLUMN_STONE_DESCRIPTION_NL = "descriptionNL";
 
         /*
         * running Number of the stone

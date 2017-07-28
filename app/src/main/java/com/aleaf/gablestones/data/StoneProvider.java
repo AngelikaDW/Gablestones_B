@@ -39,11 +39,9 @@ public class StoneProvider extends ContentProvider {
 
     /** URI matcher code for the content URI for the stones table */
     private static final int STONES = 100;
-    private static final int STONES_EN = 102;
 
     /** URI matcher code for the content URI for a single stone in the stones table */
     private static final int STONE_ID = 101;
-    private static final int STONE_EN_ID = 103;
 
     /**
      * UriMatcher object to match a content URI to a corresponding code.

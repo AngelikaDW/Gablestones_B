@@ -18,13 +18,17 @@ package com.aleaf.gablestones;
 import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.aleaf.gablestones.data.StoneContract;
+import com.aleaf.gablestones.data.StoneContract.StoneEntry;
+
+import java.util.Locale;
+import java.util.function.ToDoubleBiFunction;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
@@ -39,7 +43,7 @@ public class StoneCursorAdapter extends CursorAdapter{
     }
 
     /**
-     * This method binds the pet data (in the current row pointed to by cursor) to the given
+     * This method binds the stone data (in the current row pointed to by cursor) to the given
      * list item layout. For example, the name for the current pet can be set on the name TextView
      * in the list item layout.
      */
@@ -53,22 +57,41 @@ public class StoneCursorAdapter extends CursorAdapter{
         TextView housenumberTextView = (TextView) view.findViewById(R.id.housenumber);
 
         // Find the columns of stone attributes that we're interested in
-        int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
-        int runNbrColumnIndex = cursor.getColumnIndex(
-                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
-        int addressColumnIndex = cursor.getColumnIndex(
-                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
-        int housenumberColumnIdex = cursor.getColumnIndex(
-                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER);
+        int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
+        int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
+        //int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
+        int runNbrColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
+        int addressColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
+        int housenumberColumnIdex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
 
-        // Read the pet attributes from the Cursor for the current stone
+        // Read the stone attributes from the Cursor for the current stone
         String stoneName = cursor.getString(nameColumnIndex);
+        String stoneNameNL = cursor.getString(nameNLColumnIndex);
+        //String stoneNameDE = cursor.getString(nameDEColumnIndex);
         String stoneRunNbr = cursor.getString(runNbrColumnIndex);
         String stoneAddress = cursor.getString(addressColumnIndex);
         String stoneHousenumber = cursor.getString(housenumberColumnIdex);
 
-        // Update the TextViews with the attributes for the current pet
-        nameTextView.setText(stoneName);
+        //Get the system language of user's device
+        String language = Locale.getDefault().getLanguage();
+
+        // Update the TextViews with the attributes for the current stone
+        //nameTextView.setText(stoneName);
+
+        /*TODO: how to extract language and change settings based on it,
+        https://stackoverflow.com/questions/10657747/why-does-android-have-its-own-way-to-get-the-current-locale
+        context.getResources().getConfiguration().locale
+
+        */
+
+        if (language != "en") {
+            Log.i("CursorAdapter", stoneNameNL);
+            nameTextView.setText(stoneNameNL);
+        }
+        else {
+            nameTextView.setText(stoneName);
+        }
+
         runNbrTextView.setText(stoneRunNbr);
         addressTextView.setText(stoneAddress);
         housenumberTextView.setText(stoneHousenumber);

@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -33,6 +32,9 @@ public class MissionFragment extends Fragment implements
     /** Adapter for the ListView */
     StoneCursorAdapter mCursorAdapter;
 
+    String mLanguage;
+    String [] mProjection;
+
 
 
     @Override
@@ -46,8 +48,7 @@ public class MissionFragment extends Fragment implements
         stoneListView.setAdapter(mCursorAdapter);
 
         //Get the system language of user's device
-        String language = Locale.getDefault().getDisplayLanguage();
-        Log.i("Device MissionFrg", language);
+        mLanguage = Locale.getDefault().getDisplayLanguage();
 
         // Setup the item click listener
         stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,16 +88,18 @@ public class MissionFragment extends Fragment implements
     }
 
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+
         // Define a projection that specifies the columns from the table we care about.
         String[] projection = {
                 StoneContract.StoneEntry._ID,
                 StoneContract.StoneEntry.COLUMN_STONE_NAME,
                 StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
                 StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
-                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER
+                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL
+                //StoneContract.StoneEntry.COLUMN_STONE_NAME_DE
          };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context
