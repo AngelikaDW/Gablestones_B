@@ -18,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 
+import java.util.Locale;
+
 /*
-* Shows the user information about the stone
+* Shows the user detailed information and image about the stone selected in the overview
 * */
 public class ClueDetailActivity extends AppCompatActivity implements
                 android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
@@ -57,12 +59,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mCurrentStoneUri = intent.getData();
 
         if (mCurrentStoneUri != null) {
-            setTitle("Clue Detail");
+            setTitle(R.string.stone_detail);
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         }
 
 
-        // Find all relevant views that we will need to read user input from
+        // Find all relevant views that we will need to show content
         mNameText = (TextView) findViewById(R.id.clueName);
         mAddressText = (TextView) findViewById(R.id.clueAddress);
         mHousenumberText = (TextView) findViewById(R.id.clueHousenumber);
@@ -76,29 +78,21 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-
     }
 
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the stones table
+        // Define a projection that contains columns in all languages from the stones table
         String[] projection = {
                 StoneEntry._ID,
                 StoneEntry.COLUMN_STONE_NAME,
+                StoneEntry.COLUMN_STONE_NAME_DE,
+                StoneEntry.COLUMN_STONE_NAME_NL,
                 StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
                 StoneEntry.COLUMN_STONE_DESCRIPTION,
+                StoneEntry.COLUMN_STONE_DESCRIPTION_DE,
+                StoneEntry.COLUMN_STONE_DESCRIPTION_NL,
                 StoneEntry.COLUMN_STONE_ADDRESS,
                 StoneEntry.COLUMN_STONE_HOUSENUMBER};
 
@@ -117,22 +111,45 @@ public class ClueDetailActivity extends AppCompatActivity implements
         }
         if (cursor.moveToFirst()) {
             int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
+            int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
+            int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
             int runColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
             int descColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION);
+            int descNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_NL);
+            int descDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
             int addresColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
             int houseColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
+            String stoneNameNL = cursor.getString(nameNLColumnIndex);
+            String stoneNameDE = cursor.getString(nameDEColumnIndex);
             int run = cursor.getInt(runColumnIndex);
             String description = cursor.getString(descColumnIndex);
+            String descriptionNL = cursor.getString(descNLColumnIndex);
+            String descriptionDE = cursor.getString(descDEColumnIndex);
             String addres = cursor.getString(addresColumnIndex);
             int housenumber = cursor.getInt(houseColumnIndex);
 
             // Update the views on the screen with the values from the database
-            mNameText.setText(name);
+            // depended on the language of the device select EN, NL or DE content
+            // Get the system language of user's device
+            String language = Locale.getDefault().getLanguage();
+            Log.i("DEVICE LANG", language);
+
+            if (language.equals("en")) {
+                mNameText.setText(name);
+                mDescriptionText.setText(description);
+            } else if (language.equals("nl")) {
+                mNameText.setText(stoneNameNL);
+                mDescriptionText.setText(descriptionNL);
+            } else if (language.equals("de")) {
+                mNameText.setText(stoneNameDE);
+                mDescriptionText.setText(descriptionDE);
+            }
+
+            //No translation required for this fields
             mRunningNumberText.setText(Integer.toString(run));
-            mDescriptionText.setText(description);
             mAddressText.setText(addres);
             mHousenumberText.setText(Integer.toString(housenumber));
 
@@ -157,5 +174,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
     public void onBackPressed() {
         getFragmentManager().popBackStackImmediate();
     }
+
+
+    //ToDo: Write Content in the DB and update the DB (with new name!!!)
 }
 

@@ -25,5 +25,9 @@
     <string name="gablestone_2">Weather Chicken</string>
     <string name="gablestone_3">Golden Egg</string>
 
+    <!--Headers of fragments and activities-->
+    <string name="stone_detail">Clue Detail</string>
+
+
 
 </resources>
