@@ -98,8 +98,8 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
                 StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
                 StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
-                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL
-                //StoneContract.StoneEntry.COLUMN_STONE_NAME_DE
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE
          };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context

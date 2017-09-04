@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 
 import java.util.Locale;
-import java.util.function.ToDoubleBiFunction;
+//import java.util.function.ToDoubleBiFunction;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
@@ -44,13 +44,13 @@ public class StoneCursorAdapter extends CursorAdapter{
 
     /**
      * This method binds the stone data (in the current row pointed to by cursor) to the given
-     * list item layout. For example, the name for the current pet can be set on the name TextView
+     * list item layout. For example, the name for the current stone can be set on the name TextView
      * in the list item layout.
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        // Find individual views that we want to modify in the list item layout
+        // Find individual views that I want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView runNbrTextView = (TextView) view.findViewById(R.id.runningNumber);
         TextView addressTextView = (TextView) view.findViewById(R.id.address);
@@ -59,7 +59,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         // Find the columns of stone attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
         int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
-        //int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
+        int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
         int runNbrColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
         int addressColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
         int housenumberColumnIdex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
@@ -67,29 +67,27 @@ public class StoneCursorAdapter extends CursorAdapter{
         // Read the stone attributes from the Cursor for the current stone
         String stoneName = cursor.getString(nameColumnIndex);
         String stoneNameNL = cursor.getString(nameNLColumnIndex);
-        //String stoneNameDE = cursor.getString(nameDEColumnIndex);
+        String stoneNameDE = cursor.getString(nameDEColumnIndex);
         String stoneRunNbr = cursor.getString(runNbrColumnIndex);
         String stoneAddress = cursor.getString(addressColumnIndex);
         String stoneHousenumber = cursor.getString(housenumberColumnIdex);
 
         //Get the system language of user's device
         String language = Locale.getDefault().getLanguage();
+        Log.i("DEVICE LANG", language);
+
 
         // Update the TextViews with the attributes for the current stone
-        //nameTextView.setText(stoneName);
 
-        /*TODO: how to extract language and change settings based on it,
-        https://stackoverflow.com/questions/10657747/why-does-android-have-its-own-way-to-get-the-current-locale
-        context.getResources().getConfiguration().locale
-
-        */
-
-        if (language != "en") {
-            Log.i("CursorAdapter", stoneNameNL);
+        if (language.equals("en")) {
+            nameTextView.setText(stoneName);
+        }
+        else if (language.equals("nl")) {
             nameTextView.setText(stoneNameNL);
         }
-        else {
-            nameTextView.setText(stoneName);
+
+        else if (language.equals("de")) {
+            nameTextView.setText(stoneNameDE);
         }
 
         runNbrTextView.setText(stoneRunNbr);
