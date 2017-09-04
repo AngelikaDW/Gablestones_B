@@ -94,10 +94,27 @@ public class MapFragment extends Fragment implements
 
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(52.378123,4.884724))
-                .title("Reading Chicken")
-                .snippet("Anjelierstraat 40")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                .title(getString(R.string.gablestone_1))
+                .snippet(getString(R.string.street_address_1))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue1))
+                        //defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        );
+        googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(52.374614, 4.883376))
+                        .title(getString(R.string.gablestone_2))
+                        .snippet(getString(R.string.street_address_2))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue2))
+        );
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.385716, 4.887685))
+                .title(getString(R.string.gablestone_3))
+                .snippet(getString(R.string.street_address_3))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue3))
+        );
 
+//        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
+//        https://github.com/Concept211/Google-Maps-Markers
+//        then put into drawable and called from there
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(Amsterdam)
