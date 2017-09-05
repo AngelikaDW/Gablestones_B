@@ -1,10 +1,7 @@
 package com.aleaf.gablestones;
 
-    import android.content.Intent;
-    import android.support.design.widget.FloatingActionButton;
+
     import android.support.design.widget.TabLayout;
-    import android.support.v4.app.FragmentManager;
-    import android.support.v4.app.FragmentTransaction;
     import android.support.v7.app.AppCompatActivity;
     import android.support.v4.view.ViewPager;
     import android.os.Bundle;
@@ -12,8 +9,6 @@ package com.aleaf.gablestones;
     import android.util.Log;
     import android.view.Menu;
     import android.view.MenuItem;
-
-    import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new MapFragment(), "Map");
         viewPager.setAdapter(adapter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
