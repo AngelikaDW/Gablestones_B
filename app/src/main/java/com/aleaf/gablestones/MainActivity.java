@@ -46,26 +46,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //Attempt to go back to Mission Fragment from ClueDetail Activity TODO: get it working!
-     /*   FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .addToBackStack(null)
-                .commit();*/
-/*
-        FragmentManager fm = getSupportFragmentManager();
-        mMissionFragment = (MissionFragment) fm.findFragmentByTag(TAG_MISSION_FRAGMENT);
-
-        // If the Fragment is non-null, then it is currently being
-        // retained across a configuration change.
-        if (mMissionFragment == null) {
-            mMissionFragment = new MissionFragment();
-            fm.beginTransaction().add(mMissionFragment, TAG_MISSION_FRAGMENT).commit();
-        }*/
-
-        //Get the system language of user's device
-        String language = Locale.getDefault().getDisplayLanguage();
-        Log.i("Device language", language);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -75,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new MapFragment(), "Map");
         viewPager.setAdapter(adapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,5 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

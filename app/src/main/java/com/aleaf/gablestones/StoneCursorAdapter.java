@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 
 import java.util.Locale;
-//import java.util.function.ToDoubleBiFunction;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
@@ -74,8 +73,6 @@ public class StoneCursorAdapter extends CursorAdapter{
 
         //Get the system language of user's device
         String language = Locale.getDefault().getLanguage();
-        Log.i("DEVICE LANG", language);
-
 
         // Update the TextViews with the attributes for the current stone
 
@@ -89,7 +86,6 @@ public class StoneCursorAdapter extends CursorAdapter{
         else if (language.equals("de")) {
             nameTextView.setText(stoneNameDE);
         }
-
         runNbrTextView.setText(stoneRunNbr);
         addressTextView.setText(stoneAddress);
         housenumberTextView.setText(stoneHousenumber);

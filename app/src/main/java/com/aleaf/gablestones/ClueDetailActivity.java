@@ -36,6 +36,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
      */
     private Uri mCurrentStoneUri;
 
+
     /*Textfield for name, address, housenumber, description and running Number*/
     private TextView mNameText;
     private TextView mAddressText;
@@ -57,12 +58,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
         mCurrentStoneUri = intent.getData();
+        Bundle fragmentLoaded = intent.getExtras();
 
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         }
-
 
         // Find all relevant views that we will need to show content
         mNameText = (TextView) findViewById(R.id.clueName);
@@ -71,15 +72,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mDescriptionText = (TextView) findViewById(R.id.clueDescription);
         mRunningNumberText = (TextView) findViewById(R.id.clueRunningNumber);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
-
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -135,7 +133,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
             // depended on the language of the device select EN, NL or DE content
             // Get the system language of user's device
             String language = Locale.getDefault().getLanguage();
-            Log.i("DEVICE LANG", language);
 
             if (language.equals("en")) {
                 mNameText.setText(name);
@@ -168,11 +165,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mNameText.setText("");
         mRunningNumberText.setText("");
         mAddressText.setText("");
-    }
-
-    @Override
-    public void onBackPressed() {
-        getFragmentManager().popBackStackImmediate();
     }
 
 

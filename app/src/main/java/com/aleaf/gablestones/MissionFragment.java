@@ -33,17 +33,13 @@ public class MissionFragment extends Fragment implements
     StoneCursorAdapter mCursorAdapter;
 
     String mLanguage;
-    String [] mProjection;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mission_fragment,container,false);
         // Find the ListView which will be populated with the pet data
         ListView stoneListView = (ListView) view.findViewById(R.id.list);
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of stone data in the Cursor.
         mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
         stoneListView.setAdapter(mCursorAdapter);
 
@@ -54,17 +50,14 @@ public class MissionFragment extends Fragment implements
         stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Create new intent to go to {@link EditorActivity}
-                Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
+                // Create new intent to go to ClueDetailActivity
+                Intent intent = new Intent();
+                intent.setClass(getActivity(),ClueDetailActivity.class);
+                intent.putExtra("Fragment", TAG);
+                Log.i("This is:", TAG);
 
-                /*// Attempt to go back to Mission Fragment TODO
-                intent.putExtra("fragmentName", 2);*/
-
-                // Form the content URI that represents the specific stone that was clicked on,
-                // by appending the "id" (passed as input to this method) onto the
-                // {@link PetEntry#CONTENT_URI}.
-                // For example, the URI would be "content://com.example.android.pets/pets/2"
-                // if the pet with ID 2 was clicked on.
+                // From the content URI that represents the specific stone that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the.
                 Uri currentStoneUri = ContentUris.withAppendedId(
                         StoneContract.StoneEntry.CONTENT_URI, id);
 
@@ -79,14 +72,8 @@ public class MissionFragment extends Fragment implements
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
 
-        // Attempt to go back to MainActivity/Mission Fragment upon click on Back Arrow TODO
-        /*FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.addToBackStack(null);
-        ft.commit();*/
-
         return view;
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -112,7 +99,7 @@ public class MissionFragment extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        // Update {@link PetCursorAdapter} with this new cursor containing updated pet data
+        // Update StoneAdapter with this new cursor containing updated stone data
         mCursorAdapter.swapCursor(data);
     }
 
