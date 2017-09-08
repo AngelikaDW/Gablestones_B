@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class MapFragment extends Fragment implements
     GoogleMap mGoogleMap;
     View mView;
              MapView mMapView;
-
+    public  MainActivity main_activity;
  /**
   * Request code for location permission request.
   *
@@ -105,10 +106,10 @@ public class MapFragment extends Fragment implements
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue1))
                         //defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
         );
-        markerRun1.showInfoWindow();
 
 
-        googleMap.addMarker(new MarkerOptions()
+
+        Marker markerRun2 = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(52.374614, 4.883376))
                         .title(getString(R.string.gablestone_2))
                         .snippet(getString(R.string.street_address_2))
@@ -124,6 +125,23 @@ public class MapFragment extends Fragment implements
 //        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
 //        https://github.com/Concept211/Google-Maps-Markers
 //        then put into drawable and called from there
+
+        // https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
+        /*Get mRunNbr from Main Activity to be able to open correct InfoWindow*/
+        /*TODO: need to use a swich statement or generate some way to load the right Markers*/
+        main_activity = (MainActivity) getActivity();
+        int runNbr = main_activity.mRunNbr;
+        Log.i("MAP Log", String.valueOf(runNbr));
+
+        String openWindowMarker = "markerRun"+String.valueOf(runNbr);
+        if (runNbr == 1) {
+            markerRun1.showInfoWindow();
+        }
+        else if (runNbr == 2) {
+            markerRun2.showInfoWindow();
+        }
+
+        //markerRun1.showInfoWindow();
 
         /*Change inbetween Fragments from Mapto Mission
         * TODO: currently the MissionFragment is on top of the Map Fragment

@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private MissionFragment mMissionFragment;
 
+    public int mRunNbr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +48,21 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        /*Intent sent by ClueDetailActivity will open the MapFragment*/
+        /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestoen*/
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            if (bundle.containsKey("Fragment#")) {
-                int Fragment = bundle.getInt("Fragment#");
-                Log.i("MainActivity LOG", "Fragment: "+String.valueOf(Fragment));
+            if (bundle.containsKey("Run#")) {
+                mRunNbr = bundle.getInt("Run#");
+                Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
                 setupViewPagerReload(mViewPager);
             }
             else {
-                Log.i("ClueDetail LOG", "Fragment# is Null");
+                Log.i("ClueDetail LOG", "Run# is Null");
             }
         }
-
+//In your activity : create a bundle and use fragment.setArguments(bundle)
+ //       in your fragment : use Bundle bundle = getArguments()
+        // https://stackoverflow.com/questions/13445594/data-sharing-between-fragments-and-activity-in-android/20521851#20521851
     }
 
     private void setupViewPager(ViewPager viewPager) {

@@ -75,15 +75,16 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
-        //Set OnClickListener on the ImageView to open MapFragment in MainActivity
-        mClueImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-                mapIntent.putExtra("Fragment#", 1);
-                startActivity(mapIntent);
-            }
-        });
+//        //Set OnClickListener on the ImageView to open MapFragment
+//        mClueImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
+//                mapIntent.putExtra("Fragment#", 1);
+//                mapIntent.putExtra("Run#", run);
+//                startActivity(mapIntent);
+//            }
+//        });
     }
 
     @Override
@@ -129,7 +130,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             String name = cursor.getString(nameColumnIndex);
             String stoneNameNL = cursor.getString(nameNLColumnIndex);
             String stoneNameDE = cursor.getString(nameDEColumnIndex);
-            int run = cursor.getInt(runColumnIndex);
+            final int run = cursor.getInt(runColumnIndex);
             String description = cursor.getString(descColumnIndex);
             String descriptionNL = cursor.getString(descNLColumnIndex);
             String descriptionDE = cursor.getString(descDEColumnIndex);
@@ -162,6 +163,17 @@ public class ClueDetailActivity extends AppCompatActivity implements
             String uri = "@drawable/image" + Integer.toString(run);
             int imageResource = getResources().getIdentifier(uri, null, getPackageName());
             mClueImage.setImageResource(imageResource);
+
+            //Set OnClickListener on the ImageView to open MapFragment
+            mClueImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
+                    //mapIntent.putExtra("Fragment#", 1);
+                    mapIntent.putExtra("Run#", run);
+                    startActivity(mapIntent);
+                }
+            });
         }
     }
 
