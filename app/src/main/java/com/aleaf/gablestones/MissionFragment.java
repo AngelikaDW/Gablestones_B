@@ -52,7 +52,6 @@ public class MissionFragment extends Fragment implements
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),ClueDetailActivity.class);
                 intent.putExtra("Fragment", TAG);
-                Log.i("This is:", TAG);
 
                 // From the content URI that represents the specific stone that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the.

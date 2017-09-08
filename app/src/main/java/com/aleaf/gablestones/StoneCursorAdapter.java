@@ -16,11 +16,15 @@
 package com.aleaf.gablestones;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
@@ -29,6 +33,7 @@ import java.util.Locale;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
+
     public StoneCursorAdapter(Context context, Cursor c) {
         super(context,c, 0);
     }
@@ -52,6 +57,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         TextView runNbrTextView = (TextView) view.findViewById(R.id.runningNumber);
         TextView addressTextView = (TextView) view.findViewById(R.id.address);
         TextView housenumberTextView = (TextView) view.findViewById(R.id.housenumber);
+        ImageView stoneImageView = (ImageView) view.findViewById(R.id.image_list_view);
 
         // Find the columns of stone attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
@@ -87,5 +93,12 @@ public class StoneCursorAdapter extends CursorAdapter{
         runNbrTextView.setText(stoneRunNbr);
         addressTextView.setText(stoneAddress);
         housenumberTextView.setText(stoneHousenumber);
+
+        // Set image in the detail view from drawable folder, based on the running Number
+        // as extracted from the database
+        String uri = "@drawable/image" + stoneRunNbr;
+        int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+        stoneImageView.setImageResource(imageResource);
     }
+
 }

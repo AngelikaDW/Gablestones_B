@@ -9,6 +9,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
@@ -32,7 +33,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private Uri mCurrentStoneUri;
 
 
-    /*Textfield for name, address, housenumber, description and running Number*/
+    /*Textfield and ImageView for name, address, housenumber, description and running Number and
+    image of the stone*/
+
     private TextView mNameText;
     private TextView mAddressText;
     private TextView mHousenumberText;
@@ -53,7 +56,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
         mCurrentStoneUri = intent.getData();
-        Bundle fragmentLoaded = intent.getExtras();
 
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
@@ -72,6 +74,16 @@ public class ClueDetailActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
+
+        //Set OnClickListener on the ImageView to open MapFragment in MainActivity
+        mClueImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
+                mapIntent.putExtra("Fragment#", 1);
+                startActivity(mapIntent);
+            }
+        });
     }
 
     @Override
@@ -148,7 +160,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
             // Set image in the detail view from drawable folder, based on the running Number
             // as extracted from the database
             String uri = "@drawable/image" + Integer.toString(run);
-
             int imageResource = getResources().getIdentifier(uri, null, getPackageName());
             mClueImage.setImageResource(imageResource);
         }

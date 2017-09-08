@@ -1,11 +1,14 @@
 package com.aleaf.gablestones;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -86,19 +89,25 @@ public class MapFragment extends Fragment implements
         mGoogleMap = googleMap;
         LatLng Amsterdam = new LatLng(52.372438, 4.900327);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        /*Add markers where gable stones are located,
+        number of marker = running number of gable stone*/
         googleMap.addMarker(new MarkerOptions()
                 .position(Amsterdam)
                 .title("Center of Amsterdam")
                 .snippet("Maybe one day, I will be there with my family")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
-        googleMap.addMarker(new MarkerOptions()
+        Marker markerRun1 = googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(52.378123,4.884724))
                 .title(getString(R.string.gablestone_1))
                 .snippet(getString(R.string.street_address_1))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue1))
                         //defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
         );
+        markerRun1.showInfoWindow();
+
+
         googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(52.374614, 4.883376))
                         .title(getString(R.string.gablestone_2))
@@ -115,6 +124,21 @@ public class MapFragment extends Fragment implements
 //        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
 //        https://github.com/Concept211/Google-Maps-Markers
 //        then put into drawable and called from there
+
+        /*Change inbetween Fragments from Mapto Mission
+        * TODO: currently the MissionFragment is on top of the Map Fragment
+        * (Filling Backgrounds is covering it)TODO: need stop/replace Mapfragment properly*/
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                FragmentManager fm = getFragmentManager();
+                Fragment fragment = new MissionFragment();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.map, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(Amsterdam)
