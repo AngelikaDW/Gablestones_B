@@ -93,7 +93,7 @@ public class MapFragment extends Fragment implements
 
         /*Add markers where gable stones are located,
         number of marker = running number of gable stone*/
-        googleMap.addMarker(new MarkerOptions()
+        Marker markerRun0 =googleMap.addMarker(new MarkerOptions()
                 .position(Amsterdam)
                 .title("Center of Amsterdam")
                 .snippet("Maybe one day, I will be there with my family")
@@ -115,7 +115,7 @@ public class MapFragment extends Fragment implements
                         .snippet(getString(R.string.street_address_2))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue2))
         );
-        googleMap.addMarker(new MarkerOptions()
+        Marker markerRun3  = googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(52.385716, 4.887685))
                 .title(getString(R.string.gablestone_3))
                 .snippet(getString(R.string.street_address_3))
@@ -126,22 +126,35 @@ public class MapFragment extends Fragment implements
 //        https://github.com/Concept211/Google-Maps-Markers
 //        then put into drawable and called from there
 
-        // https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
-        /*Get mRunNbr from Main Activity to be able to open correct InfoWindow*/
-        /*TODO: need to use a swich statement or generate some way to load the right Markers*/
+
+        /*Open InfoWindow of Marker that has been viewed in ClueDetailActivity
+        * Based on runnumber which is sent by intent from ClueDetailActivity to MainActivity
+        * MainActivity then stores the runNbr in a global Variable mRunNbr, which is accessed by
+        * MapFragment
+        * https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
+        * TODO: create Markers based on Gablestones to be identified, currently only 4 Markers active
+        * */
         main_activity = (MainActivity) getActivity();
         int runNbr = main_activity.mRunNbr;
         Log.i("MAP Log", String.valueOf(runNbr));
 
-        String openWindowMarker = "markerRun"+String.valueOf(runNbr);
-        if (runNbr == 1) {
-            markerRun1.showInfoWindow();
-        }
-        else if (runNbr == 2) {
-            markerRun2.showInfoWindow();
+        switch (runNbr) {
+            case 0: markerRun0.showInfoWindow(); break;
+            case 1: markerRun1.showInfoWindow(); break;
+            case 2: markerRun2.showInfoWindow(); break;
+            case 3: markerRun3.showInfoWindow(); break;
+            case 4: markerRun1.showInfoWindow(); break;
+            case 5: markerRun2.showInfoWindow(); break;
+            case 6: markerRun3.showInfoWindow(); break;
+            case 7: markerRun0.showInfoWindow(); break;
+            case 8: markerRun1.showInfoWindow(); break;
+            case 9: markerRun2.showInfoWindow(); break;
+            case 10: markerRun3.showInfoWindow(); break;
+            default:
+                Log.e("", "no Marker");
+                return;
         }
 
-        //markerRun1.showInfoWindow();
 
         /*Change inbetween Fragments from Mapto Mission
         * TODO: currently the MissionFragment is on top of the Map Fragment
