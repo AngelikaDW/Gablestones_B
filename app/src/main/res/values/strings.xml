@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Gablestone Quest</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Info</string>
     <string name="title_activity_toolbar">Toolbar</string>
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="intro_title">About Gable Stones</string>
@@ -8,10 +8,23 @@
             Before Amsterdam introduced a system of street names, a building was referred to by its gable stone.
             Besides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.
             Explore Amsterdam and immerse into its rich history in a unique and memorable way.</string>
-    <string name="topic_tour">Quest: Find the gable stones</string>
+    <string name="topic_tour">Welcome to Gable Stone Quest Amsterdam </string>
     <string name="explanation">Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.
             Discover hidden architectonic gems and enjoy the unique ambiance of Amsterdam\'s historic center.
     </string>
+    <string name="quest_explanation">Your scavenger hunt adventure will begin in *** and will take
+            you around the Jordaan District, Prinseneiland and nearby areas in Amsterdam center.
+            Follow the quest and discover special gable stones.
+            Your quest will give you a new perspective on the city as you weave through picturesque
+            streets and along idyllic canals to find your next location.
+            Discover special gable stones, architectonic gems and enjoy the unique ambiance of
+            Amsterdam\'s historic center in a fun and memorable way.</string>
+    <string name="quest_highlights">Quest Highlights</string>
+    <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable
+            stones: carved and painted stone tablets, fixed to the facade.
+            Before Amsterdam introduced a system of street names, a building was referred to by
+            its gable stone.</string>
+
     <string name="intro_instruction1"> - Start your quest: the clues will lead you to the gable stones </string>
     <string name="intro_instruction2"> - Locate the gable stones in Map</string>
     <string name="intro_instruction3"> - Solve the clues</string>
@@ -40,6 +53,13 @@
     <string name="welcome_msg">Follow the quest, and locate the gable stones.
             Discover unique details of Amsterdam\'s history.
     </string>
+    <string name="title_activity_info">Info</string>
+
+
+    <string name="header_colofon" translatable="false">Colofon</string>
+    <string name="text_development" translatable="false">Design and Development: aleaf.nl</string>
+    <string name="text_version" translatable="false">Version: 1.0</string>
+    <string name="text_icons" translatable="false">Icon adapted from Noun Project (A. Vasiliev)</string>
 
 
 

@@ -10,60 +10,110 @@
         android:orientation="vertical"
         android:layout_margin="16dp"
         style="@style/AppTheme">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_title"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-                />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about_gable_stones"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/topic_tour"
             style="@style/Base.TextAppearance.AppCompat.Medium"
-            android:paddingBottom="@dimen/activity_horizontal_margin"/>
+             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/explanation"
+            android:text="@string/quest_explanation"
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:paddingBottom="@dimen/activity_horizontal_margin"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/intro_instruction1"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_instruction2"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_instruction3"
-            style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro_enjoy"
+            android:id="@+id/quest_highlights"
             style="@style/Base.TextAppearance.AppCompat.Medium"
-            android:paddingBottom="@dimen/activity_horizontal_margin"/>
+            android:text="Quest Highlights"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_startpoint"
+                android:text="Start:"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/start_location"
+                android:text="Streetname"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="8dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_endpoint"
+                android:text="End:"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/end_location"
+                android:text="Streetname"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="8dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_distance"
+                android:text="Distance"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/distance_km"
+                android:text="Streetname"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="8dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_Time"
+                android:text="Time:"
+                style="@style/Base.TextAppearance.AppCompat.Body1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time_hours"
+                android:text="Streetname"
+                style="@style/Base.TextAppearance.AppCompat.Body1"
+                android:paddingLeft="8dp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/quest_gablestones_info"
+            android:paddingTop="8dp"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="About Gable Stones"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_gable_stones"
+            style="@style/Base.TextAppearance.AppCompat.Body1"
+            android:paddingBottom="@dimen/activity_horizontal_margin" />
 
     </LinearLayout>
 
