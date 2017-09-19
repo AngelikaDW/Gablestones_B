@@ -3,4 +3,12 @@
     <string name="app_name">Gablestone Quest</string>
     <string name="stone_detail">Details</string>
     <string name="title_activity_clue_detail_activiy">über den Stein</string>
+    <string name="gablestone_1">Zwei Stühle</string>
+    <string name="gablestone_2">Ruderboot</string>
+    <string name="gablestone_3">Bauer</string>
+    <string name="gablestone_4">Die Linde</string>
+    <string name="gablestone_5">Das Kutschhaus</string>
+    <string name="gablestone_6">Pferdestall</string>
+    <string name="gablestone_7">Papierfabrik</string>
+    <string name="gablestone_8">Roter Hut</string>
 </resources>

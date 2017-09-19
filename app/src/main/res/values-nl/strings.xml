@@ -3,4 +3,12 @@
     <string name="app_name">Gablestone Quest</string>
     <string name="stone_detail">meer over de steen</string>
     <string name="title_activity_clue_detail_activiy">meer over de steen</string>
+    <string name="gablestone_1">Twee Stoelen</string>
+    <string name="gablestone_2">Roeiboot</string>
+    <string name="gablestone_3">Boer</string>
+    <string name="gablestone_4">De Lindenboom</string>
+    <string name="gablestone_5">Het Koetshuis</string>
+    <string name="gablestone_6">Paardenstal</string>
+    <string name="gablestone_7">Papiermolen</string>
+    <string name="gablestone_8">Rode Hoed</string>
 </resources>

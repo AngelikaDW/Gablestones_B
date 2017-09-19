@@ -13,7 +13,7 @@
             Discover hidden architectonic gems and enjoy the unique ambiance of Amsterdam\'s historic center.
     </string>
     <string name="quest_explanation">Your scavenger hunt adventure will begin in *** and will take
-            you around the Jordaan District, Prinseneiland and nearby areas in Amsterdam center.
+            you around the Jordaan District.
             Follow the quest and discover special gable stones.
             Your quest will give you a new perspective on the city as you weave through picturesque
             streets and along idyllic canals to find your next location.
@@ -36,12 +36,31 @@
     <string name="title_activity_clue_detail_activiy">Clues Details</string>
 
     <!--Gable Stones-->
-    <string name="street_address_1">Anjelierstraat 40</string>
-    <string name="street_address_2">Westermarkt 1</string>
-    <string name="street_address_3">Damrak 15</string>
-    <string name="gablestone_1">Reading Chicken</string>
-    <string name="gablestone_2">Weather Chicken</string>
-    <string name="gablestone_3">Golden Egg</string>
+    <string name="street_address_1" translatable="false">Brouwersgracht 52</string>
+    <string name="street_address_2" translatable="false">Lange Straat 5</string>
+    <string name="street_address_3" translatable="false">Lange Straat 17</string>
+    <string name="street_address_4" translatable="false">Lange Straat 28</string>
+    <string name="street_address_5" translatable="false">Lange Straat 50</string>
+    <string name="street_address_6" translatable="false">Lange Straat 92</string>
+    <string name="street_address_7" translatable="false">Herengracht 105</string>
+    <string name="street_address_8" translatable="false">Keizergracht 104</string>
+    <string name="street_address_9" translatable="false">Lange Straat 28</string>
+    <string name="street_address_10" translatable="false">Lange Straat 28</string>
+
+
+
+    <string name="gablestone_1">Two Chairs</string>
+    <string name="gablestone_2">Rowing Boat</string>
+    <string name="gablestone_3">Farmer</string>
+    <string name="gablestone_4">The Linden</string>
+    <string name="gablestone_5">Carriage House</string>
+    <string name="gablestone_6">Horse stables</string>
+    <string name="gablestone_7">Papermill</string>
+    <string name="gablestone_8">Red Hat</string>
+    <string name="gablestone_9">The Linden</string>
+    <string name="gablestone_10">The Linden</string>
+
+
 
     <!--Headers of fragments and activities-->
     <string name="stone_detail">Clue Detail</string>
@@ -60,7 +79,6 @@
     <string name="text_development" translatable="false">Design and Development: aleaf.nl</string>
     <string name="text_version" translatable="false">Version: 1.0</string>
     <string name="text_icons" translatable="false">Icon adapted from Noun Project (A. Vasiliev)</string>
-
 
 
 </resources>

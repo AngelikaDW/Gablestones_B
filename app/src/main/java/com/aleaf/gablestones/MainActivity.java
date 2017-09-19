@@ -1,19 +1,19 @@
 package com.aleaf.gablestones;
 
 
-    import android.content.Intent;
-    import android.support.design.widget.TabLayout;
-    import android.support.v4.app.Fragment;
-    import android.support.v4.app.FragmentManager;
-    import android.support.v4.app.FragmentTransaction;
-    import android.support.v7.app.AppCompatActivity;
-    import android.support.v4.view.ViewPager;
-    import android.os.Bundle;
-    import android.support.v7.widget.Toolbar;
-    import android.util.Log;
-    import android.view.Menu;
-    import android.view.MenuItem;
-    import android.widget.Toast;
+import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 //In your activity : create a bundle and use fragment.setArguments(bundle)
- //       in your fragment : use Bundle bundle = getArguments()
+        //       in your fragment : use Bundle bundle = getArguments()
         // https://stackoverflow.com/questions/13445594/data-sharing-between-fragments-and-activity-in-android/20521851#20521851
     }
 

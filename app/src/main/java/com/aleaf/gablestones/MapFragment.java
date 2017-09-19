@@ -60,14 +60,6 @@ public class MapFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.map_fragment, container, false);
-//        FloatingActionButton FAB3;
-//        FAB3 = (FloatingActionButton) mView.findViewById(R.id.fab3);
-//        FAB3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "TESTING FAB locate me", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         return mView;
     }
@@ -88,39 +80,76 @@ public class MapFragment extends Fragment implements
         MapsInitializer.initialize(getContext());
 
         mGoogleMap = googleMap;
-        LatLng Amsterdam = new LatLng(52.372438, 4.900327);
+        LatLng Amsterdam = new LatLng(52.376376, 4.887343);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         /*Add markers where gable stones are located,
         number of marker = running number of gable stone*/
-        Marker markerRun0 =googleMap.addMarker(new MarkerOptions()
-                .position(Amsterdam)
-                .title("Center of Amsterdam")
-                .snippet("Maybe one day, I will be there with my family")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
         Marker markerRun1 = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378123,4.884724))
+                .position(new LatLng(52.379295, 4.892488))
                 .title(getString(R.string.gablestone_1))
                 .snippet(getString(R.string.street_address_1))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue1))
-                        //defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
         );
 
-
-
         Marker markerRun2 = googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(52.374614, 4.883376))
+                        .position(new LatLng(52.378777, 4.892577))
                         .title(getString(R.string.gablestone_2))
                         .snippet(getString(R.string.street_address_2))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue2))
         );
         Marker markerRun3  = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.385716, 4.887685))
+                .position(new LatLng(52.378512, 4.892351))
                 .title(getString(R.string.gablestone_3))
                 .snippet(getString(R.string.street_address_3))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue3))
         );
+
+        Marker markerRun4  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.378485, 4.892216))
+                .title(getString(R.string.gablestone_4))
+                .snippet(getString(R.string.street_address_4))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue4))
+        );
+        Marker markerRun5  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.377991, 4.891739))
+                .title(getString(R.string.gablestone_5))
+                .snippet(getString(R.string.street_address_5))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue5))
+        );
+        Marker markerRun6  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.376880, 4.890647))
+                .title(getString(R.string.gablestone_6))
+                .snippet(getString(R.string.street_address_6))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue6))
+        );
+        Marker markerRun7  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.376611, 4.889971))
+                .title(getString(R.string.gablestone_7))
+                .snippet(getString(R.string.street_address_7))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue7))
+        );
+        Marker markerRun8  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.377286, 4.887302))
+                .title(getString(R.string.gablestone_8))
+                .snippet(getString(R.string.street_address_8))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue8))
+        );
+        Marker markerRun9  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.378485, 4.892216))
+                .title(getString(R.string.gablestone_9))
+                .snippet(getString(R.string.street_address_9))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue9))
+        );
+        Marker markerRun10  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.378485, 4.892216))
+                .title(getString(R.string.gablestone_10))
+                .snippet(getString(R.string.street_address_10))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue10))
+        );
+
+
 
 //        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
 //        https://github.com/Concept211/Google-Maps-Markers
@@ -132,24 +161,23 @@ public class MapFragment extends Fragment implements
         * MainActivity then stores the runNbr in a global Variable mRunNbr, which is accessed by
         * MapFragment
         * https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
-        * TODO: create Markers based on Gablestones to be identified, currently only 4 Markers active
         * */
         main_activity = (MainActivity) getActivity();
         int runNbr = main_activity.mRunNbr;
         Log.i("MAP Log", String.valueOf(runNbr));
 
         switch (runNbr) {
-            case 0: markerRun0.showInfoWindow(); break;
+            //case 0: markerRun0.showInfoWindow(); break;
             case 1: markerRun1.showInfoWindow(); break;
             case 2: markerRun2.showInfoWindow(); break;
             case 3: markerRun3.showInfoWindow(); break;
-            case 4: markerRun1.showInfoWindow(); break;
-            case 5: markerRun2.showInfoWindow(); break;
-            case 6: markerRun3.showInfoWindow(); break;
-            case 7: markerRun0.showInfoWindow(); break;
-            case 8: markerRun1.showInfoWindow(); break;
-            case 9: markerRun2.showInfoWindow(); break;
-            case 10: markerRun3.showInfoWindow(); break;
+            case 4: markerRun4.showInfoWindow(); break;
+            case 5: markerRun5.showInfoWindow(); break;
+            case 6: markerRun6.showInfoWindow(); break;
+            case 7: markerRun7.showInfoWindow(); break;
+            case 8: markerRun8.showInfoWindow(); break;
+            case 9: markerRun9.showInfoWindow(); break;
+            case 10: markerRun10.showInfoWindow(); break;
             default:
                 Log.e("", "no Marker");
                 return;
@@ -172,8 +200,8 @@ public class MapFragment extends Fragment implements
         });
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
-                .target(Amsterdam)
-                .zoom(13)
+                .target(new LatLng(52.378777, 4.892577))
+                .zoom(15)
                 .bearing(0)
                 .tilt(0)
                 .build();
@@ -190,7 +218,7 @@ public class MapFragment extends Fragment implements
          if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                  != PackageManager.PERMISSION_GRANTED) {
              // Permission to access the location is missing.
-             PermissionUtils.requestPermission((AppCompatActivity) getActivity().getApplicationContext(), LOCATION_PERMISSION_REQUEST_CODE,
+             PermissionUtils.requestPermission((AppCompatActivity) getActivity(), LOCATION_PERMISSION_REQUEST_CODE,
                      Manifest.permission.ACCESS_FINE_LOCATION, true);
          } else if (mGoogleMap != null) {
              // Access to the location has been granted to the app.

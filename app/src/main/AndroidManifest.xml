@@ -13,9 +13,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_gablestones"
+        android:icon="@mipmap/ic_image_gablestone"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_gablestones"
+        android:roundIcon="@mipmap/ic_image_gablestone"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -32,7 +32,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!-- A Child of the main activity -->
@@ -65,6 +65,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aleaf.gablestones.MainActivity" />
+        </activity>
+        <!--Splash Activity Launch Screen-->
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
