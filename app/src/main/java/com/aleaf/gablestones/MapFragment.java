@@ -137,18 +137,78 @@ public class MapFragment extends Fragment implements
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue8))
         );
         Marker markerRun9  = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378485, 4.892216))
+                .position(new LatLng(52.375631,4.885798))
                 .title(getString(R.string.gablestone_9))
                 .snippet(getString(R.string.street_address_9))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue9))
         );
         Marker markerRun10  = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378485, 4.892216))
+                .position(new LatLng(52.376715, 4.884386))
                 .title(getString(R.string.gablestone_10))
                 .snippet(getString(R.string.street_address_10))
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue10))
         );
+        Marker markerRun11  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.376364, 4.883624))
+                .title(getString(R.string.gablestone_11))
+                .snippet(getString(R.string.street_address_11))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue11))
+        );
+        Marker markerRun12  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.376299, 4.882291))
+                .title(getString(R.string.gablestone_12))
+                .snippet(getString(R.string.street_address_12))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue12))
+        );
+        Marker markerRun13  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.376503, 4.882205))
+                .title(getString(R.string.gablestone_13))
+                .snippet(getString(R.string.street_address_13))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue13))
+        );
+        Marker markerRun14  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.377482, 4.883778))
+                .title(getString(R.string.gablestone_14))
+                .snippet(getString(R.string.street_address_14))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue14))
+        );
+        Marker markerRun15  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.377441, 4.883877))
+                .title(getString(R.string.gablestone_15))
+                .snippet(getString(R.string.street_address_15))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue15))
+        );
 
+        Marker markerRun16  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.378059, 4.881117))
+                .title(getString(R.string.gablestone_16))
+                .snippet(getString(R.string.street_address_16))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue16))
+        );
+        Marker markerRun17  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.378745, 4.884467))
+                .title(getString(R.string.gablestone_17))
+                .snippet(getString(R.string.street_address_17))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue17))
+        );
+        Marker markerRun18  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.379347, 4.885459))
+                .title(getString(R.string.gablestone_18))
+                .snippet(getString(R.string.street_address_18))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue18))
+        );
+        Marker markerRun19  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.379957, 4.886873))
+                .title(getString(R.string.gablestone_19))
+                .snippet(getString(R.string.street_address_19))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue19))
+        );
+        Marker markerRun20  = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.379190, 4.886257))
+                .title(getString(R.string.gablestone_20))
+                .snippet(getString(R.string.street_address_20))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue20))
+        );
 
 
 //        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
@@ -178,6 +238,17 @@ public class MapFragment extends Fragment implements
             case 8: markerRun8.showInfoWindow(); break;
             case 9: markerRun9.showInfoWindow(); break;
             case 10: markerRun10.showInfoWindow(); break;
+            case 11: markerRun11.showInfoWindow(); break;
+            case 12: markerRun12.showInfoWindow(); break;
+            case 13: markerRun13.showInfoWindow(); break;
+            case 14: markerRun14.showInfoWindow(); break;
+            case 15: markerRun15.showInfoWindow(); break;
+            case 16: markerRun16.showInfoWindow(); break;
+            case 17: markerRun17.showInfoWindow(); break;
+            case 18: markerRun18.showInfoWindow(); break;
+            case 19: markerRun19.showInfoWindow(); break;
+            case 20: markerRun20.showInfoWindow(); break;
+
             default:
                 Log.e("", "no Marker");
                 return;

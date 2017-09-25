@@ -43,11 +43,19 @@
     <string name="street_address_5" translatable="false">Lange Straat 50</string>
     <string name="street_address_6" translatable="false">Lange Straat 92</string>
     <string name="street_address_7" translatable="false">Herengracht 105</string>
-    <string name="street_address_8" translatable="false">Keizergracht 104</string>
-    <string name="street_address_9" translatable="false">Lange Straat 28</string>
-    <string name="street_address_10" translatable="false">Lange Straat 28</string>
-
-
+    <string name="street_address_8" translatable="false">Keizersgracht 104</string>
+    <string name="street_address_9" translatable="false">Keizersgracht 172</string>
+    <string name="street_address_10" translatable="false">Egelantiersgracht 10</string>
+    <string name="street_address_11" translatable="false">Egelantiersgracht 15</string>
+    <string name="street_address_12" translatable="false">Egelantiersgracht 72</string>
+    <string name="street_address_13" translatable="false">Tweede Egelantiersdwarsstraat 20</string>
+    <string name="street_address_14" translatable="false">Eerste Tuindwarsstraat 19</string>
+    <string name="street_address_15" translatable="false">Eerste Tuindwarsstraat 21</string>
+    <string name="street_address_16" translatable="false">Westerstraat 202</string>
+    <string name="street_address_17" translatable="false">Westerstraat 54</string>
+    <string name="street_address_18" translatable="false">Boomstraat 28</string>
+    <string name="street_address_19" translatable="false">Noordermarkt 17</string>
+    <string name="street_address_20" translatable="false">Noordermarkt 40</string>
 
     <string name="gablestone_1">Two Chairs</string>
     <string name="gablestone_2">Rowing Boat</string>
@@ -57,9 +65,18 @@
     <string name="gablestone_6">Horse stables</string>
     <string name="gablestone_7">Papermill</string>
     <string name="gablestone_8">Red Hat</string>
-    <string name="gablestone_9">The Linden</string>
-    <string name="gablestone_10">The Linden</string>
-
+    <string name="gablestone_9">Hourglass</string>
+    <string name="gablestone_10">Beer brewer</string>
+    <string name="gablestone_11">The young carpenter</string>
+    <string name="gablestone_12">Bright sun</string>
+    <string name="gablestone_13">Beehive</string>
+    <string name="gablestone_14">Baker</string>
+    <string name="gablestone_15">Smith</string>
+    <string name="gablestone_16">Crowned Lilium Flower</string>
+    <string name="gablestone_17">Disappeared Cottages</string>
+    <string name="gablestone_18">Boat with 3 Men</string>
+    <string name="gablestone_19">The gilded fortune</string>
+    <string name="gablestone_20">Fox and Crab</string>
 
 
     <!--Headers of fragments and activities-->
