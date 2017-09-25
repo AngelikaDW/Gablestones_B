@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Gablestone Quest</string>
     <string name="stone_detail">Details</string>
-    <string name="title_activity_clue_detail_activiy">über den Stein</string>
+    <string name="title_activity_clue_detail_activiy">Details</string>
     <string name="gablestone_1">Zwei Stühle</string>
     <string name="gablestone_2">Ruderboot</string>
     <string name="gablestone_3">Bauer</string>
@@ -23,4 +23,18 @@
     <string name="gablestone_18">Boot mit 3 Männern</string>
     <string name="gablestone_19">Fortuna</string>
     <string name="gablestone_20">Fuchs und Krabbe</string>
+    <string name="about_gable_stones">Traditionell wurden Häuser und Herrenhäuser mit Giebelsteinen verziert: geschnitzte und bemalte Steintafeln, die an der Fassade befestigt wurden.\nBevor Amsterdam Straßennamen und Hausnummern einführte, wurde ein Gebäude mit Hilfe seines Giebelsteis identifiziert.\nEin Giebelstein gibt Auskunft über den (ehemaligen) Besitzer, seinen Beruf oder seinen Glauben.\nErkunden Sie Amsterdam und erleben Sie in die reiche Geschichte auf eine einzigartige und unvergessliche Weise.</string>
+    <string name="action_settings">Info</string>
+    <string name="explanation">Folgen Sie der Route und finden Sie die speziellen Giebelsteine. Die Suche führt Sie durch malerische Straßen und entlang idyllischer Kanäle.\n             Entdecken Sie versteckte architektonische Besonderheiten und genießen Sie das einzigartige Ambiente des historischen Zentrums von Amsterdam.</string>
+    <string name="fragment_mission">Route</string>
+    <string name="fragment_map">Plan</string>
+    <string name="fragment_about">Mehr info</string>
+    <string name="intro_enjoy">Entdecken und Genießen</string>
+    <string name="topic_tour">Willkommen bei der Suche nach Giebelsteinen in Amsterdam</string>
+    <string name="welcome_msg">Folgen Sie der Route und finden Sie die Giebelsteine. Entdecken Sie einzigartige Details der Geschichte Amsterdams.</string>
+    <string name="intro_title">Mehr über Giebelsteine</string>
+    <string name="quest_highlights">Höhepunkte</string>
+    <string name="text_gablestones_info">Traditionell wurden Häuser und Herrenhäuser mit Giebelsteinen verziert: behauene und bemalte Steintafeln, die an der Fassade befestigt wurden.\nBevor Amsterdam Straßennamen und Hausnummern einführte, wurde ein Gebäude mit Hilfe seines Giebelsteis identifiziert.</string>
+    <string name="quest_explanation">Ihre Tour beginnt in der Brouwersgracht und führt Sie durch den Jordaan Bezirk.\nFolgen Sie der Route und entdecken Sie besondere Giebelsteine.\nIhre Suche wird ihnen eine neue Perspektive auf die Stadt geben, während Sie durch malerische Straßen und entlang idyllischer Kanäle schlendern, um Ihren nächsten Giebelstein zu finden.\nEntdecken Sie besondere Giebelsteine, architektonische Schätze und genießen Sie das einzigartige Ambiente von Amsterdams historisches Zentrum.</string>
+    <string name="duration_in_hours">ca. 2,5 Stunden</string>
 </resources>

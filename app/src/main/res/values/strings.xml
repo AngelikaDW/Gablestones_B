@@ -1,38 +1,20 @@
 <resources>
     <string name="app_name">Gablestone Quest</string>
     <string name="action_settings">Info</string>
-    <string name="title_activity_toolbar">Toolbar</string>
-    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="title_activity_toolbar" translatable="false">Toolbar</string>
+    <string name="title_activity_tabbed" translatable="false">TabbedActivity</string>
     <string name="intro_title">About Gable Stones</string>
-    <string name="about_gable_stones">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.
-            Before Amsterdam introduced a system of street names, a building was referred to by its gable stone.
-            Besides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.
-            Explore Amsterdam and immerse into its rich history in a unique and memorable way.</string>
+    <string name="about_gable_stones">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.\nBesides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.\nExplore Amsterdam and immerse into its rich history in a unique and memorable way.</string>
     <string name="topic_tour">Welcome to Gable Stone Quest Amsterdam </string>
-    <string name="explanation">Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.
-            Discover hidden architectonic gems and enjoy the unique ambiance of Amsterdam\'s historic center.
-    </string>
-    <string name="quest_explanation">Your scavenger hunt adventure will begin in *** and will take
-            you around the Jordaan District.
-            Follow the quest and discover special gable stones.
-            Your quest will give you a new perspective on the city as you weave through picturesque
-            streets and along idyllic canals to find your next location.
-            Discover special gable stones, architectonic gems and enjoy the unique ambiance of
-            Amsterdam\'s historic center in a fun and memorable way.</string>
+    <string name="explanation">"Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.\nDiscover hidden architectonic gems and enjoy the unique ambiance of Amsterdam's historic center.\n    "</string>
+    <string name="quest_explanation">Your scavenger hunt adventure will begin in Brouwersgracht and will take you around the Jordaan District.\nFollow the quest and discover special gable stones.\nYour quest will give you a new perspective on the city as you weave through picturesque streets and along idyllic canals to find your next location.\nDiscover special gable stones, architectonic gems and enjoy the unique ambiance of\nAmsterdam\'s historic center in a fun and memorable way.</string>
     <string name="quest_highlights">Quest Highlights</string>
-    <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable
-            stones: carved and painted stone tablets, fixed to the facade.
-            Before Amsterdam introduced a system of street names, a building was referred to by
-            its gable stone.</string>
+    <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable  stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.</string>
 
-    <string name="intro_instruction1"> - Start your quest: the clues will lead you to the gable stones </string>
-    <string name="intro_instruction2"> - Locate the gable stones in Map</string>
-    <string name="intro_instruction3"> - Solve the clues</string>
-    <string name="intro_enjoy">Explore and Enjoy!</string>
     <!--    Permissions    -->
-    <string name="permission_rationale_location">Access to the location service is required to demonstrate the "Show me my current location on the map" feature, which shows your current location on the map.</string>
-    <string name="location_permission_denied">This app requires location permission to enable the "Show me my current location on the map" functionality. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
-    <string name="permission_required_toast">Location permission is required to show your location on the map.</string>
+    <string name="permission_rationale_location" translatable="false">Access to the location service is required to demonstrate the "Show me my current location on the map" feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied" translatable="false">This app requires location permission to enable the "Show me my current location on the map" functionality. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast" translatable="false">Location permission is required to show your location on the map.</string>
     <string name="title_activity_clue_detail_activiy">Clues Details</string>
 
     <!--Gable Stones-->
@@ -89,13 +71,17 @@
     <string name="welcome_msg">Follow the quest, and locate the gable stones.
             Discover unique details of Amsterdam\'s history.
     </string>
-    <string name="title_activity_info">Info</string>
+    <string name="title_activity_info" translatable="false">Info</string>
 
 
     <string name="header_colofon" translatable="false">Colofon</string>
     <string name="text_development" translatable="false">Design and Development: aleaf.nl</string>
     <string name="text_version" translatable="false">Version: 1.0</string>
     <string name="text_icons" translatable="false">Icon adapted from Noun Project (A. Vasiliev)</string>
+    <string name="intro_enjoy">Discover and Enjoy!</string>
+
+    <string name="start">Start</string>
+    <string name="duration_hours">2.5 hours</string>
 
 
 </resources>
