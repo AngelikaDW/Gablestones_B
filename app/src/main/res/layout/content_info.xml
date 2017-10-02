@@ -25,16 +25,7 @@
             android:layout_gravity="center"
             android:src="@drawable/image_gablestones" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/get_there"
-            android:text="How to get there"
-            style="@style/Base.TextAppearance.AppCompat.Medium"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Take Public transport"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,6 +47,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/text_icons" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="More information about gablestones:  www.gevelstenenvanamsterdam.nl" />
     </LinearLayout>
 
 

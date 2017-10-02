@@ -10,6 +10,8 @@
     <string name="quest_explanation">Your scavenger hunt adventure will begin in Brouwersgracht and will take you around the Jordaan District.\nFollow the quest and discover special gable stones.\nYour quest will give you a new perspective on the city as you weave through picturesque streets and along idyllic canals to find your next location.\nDiscover special gable stones, architectonic gems and enjoy the unique ambiance of\nAmsterdam\'s historic center in a fun and memorable way.</string>
     <string name="quest_highlights">Quest Highlights</string>
     <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable  stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.</string>
+    <string name="locate_on_map">Show on map</string>
+    <string name="click_on_img">Click again to show image full screen</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location" translatable="false">Access to the location service is required to demonstrate the "Show me my current location on the map" feature, which shows your current location on the map.</string>
@@ -81,7 +83,12 @@
     <string name="intro_enjoy">Discover and Enjoy!</string>
 
     <string name="start">Start</string>
-    <string name="duration_hours">2.5 hours</string>
+    <string name="duration_hours" translatable="false">2.5 hours</string>
+    <string name="duration_in_hours">2.5 hours</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

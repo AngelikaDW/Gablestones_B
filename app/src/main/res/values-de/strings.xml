@@ -37,4 +37,6 @@
     <string name="text_gablestones_info">Traditionell wurden Häuser und Herrenhäuser mit Giebelsteinen verziert: behauene und bemalte Steintafeln, die an der Fassade befestigt wurden.\nBevor Amsterdam Straßennamen und Hausnummern einführte, wurde ein Gebäude mit Hilfe seines Giebelsteis identifiziert.</string>
     <string name="quest_explanation">Ihre Tour beginnt in der Brouwersgracht und führt Sie durch den Jordaan Bezirk.\nFolgen Sie der Route und entdecken Sie besondere Giebelsteine.\nIhre Suche wird ihnen eine neue Perspektive auf die Stadt geben, während Sie durch malerische Straßen und entlang idyllischer Kanäle schlendern, um Ihren nächsten Giebelstein zu finden.\nEntdecken Sie besondere Giebelsteine, architektonische Schätze und genießen Sie das einzigartige Ambiente von Amsterdams historisches Zentrum.</string>
     <string name="duration_in_hours">ca. 2,5 Stunden</string>
+    <string name="locate_on_map">Karte</string>
+    <string name="click_on_img">Klicken Sie, um das Bild im Vollbild zu sehen</string>
 </resources>

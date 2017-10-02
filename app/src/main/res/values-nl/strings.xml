@@ -37,4 +37,6 @@
     <string name="text_gablestones_info">Traditioneel werden huizen en herenhuizen versierd met gevelstenen: gehouen en beschilderde stenen, die aan de gevel bevestigd werden.\nVoordat er in Amsterdam straatnamen en huisnummern waren, werd een gebouw door zijn gevelsteen aangewezen.\n         </string>
     <string name="quest_explanation">Je avontuurlijke zoektocht begint in Brouwersgracht en leid je rond in de Jordaan.\nVolg de zoektocht en ontdek speciale gevelstenen.\nUw zoektocht geeft u een nieuw perspectief op de stad terwijl u door pittoreske straaten en langs idyllische grachten loopt om uw volgende gevel steen te vinden.\nOntdek speciale gevel stenen, architectonische schatten en geniet van de unieke sfeer van het historische centrum van Amsterdam op een leuke en onvergetelijke manier.</string>
     <string name="duration_in_hours">ongeveer 2,5 uur</string>
+    <string name="locate_on_map">toon op kaart</string>
+    <string name="click_on_img">Klik nogmaals om het beeld volledig te zien</string>
 </resources>

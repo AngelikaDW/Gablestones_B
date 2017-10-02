@@ -30,6 +30,8 @@ public class MissionFragment extends Fragment implements
     /** Adapter for the ListView */
     StoneCursorAdapter mCursorAdapter;
 
+    int mPositionClicked;
+
     String mLanguage;
 
     @Override
@@ -44,10 +46,12 @@ public class MissionFragment extends Fragment implements
         //Get the system language of user's device
         mLanguage = Locale.getDefault().getDisplayLanguage();
 
+
         // Setup the item click listener
         stoneListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
                 // Create new intent to go to ClueDetailActivity
                 Intent intent = new Intent();
                 intent.setClass(getActivity(),ClueDetailActivity.class);
@@ -63,8 +67,17 @@ public class MissionFragment extends Fragment implements
 
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
+
+                Log.i("Position in List", String.valueOf(position));
+                mPositionClicked = position;
+
+
             }
         });
+//        //ToDo: Scroll doesn't work
+//        //Scroll to the position clicked before doesn't work!!
+//        Log.i("MissionFrag Pos", String.valueOf((mPositionClicked)));
+//        stoneListView.smoothScrollToPosition(mPositionClicked);
 
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
@@ -98,6 +111,7 @@ public class MissionFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Update StoneAdapter with this new cursor containing updated stone data
         mCursorAdapter.swapCursor(data);
+
     }
 
     @Override
@@ -105,6 +119,8 @@ public class MissionFragment extends Fragment implements
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
     }
+
+
 }
 
 

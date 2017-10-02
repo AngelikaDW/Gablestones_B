@@ -1,17 +1,30 @@
 package com.aleaf.gablestones;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 
 import java.util.Locale;
@@ -75,16 +88,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
-//        //Set OnClickListener on the ImageView to open MapFragment
-//        mClueImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-//                mapIntent.putExtra("Fragment#", 1);
-//                mapIntent.putExtra("Run#", run);
-//                startActivity(mapIntent);
-//            }
-//        });
     }
 
     @Override
@@ -164,16 +167,33 @@ public class ClueDetailActivity extends AppCompatActivity implements
             int imageResource = getResources().getIdentifier(uri, null, getPackageName());
             mClueImage.setImageResource(imageResource);
 
-            //Set OnClickListener on the ImageView to open MapFragment
+            //Set OnClickListener on the ImageView to open full screen image
+            //https://github.com/juliomarcos/ImageViewPopUpHelper
             mClueImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                   ImageViewPopUpHelper.enablePopUpOnClick(ClueDetailActivity.this, mClueImage,
+                           mClueImage.getDrawable());
+                    Toast.makeText(ClueDetailActivity.this, getText(R.string.click_on_img),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+            // When Button "show on Map" is clicked, open the infowindow of the marker in the map
+            // fragment
+            Button markerLocation = (Button) findViewById(R.id.locate_on_map);
+            markerLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-                    //mapIntent.putExtra("Fragment#", 1);
+                    mapIntent.putExtra("Fragment#", 1);
                     mapIntent.putExtra("Run#", run);
                     startActivity(mapIntent);
                 }
             });
+
+
         }
     }
 
@@ -184,7 +204,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mRunningNumberText.setText("");
         mAddressText.setText("");
     }
-
 
     //ToDo: Write Content in the DB and update the DB (with new name!!!)
 }

@@ -54,13 +54,15 @@ public class MainActivity extends AppCompatActivity {
             if (bundle.containsKey("Run#")) {
                 mRunNbr = bundle.getInt("Run#");
                 Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
-                setupViewPagerReload(mViewPager);
+                //openMapFragment();
             }
             else {
                 Log.i("ClueDetail LOG", "Run# is Null");
             }
         }
-//In your activity : create a bundle and use fragment.setArguments(bundle)
+
+
+        //In your activity : create a bundle and use fragment.setArguments(bundle)
         //       in your fragment : use Bundle bundle = getArguments()
         // https://stackoverflow.com/questions/13445594/data-sharing-between-fragments-and-activity-in-android/20521851#20521851
     }
@@ -73,15 +75,18 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new IntroFragment(), getString(R.string.fragment_about));
         viewPager.setAdapter(adapter);
     }
-    /*Upon click on Image in the ClueDetailActivity, the MapFragment will be loaded*/
-    private void setupViewPagerReload(ViewPager viewPager) {
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new MissionFragment(), getString(R.string.fragment_mission));
-        adapter.addFragment(new MapFragment(), getString(R.string.fragment_map));
-        adapter.addFragment(new IntroFragment(), getString(R.string.fragment_about));
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
+    private void openMapFragment() {
+        //TODO: Open MapFragment with Fragment Manager???
+        //THROWS ERROR
+//        MapFragment fragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.container, fragment);
+//        fragmentTransaction.addToBackStack(null);
+
+//        // Commit the transaction
+//        fragmentTransaction.commit();
     }
 
     @Override

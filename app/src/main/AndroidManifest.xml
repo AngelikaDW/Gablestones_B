@@ -66,8 +66,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aleaf.gablestones.MainActivity" />
         </activity>
-        <!--Splash Activity Launch Screen-->
-        <activity android:name=".SplashActivity"
+        <!-- Splash Activity Launch Screen -->
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
