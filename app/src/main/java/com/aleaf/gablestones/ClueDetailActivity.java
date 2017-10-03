@@ -55,7 +55,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private TextView mDescriptionText;
     private TextView mRunningNumberText;
     private ImageView mClueImage;
-
+    public int mRun;
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -179,21 +179,19 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 }
             });
 
-
-            // When Button "show on Map" is clicked, open the infowindow of the marker in the map
-            // fragment
+            mRun = run;
+            // When Button "show on Map" is clicked, open the infowindow of the marker in the
+            // MapFragment
             Button markerLocation = (Button) findViewById(R.id.locate_on_map);
             markerLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-                    mapIntent.putExtra("Fragment#", 1);
+                    mapIntent.putExtra("Fragment_ID", 1);
                     mapIntent.putExtra("Run#", run);
                     startActivity(mapIntent);
                 }
             });
-
-
         }
     }
 
@@ -205,6 +203,5 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mAddressText.setText("");
     }
 
-    //ToDo: Write Content in the DB and update the DB (with new name!!!)
 }
 

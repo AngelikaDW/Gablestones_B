@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private MissionFragment mMissionFragment;
 
     public int mRunNbr;
+    public int mFragmentId;
 
 
     @Override
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: Starting.");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Default open Quest/List Fragment, only when intent asks to open MapFragment (1)
+        mFragmentId =0;
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -48,23 +50,26 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestoen*/
+        /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone and
+        Fragment_ID*/
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             if (bundle.containsKey("Run#")) {
                 mRunNbr = bundle.getInt("Run#");
                 Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
-                //openMapFragment();
+
+                if (bundle.containsKey("Fragment_ID")) {
+                    mFragmentId = bundle.getInt("Fragment_ID");
+                    Log.i("MainActivity LOG", "FragmentID: "+String.valueOf(mFragmentId));
+                }
             }
             else {
                 Log.i("ClueDetail LOG", "Run# is Null");
             }
         }
-
-
-        //In your activity : create a bundle and use fragment.setArguments(bundle)
-        //       in your fragment : use Bundle bundle = getArguments()
-        // https://stackoverflow.com/questions/13445594/data-sharing-between-fragments-and-activity-in-android/20521851#20521851
+        //If ClueDetailActivity sends mapIntent to open Map, get Fragment_ID from intent
+        // and open Map Fragment. If no intent, open default Fragment 0 (listview)
+        mViewPager.setCurrentItem(mFragmentId);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -74,19 +79,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new MapFragment(), getString(R.string.fragment_map));
         adapter.addFragment(new IntroFragment(), getString(R.string.fragment_about));
         viewPager.setAdapter(adapter);
-    }
-
-    private void openMapFragment() {
-        //TODO: Open MapFragment with Fragment Manager???
-        //THROWS ERROR
-//        MapFragment fragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.container, fragment);
-//        fragmentTransaction.addToBackStack(null);
-
-//        // Commit the transaction
-//        fragmentTransaction.commit();
     }
 
     @Override

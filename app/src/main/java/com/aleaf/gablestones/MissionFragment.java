@@ -2,12 +2,14 @@ package com.aleaf.gablestones;
 
 import android.content.ContentUris;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneContract;
 
+import java.util.List;
 import java.util.Locale;
 
 
@@ -33,15 +36,21 @@ public class MissionFragment extends Fragment implements
     int mPositionClicked;
 
     String mLanguage;
+    ListView mStoneListView;
+
+    public  MainActivity main_activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mission_fragment,container,false);
+
         // Find the ListView which will be populated with the pet data
         ListView stoneListView = (ListView) view.findViewById(R.id.list);
+        mStoneListView = stoneListView;
         // Setup an Adapter to create a list item for each row of stone data in the Cursor.
         mCursorAdapter = new StoneCursorAdapter(getActivity(), null);
         stoneListView.setAdapter(mCursorAdapter);
+
 
         //Get the system language of user's device
         mLanguage = Locale.getDefault().getDisplayLanguage();
@@ -71,8 +80,7 @@ public class MissionFragment extends Fragment implements
                 Log.i("Position in List", String.valueOf(position));
                 mPositionClicked = position;
 
-
-            }
+                           }
         });
 //        //ToDo: Scroll doesn't work
 //        //Scroll to the position clicked before doesn't work!!
@@ -120,7 +128,11 @@ public class MissionFragment extends Fragment implements
         mCursorAdapter.swapCursor(null);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("Which position clicked", String.valueOf(mPositionClicked));
+    }
 }
 
 

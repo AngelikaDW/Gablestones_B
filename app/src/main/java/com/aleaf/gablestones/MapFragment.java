@@ -120,17 +120,21 @@ public class MapFragment extends Fragment implements
         /*Change in between Fragments from Mapto Mission
         * TODO: currently the MissionFragment is on top of the Map Fragment
         * (Filling Backgrounds is covering it)TODO: need stop/replace Mapfragment properly*/
-        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                FragmentManager fm = getFragmentManager();
-                Fragment fragment = new MissionFragment();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                fragmentTransaction.replace(R.id.map, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+
+//        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+//            @Override
+//            public void onInfoWindowClick(Marker marker) {
+//                FragmentManager fm = getFragmentManager();
+//                MissionFragment fragment = new MissionFragment();
+//                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//                fragmentTransaction.replace(R.id.map, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+//                MapFragment mapFragment = new MapFragment();
+//                FragmentTransaction transaction = fm.beginTransaction();
+//                transaction.add(mapFragment).commit();
+//            }
+//        });
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -146,7 +150,6 @@ public class MapFragment extends Fragment implements
      /**
       * Enables the My Location layer if the fine location permission has been granted.
       * */
-
      private void enableMyLocation() {
          if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                  != PackageManager.PERMISSION_GRANTED) {

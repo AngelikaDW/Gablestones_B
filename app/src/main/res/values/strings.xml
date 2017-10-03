@@ -62,6 +62,8 @@
     <string name="gablestone_19">The gilded fortune</string>
     <string name="gablestone_20">Fox and Crab</string>
 
+    <string name="lat_1">52.379295</string>
+    <string name="lng_1">4.892488</string>
 
     <!--Headers of fragments and activities-->
     <string name="stone_detail">Clue Detail</string>
