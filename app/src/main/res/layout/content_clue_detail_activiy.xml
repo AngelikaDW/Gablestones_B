@@ -111,7 +111,6 @@
          from the bounds of the thumbnail button above, to its final laid-out
          bounds.
          -->
-
         <ImageView
             android:id="@+id/expanded_image"
             android:layout_width="match_parent"

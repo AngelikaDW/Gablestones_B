@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
         if (bundle != null) {
             if (bundle.containsKey("Run#")) {
                 mRunNbr = bundle.getInt("Run#");
-                Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
+                //Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
 
                 if (bundle.containsKey("Fragment_ID")) {
                     mFragmentId = bundle.getInt("Fragment_ID");
-                    Log.i("MainActivity LOG", "FragmentID: "+String.valueOf(mFragmentId));
+                    //Log.i("MainActivity LOG", "FragmentID: "+String.valueOf(mFragmentId));
                 }
             }
             else {
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         //If ClueDetailActivity sends mapIntent to open Map, get Fragment_ID from intent
         // and open Map Fragment. If no intent, open default Fragment 0 (listview)
         mViewPager.setCurrentItem(mFragmentId);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

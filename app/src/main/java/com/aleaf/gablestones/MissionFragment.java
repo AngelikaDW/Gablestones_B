@@ -44,7 +44,7 @@ public class MissionFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mission_fragment,container,false);
 
-        // Find the ListView which will be populated with the pet data
+        // Find the ListView which will be populated with the stone data
         ListView stoneListView = (ListView) view.findViewById(R.id.list);
         mStoneListView = stoneListView;
         // Setup an Adapter to create a list item for each row of stone data in the Cursor.
@@ -131,7 +131,7 @@ public class MissionFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("Which position clicked", String.valueOf(mPositionClicked));
+        //Log.i("Which position clicked", String.valueOf(mPositionClicked));
     }
 }
 
