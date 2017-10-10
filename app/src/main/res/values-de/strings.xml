@@ -39,4 +39,6 @@
     <string name="duration_in_hours">ca. 2,5 Stunden</string>
     <string name="locate_on_map">Karte</string>
     <string name="click_on_img">Klicken Sie, um das Bild im Vollbild zu sehen</string>
+    <string name="stone_located">Gratulation - Sie haben den Giebelstein gefunden!</string>
+    <string name="stone_too_far">Hier ist es noch nicht - suchen Sie weiter</string>
 </resources>

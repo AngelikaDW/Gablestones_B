@@ -39,4 +39,6 @@
     <string name="duration_in_hours">ongeveer 2,5 uur</string>
     <string name="locate_on_map">toon op kaart</string>
     <string name="click_on_img">Klik nogmaals om het beeld volledig te zien</string>
+    <string name="stone_located">Gefeliciteerd - je hebt de gevelsteen gevonden!</string>
+    <string name="stone_too_far">Nog even verder zoeken!</string>
 </resources>

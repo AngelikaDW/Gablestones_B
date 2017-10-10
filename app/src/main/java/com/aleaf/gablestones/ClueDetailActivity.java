@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -83,7 +84,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     public Double mLng;
     private TextView mCurrentLocationText;
     Location mCurrentLocation;
-
+    int mMatchResult;
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -103,7 +104,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
 
         }
-
+        // Define GoogleApiClient which was initiated onStart()
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -125,6 +126,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
+        // Set up FAB Button: when clicked gets current Location and calculates distance between
+        // current location of user and location of stone
+        // Depending on the distance, the db is being updated
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,10 +138,13 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 /*WATCH OUT CURRRENTLY 1000m distance!*/
                 distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                         mLat, mLng);
-//                TODO: write new data to DB COLUMN MATCH
+                // depending if user is close enough to the gable stone, the database is being
+                // updated and the image in the ListView in the MissionFragment is changed from
+                // unchecked to checked box
+                updateStone();
 
-                Snackbar.make(view, "You found it - congrats!"+mCurrentLocation, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "You found it - congrats!", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
@@ -368,18 +375,43 @@ public class ClueDetailActivity extends AppCompatActivity implements
                                 double endLatitude,
                                 double endLongitude) {
 
-        float [] distance = new float[1];
-        Location.distanceBetween(startLatitude,startLongitude,endLatitude, endLongitude, distance);
-        if (distance[0] <1000.0) {
+        float[] distance = new float[1];
+        Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
+        if (distance[0] < 1000.0) {
             Log.i("Is user within 1000m?", "YES");
-            Toast.makeText(this, "You have located the gable stone - Congratulations",
+            Toast.makeText(this, getString(R.string.stone_located),
                     Toast.LENGTH_SHORT).show();
+            mMatchResult = 1;
         } else {
             Log.i("is user near?", "No");
-            Toast.makeText(this,"You haven't located the gable stone yet - Keep on looking!",
+            Toast.makeText(this, getString(R.string.stone_too_far),
                     Toast.LENGTH_LONG).show();
+            mMatchResult = 0;
         }
+    }
+    // Get update from location of user and save it to stones database
+    private void updateStone(){
+        // Create a ContentValues object where column names are the keys,
+        // and pet attributes from the editor are the values.
+        ContentValues values = new ContentValues();
+        values.put(StoneEntry.COLUMN_STONE_MATCH, mMatchResult);
 
+        //Update the row of the stone with 0 or 1 in COLUMN_STONE_MATCH
+        // and pass in the new ContentValues. Pass in null for the selection and selection args
+        // because mCurrentStoneUri will already identify the correct row in the database that
+        // we want to modify.
+        int rowsAffected = getContentResolver().update(mCurrentStoneUri, values, null, null);
+
+        // Show a toast message depending on whether or not the update was successful.
+        if (rowsAffected == 0) {
+            // If no rows were affected, then there was an error with the update.
+            Toast.makeText(this, "UPDATE FAILED",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Otherwise, the update was successful and we can display a toast.
+//            Toast.makeText(this, "DB updated successfully",
+//                    Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
