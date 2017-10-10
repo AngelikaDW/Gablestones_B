@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        {
 
     private static final String TAG = "MainActivity";
 
@@ -113,6 +115,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
 }

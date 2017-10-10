@@ -105,6 +105,11 @@
             android:textColor="#424242"
             android:text="description of Stone"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentLocMatch"
+            android:text="Current Location of User"/>
         <!-- This initially-hidden ImageView will hold the expanded/zoomed version of
          the images above. Without transformations applied, it takes up the entire
          screen. To achieve the "zoom" animation, this view's bounds are animated

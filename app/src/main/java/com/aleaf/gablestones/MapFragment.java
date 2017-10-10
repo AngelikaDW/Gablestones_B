@@ -147,26 +147,6 @@ public class MapFragment extends Fragment implements
         addMarkersToMap();
         openInfoWindow();
 
-
-        /*Change in between Fragments from Mapto Mission
-        * TODO: currently the MissionFragment is on top of the Map Fragment
-        * (Filling Backgrounds is covering it)TODO: need stop/replace Mapfragment properly*/
-
-//        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-//            @Override
-//            public void onInfoWindowClick(Marker marker) {
-//                FragmentManager fm = getFragmentManager();
-//                MissionFragment fragment = new MissionFragment();
-//                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//                fragmentTransaction.replace(R.id.map, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
-//                MapFragment mapFragment = new MapFragment();
-//                FragmentTransaction transaction = fm.beginTransaction();
-//                transaction.add(mapFragment).commit();
-//            }
-//        });
-
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
                 .zoom(15)
@@ -514,6 +494,7 @@ public class MapFragment extends Fragment implements
         LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
         //Log.v("CURRENT LOCATION", currentLoc.toString());
         mCurrentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
     }
 
     @Override
@@ -530,10 +511,7 @@ public class MapFragment extends Fragment implements
         super.onStop();
     }
 
-    // Container Activity to communicate currentLocation with MainActivity
-    public interface CurrentLocationListener {
-        //https://developer.android.com/training/basics/fragments/communicating.html
-        }
+
 }
 
 

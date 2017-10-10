@@ -58,6 +58,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         TextView addressTextView = (TextView) view.findViewById(R.id.address);
         TextView housenumberTextView = (TextView) view.findViewById(R.id.housenumber);
         ImageView stoneImageView = (ImageView) view.findViewById(R.id.image_list_view);
+        ImageView checkboxImageView = (ImageView) view.findViewById(R.id.checkbox);
 
         // Find the columns of stone attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
@@ -65,7 +66,8 @@ public class StoneCursorAdapter extends CursorAdapter{
         int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
         int runNbrColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
         int addressColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
-        int housenumberColumnIdex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
+        int housenumberColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
+        int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
 
         // Read the stone attributes from the Cursor for the current stone
         String stoneName = cursor.getString(nameColumnIndex);
@@ -73,7 +75,8 @@ public class StoneCursorAdapter extends CursorAdapter{
         String stoneNameDE = cursor.getString(nameDEColumnIndex);
         String stoneRunNbr = cursor.getString(runNbrColumnIndex);
         String stoneAddress = cursor.getString(addressColumnIndex);
-        String stoneHousenumber = cursor.getString(housenumberColumnIdex);
+        String stoneHousenumber = cursor.getString(housenumberColumnIndex);
+        String stoneMatch = cursor.getString(matchColumnIndex);
 
         //Get the system language of user's device
         String language = Locale.getDefault().getLanguage();
@@ -94,11 +97,20 @@ public class StoneCursorAdapter extends CursorAdapter{
         addressTextView.setText(stoneAddress);
         housenumberTextView.setText(stoneHousenumber);
 
+
+
         // Set image in the detail view from drawable folder, based on the running Number
         // as extracted from the database
         String uri = "@drawable/image" + stoneRunNbr;
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         stoneImageView.setImageResource(imageResource);
+
+        //Image of Checkbox, if the data is 0, no match yet --> unchecked box
+        // if data in db is 1, location of user and stone matched --> checked box
+        if (stoneMatch.equals("0")){
+            checkboxImageView.setImageResource(R.drawable.unchecked_box);
+        } else {
+            checkboxImageView.setImageResource(R.drawable.checked_box);}
     }
 
 }

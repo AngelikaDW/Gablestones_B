@@ -127,7 +127,17 @@ public class StoneContract {
         *     */
         public final static String COLUMN_STONE_RUNNINGNUMBER ="runningNumber";
 
+        /*
+        * Lat and Lng of stone
+        * Type: REAL
+        * */
+        public final static  String COLUMN_STONE_LAT = "lat";
+        public final static String COLUMN_STONE_LNG = "lng";
 
+        /*
+        * User has found gable stone, result of matching current location of user with saved
+        * location of stone*/
+        public final static String COLUMN_STONE_MATCH = "match";
     }
 
 }

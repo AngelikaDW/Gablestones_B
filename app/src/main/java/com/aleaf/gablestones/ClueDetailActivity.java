@@ -6,19 +6,25 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -28,6 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Locale;
 
@@ -35,7 +48,10 @@ import java.util.Locale;
 * Shows the user detailed information and image about the stone selected in the overview
 * */
 public class ClueDetailActivity extends AppCompatActivity implements
-                android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
+                android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>,
+                GoogleApiClient.ConnectionCallbacks,
+                GoogleApiClient.OnConnectionFailedListener,
+                com.google.android.gms.location.LocationListener{
 
     /**
      * Identifier for the stone data loader
@@ -43,9 +59,13 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private static final int EXISTING_STONE_LOADER = 0;
 
     /**
-     * Content URI for the exitsing stone (null if it's a new stone)
+     * Content URI for the existing stone (null if it's a new stone)
      */
     private Uri mCurrentStoneUri;
+
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+    private static final int MY_PERMISSIONS_REQUEST = 1;
 
 
     /*Textfield and ImageView for name, address, housenumber, description and running Number and
@@ -58,6 +78,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private TextView mRunningNumberText;
     private ImageView mClueImage;
     public int mRun;
+    private TextView mCurrentLocationText;
+    String mCurrentLocation;
+
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -75,7 +98,15 @@ public class ClueDetailActivity extends AppCompatActivity implements
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
             getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
+
         }
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        configureLocationUpdates();
 
         // Find all relevant views that we will need to show content
         mNameText = (TextView) findViewById(R.id.clueName);
@@ -83,6 +114,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mHousenumberText = (TextView) findViewById(R.id.clueHousenumber);
         mDescriptionText = (TextView) findViewById(R.id.clueDescription);
         mRunningNumberText = (TextView) findViewById(R.id.clueRunningNumber);
+        mCurrentLocationText = (TextView) findViewById(R.id.currentLocMatch);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,7 +126,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You found it - congrats!", Snackbar.LENGTH_LONG)
+
+                requestLocationUpdate();
+
+                Snackbar.make(view, "You found it - congrats!"+mCurrentLocation, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -114,7 +149,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 StoneEntry.COLUMN_STONE_DESCRIPTION_DE,
                 StoneEntry.COLUMN_STONE_DESCRIPTION_NL,
                 StoneEntry.COLUMN_STONE_ADDRESS,
-                StoneEntry.COLUMN_STONE_HOUSENUMBER};
+                StoneEntry.COLUMN_STONE_HOUSENUMBER,
+                StoneEntry.COLUMN_STONE_LAT,
+                StoneEntry.COLUMN_STONE_LNG,
+                StoneEntry.COLUMN_STONE_MATCH};
 
         return new CursorLoader(this,
                 mCurrentStoneUri,
@@ -139,6 +177,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
             int descDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
             int addresColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
             int houseColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
+            int latColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LAT);
+            int lngColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LNG);
+            int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
 
             // Extract out the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
@@ -150,6 +191,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
             String descriptionDE = cursor.getString(descDEColumnIndex);
             String addres = cursor.getString(addresColumnIndex);
             int housenumber = cursor.getInt(houseColumnIndex);
+            double lat = cursor.getDouble(latColumnIndex);
+            double lng = cursor.getDouble(lngColumnIndex);
+            int match = cursor.getInt(matchColumnIndex);
 
             // Update the views on the screen with the values from the database
             // depended on the language of the device select EN, NL or DE content
@@ -171,6 +215,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mRunningNumberText.setText(Integer.toString(run));
             mAddressText.setText(addres);
             mHousenumberText.setText(Integer.toString(housenumber));
+            mCurrentLocationText.setText(Integer.toString(match));
 
             // Set image in the detail view from drawable folder, based on the running Number
             // as extracted from the database
@@ -191,7 +236,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             });
 
             mRun = run;
-            // When Button "show on Map" is clicked, open the infowindow of the marker in the
+            // When Button "show on Map" is clicked, open the info window of the marker in the
             // MapFragment
             Button markerLocation = (Button) findViewById(R.id.locate_on_map);
             markerLocation.setOnClickListener(new View.OnClickListener() {
@@ -212,6 +257,97 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mNameText.setText("");
         mRunningNumberText.setText("");
         mAddressText.setText("");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Connect the Client
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        //Disconnect the Client
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    private void requestLocationUpdate() {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+
+    }
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        //This check necessary for API 23 or higher (Android 6.0)
+        int permissionCheck = ActivityCompat.checkSelfPermission(
+                this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{
+                        android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST);
+            }
+
+        } else {
+
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, mLocationRequest, this);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    requestLocationUpdate();
+                } else {
+                    //txtOutput.setText("No permission to get the location");
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //Log.v("Loc in DetailClue", location.toString());
+        LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
+        Log.i("LatLn in DetailClue", currentLoc.toString());
+        mCurrentLocation = currentLoc.toString();
+    }
+    private void configureLocationUpdates() {
+
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(15*10000); //Update location every 15 sec
     }
 
 }

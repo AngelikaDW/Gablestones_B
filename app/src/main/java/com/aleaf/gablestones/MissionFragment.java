@@ -2,14 +2,12 @@ package com.aleaf.gablestones;
 
 import android.content.ContentUris;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,6 @@ import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneContract;
 
-import java.util.List;
 import java.util.Locale;
 
 
@@ -104,7 +101,8 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
                 StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
                 StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
-                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH
          };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context
