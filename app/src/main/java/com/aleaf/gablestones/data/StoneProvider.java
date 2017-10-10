@@ -151,9 +151,55 @@ public class StoneProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection,
-                      @Nullable String[] selectionArgs) {
-        return 0;
+    public int update(Uri uri, ContentValues values, String selection,
+                      String[] selectionArgs) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case STONES:
+                return updateStone(uri, values, selection, selectionArgs);
+            case STONE_ID:
+                // For the STONE_ID code, extract out the ID from the URI,
+                // so we know which row to update. Selection will be "_id=?" and selection
+                // arguments will be a String array containing the actual ID.
+                selection = StoneContract.StoneEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateStone(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+            }
+        }
+    /**
+     * Update stones in the database with the given content values. Apply the changes to the rows
+     * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
+     * Return the number of rows that were successfully updated.
+     */
+    private int updateStone(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        // If the COLUMN_STONE_MATCH key is present, check tha the value is not null.
+        if (values.containsKey(StoneContract.StoneEntry.COLUMN_STONE_MATCH)) {
+            Integer match = values.getAsInteger(StoneContract.StoneEntry.COLUMN_STONE_MATCH);
+            if (match == null) {
+                throw new IllegalArgumentException("Requires input");
+            }
+        }
+            // If there are no values to update, then don't try to update the database
+            if (values.size() == 0) {
+                return 0;
+            }
+            // Otherwise, get writeable database to update the data
+            SQLiteDatabase database = mDbHelper.getWritableDatabase();
+            // Perform the update on the database and get the number of rows affected
+            int rowsUpdated = database.update(StoneContract.StoneEntry.TABLE_NAME, values, selection, selectionArgs);
+
+            // If 1 or more rows were updated, then notify all listeners that the data at the
+            // given URI has changed
+            if (rowsUpdated != 0) {
+                getContext().getContentResolver().notifyChange(uri, null);
+            }
+
+            // Return the number of rows updated
+            return rowsUpdated;
+
+        //return 0;
     }
 
 

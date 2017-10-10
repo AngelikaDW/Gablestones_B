@@ -58,6 +58,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
      */
     private static final int EXISTING_STONE_LOADER = 0;
 
+
     /**
      * Content URI for the existing stone (null if it's a new stone)
      */
@@ -78,8 +79,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private TextView mRunningNumberText;
     private ImageView mClueImage;
     public int mRun;
+    public Double mLat;
+    public Double mLng;
     private TextView mCurrentLocationText;
-    String mCurrentLocation;
+    Location mCurrentLocation;
 
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
@@ -128,6 +131,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
             public void onClick(View view) {
 
                 requestLocationUpdate();
+                /*WATCH OUT CURRRENTLY 1000m distance!*/
+                distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
+                        mLat, mLng);
+//                TODO: write new data to DB COLUMN MATCH
 
                 Snackbar.make(view, "You found it - congrats!"+mCurrentLocation, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -192,7 +199,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
             String addres = cursor.getString(addresColumnIndex);
             int housenumber = cursor.getInt(houseColumnIndex);
             double lat = cursor.getDouble(latColumnIndex);
+            mLat = lat;
             double lng = cursor.getDouble(lngColumnIndex);
+            mLng = lng;
             int match = cursor.getInt(matchColumnIndex);
 
             // Update the views on the screen with the values from the database
@@ -340,14 +349,37 @@ public class ClueDetailActivity extends AppCompatActivity implements
     public void onLocationChanged(Location location) {
         //Log.v("Loc in DetailClue", location.toString());
         LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-        Log.i("LatLn in DetailClue", currentLoc.toString());
-        mCurrentLocation = currentLoc.toString();
+        //Log.i("LatLn in DetailClue", currentLoc.toString());
+        mCurrentLocation = location;
     }
     private void configureLocationUpdates() {
 
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(15*10000); //Update location every 15 sec
+    }
+
+    // Compares the current Location (Lat and Lng) of user with the location of the stone
+    // as saved in db
+    // if distance is less than 1000m (!!!) positive result gets written into db
+    // if distance is more than !!!! 1000m !!!! db is not updated
+    public void distanceBetween(double startLatitude,
+                                double startLongitude,
+                                double endLatitude,
+                                double endLongitude) {
+
+        float [] distance = new float[1];
+        Location.distanceBetween(startLatitude,startLongitude,endLatitude, endLongitude, distance);
+        if (distance[0] <1000.0) {
+            Log.i("Is user within 1000m?", "YES");
+            Toast.makeText(this, "You have located the gable stone - Congratulations",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("is user near?", "No");
+            Toast.makeText(this,"You haven't located the gable stone yet - Keep on looking!",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }
