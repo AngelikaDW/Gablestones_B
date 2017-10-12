@@ -98,7 +98,6 @@ public class StoneCursorAdapter extends CursorAdapter{
         housenumberTextView.setText(stoneHousenumber);
 
 
-
         // Set image in the detail view from drawable folder, based on the running Number
         // as extracted from the database
         String uri = "@drawable/image" + stoneRunNbr;

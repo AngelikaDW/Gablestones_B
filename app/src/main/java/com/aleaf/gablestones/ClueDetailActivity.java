@@ -209,7 +209,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mLat = lat;
             double lng = cursor.getDouble(lngColumnIndex);
             mLng = lng;
-            int match = cursor.getInt(matchColumnIndex);
+            final int match = cursor.getInt(matchColumnIndex);
 
             // Update the views on the screen with the values from the database
             // depended on the language of the device select EN, NL or DE content
@@ -261,6 +261,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
                     Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
                     mapIntent.putExtra("Fragment_ID", 1);
                     mapIntent.putExtra("Run#", run);
+                    mapIntent.putExtra("LocMatch", match);
                     startActivity(mapIntent);
                 }
             });
@@ -392,7 +393,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     // Get update from location of user and save it to stones database
     private void updateStone(){
         // Create a ContentValues object where column names are the keys,
-        // and pet attributes from the editor are the values.
+        // and stone attributes from the result of the location match are the values.
         ContentValues values = new ContentValues();
         values.put(StoneEntry.COLUMN_STONE_MATCH, mMatchResult);
 
@@ -415,4 +416,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
     }
 
 }
-
+//Query, Select and COUNT in database how often 1 is in the match column,
+// if quant ==20 display confetti!
+//https://stackoverflow.com/questions/5202269/sqlite-query-in-android-to-count-rows

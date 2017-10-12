@@ -102,6 +102,8 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
                 StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
                 StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
+                StoneContract.StoneEntry.COLUMN_STONE_LAT,
+                StoneContract.StoneEntry.COLUMN_STONE_LNG,
                 StoneContract.StoneEntry.COLUMN_STONE_MATCH
          };
         // This loader will execute the ContentProvider's query method on a background thread

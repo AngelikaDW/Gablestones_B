@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     public int mRunNbr;
     public int mFragmentId;
+            public int mMatch;
 
 
     @Override
@@ -65,6 +66,10 @@ public class MainActivity extends AppCompatActivity
                 if (bundle.containsKey("Fragment_ID")) {
                     mFragmentId = bundle.getInt("Fragment_ID");
                     //Log.i("MainActivity LOG", "FragmentID: "+String.valueOf(mFragmentId));
+                }
+                if (bundle.containsKey("LocMatch")) {
+                    mMatch = bundle.getInt("LocMatch");
+                    Log.i("MainActivity LOG", "Location MatchY/N: "+String.valueOf(mMatch));
                 }
             }
             else {

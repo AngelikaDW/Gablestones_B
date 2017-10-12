@@ -1,33 +1,30 @@
 package com.aleaf.gablestones;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
+import android.database.Cursor;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.aleaf.gablestones.data.StoneContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -42,15 +39,27 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import java.util.Locale;
 
 
 
 public class MapFragment extends Fragment implements
+        android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener {
+    /**
+     * Identifier for the stone data loader
+     */
+    private static final int EXISTING_STONE_LOADER = 0;
+
+
+    /**
+     * Adapter for the ListView
+     */
+    StoneCursorAdapter mCursorAdapter;
 
     //for location extraction
     private static final int MY_PERMISSIONS_REQUEST = 1;
@@ -85,6 +94,7 @@ public class MapFragment extends Fragment implements
     Marker mMarkerRun18;
     Marker mMarkerRun19;
     Marker mMarkerRun20;
+    int mMarkerRessource;
 
 
     public MainActivity main_activity;
@@ -110,6 +120,9 @@ public class MapFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.map_fragment, container, false);
 
+
+        // Kick off the loader
+        getLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         return mView;
     }
 
@@ -142,10 +155,8 @@ public class MapFragment extends Fragment implements
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
-        /*Add markers where gable stones are located,
-        number of marker = running number of gable stone*/
-        addMarkersToMap();
-        openInfoWindow();
+        /*Opens Infowindow of marker that has been click on in ClueDetailActivity*/
+        //openInfoWindow();
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -179,7 +190,7 @@ public class MapFragment extends Fragment implements
 
         if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                getContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -221,134 +232,6 @@ public class MapFragment extends Fragment implements
                 .newInstance(true).show(getChildFragmentManager(), "dialog");
     }
 
-    public void addMarkersToMap() {
-//        Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
-//        https://github.com/Concept211/Google-Maps-Markers
-//        then put into drawable and called from there
-
-        mMarkerRun1 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.379295, 4.892488))
-                .title(getString(R.string.gablestone_1))
-                .snippet(getString(R.string.street_address_1))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue1))
-        );
-
-        mMarkerRun2 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378777, 4.892577))
-                .title(getString(R.string.gablestone_2))
-                .snippet(getString(R.string.street_address_2))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue2))
-        );
-        mMarkerRun3 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378512, 4.892351))
-                .title(getString(R.string.gablestone_3))
-                .snippet(getString(R.string.street_address_3))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue3))
-        );
-
-        mMarkerRun4 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378485, 4.892216))
-                .title(getString(R.string.gablestone_4))
-                .snippet(getString(R.string.street_address_4))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue4))
-        );
-        mMarkerRun5 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.377991, 4.891739))
-                .title(getString(R.string.gablestone_5))
-                .snippet(getString(R.string.street_address_5))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue5))
-        );
-        mMarkerRun6 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376880, 4.890647))
-                .title(getString(R.string.gablestone_6))
-                .snippet(getString(R.string.street_address_6))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue6))
-        );
-        mMarkerRun7 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376611, 4.889971))
-                .title(getString(R.string.gablestone_7))
-                .snippet(getString(R.string.street_address_7))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue7))
-        );
-        mMarkerRun8 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.377286, 4.887302))
-                .title(getString(R.string.gablestone_8))
-                .snippet(getString(R.string.street_address_8))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue8))
-        );
-        mMarkerRun9 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.375631, 4.885798))
-                .title(getString(R.string.gablestone_9))
-                .snippet(getString(R.string.street_address_9))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue9))
-        );
-        mMarkerRun10 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376715, 4.884386))
-                .title(getString(R.string.gablestone_10))
-                .snippet(getString(R.string.street_address_10))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue10))
-        );
-        mMarkerRun11 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376364, 4.883624))
-                .title(getString(R.string.gablestone_11))
-                .snippet(getString(R.string.street_address_11))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue11))
-        );
-        mMarkerRun12 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376299, 4.882291))
-                .title(getString(R.string.gablestone_12))
-                .snippet(getString(R.string.street_address_12))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue12))
-        );
-        mMarkerRun13 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.376503, 4.882205))
-                .title(getString(R.string.gablestone_13))
-                .snippet(getString(R.string.street_address_13))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue13))
-        );
-        mMarkerRun14 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.377482, 4.883778))
-                .title(getString(R.string.gablestone_14))
-                .snippet(getString(R.string.street_address_14))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue14))
-        );
-        mMarkerRun15 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.377441, 4.883877))
-                .title(getString(R.string.gablestone_15))
-                .snippet(getString(R.string.street_address_15))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue15))
-        );
-        mMarkerRun16 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378059, 4.881117))
-                .title(getString(R.string.gablestone_16))
-                .snippet(getString(R.string.street_address_16))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue16))
-        );
-        mMarkerRun17 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.378745, 4.884467))
-                .title(getString(R.string.gablestone_17))
-                .snippet(getString(R.string.street_address_17))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue17))
-        );
-        mMarkerRun18 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.379347, 4.885459))
-                .title(getString(R.string.gablestone_18))
-                .snippet(getString(R.string.street_address_18))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue18))
-        );
-        mMarkerRun19 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.379957, 4.886873))
-                .title(getString(R.string.gablestone_19))
-                .snippet(getString(R.string.street_address_19))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue19))
-        );
-        mMarkerRun20 = mGoogleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.379190, 4.886257))
-                .title(getString(R.string.gablestone_20))
-                .snippet(getString(R.string.street_address_20))
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_blue20))
-        );
-    }
 
     public void openInfoWindow() {
          /*Open InfoWindow of Marker that has been viewed in ClueDetailActivity
@@ -359,7 +242,7 @@ public class MapFragment extends Fragment implements
         * */
         main_activity = (MainActivity) getActivity();
         int runNbr = main_activity.mRunNbr;
-        Log.i("MAP Log", String.valueOf(runNbr));
+        //Log.i("MAP Log", String.valueOf(runNbr));
 
         switch (runNbr) {
             //case 0: markerRun0.showInfoWindow(); break;
@@ -512,6 +395,97 @@ public class MapFragment extends Fragment implements
     }
 
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // Define a projection that contains columns in all languages from the stones table
+        String[] projection = {
+                StoneContract.StoneEntry._ID,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
+                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
+                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_LAT,
+                StoneContract.StoneEntry.COLUMN_STONE_LNG,
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH};
+
+        return new CursorLoader(getActivity(),
+                StoneContract.StoneEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        if (cursor == null || cursor.getCount() < 1) {
+            return;
+        }
+        while (cursor.moveToNext()) {
+            int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
+            int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
+            int nameDEColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_DE);
+            int runColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
+            int addresColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
+            int houseColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER);
+            int latColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LAT);
+            int lngColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LNG);
+            int matchColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_MATCH);
+
+
+            // Extract out the value from the Cursor for the given column index
+            String name = cursor.getString(nameColumnIndex);
+            String stoneNameNL = cursor.getString(nameNLColumnIndex);
+            String stoneNameDE = cursor.getString(nameDEColumnIndex);
+            final int run = cursor.getInt(runColumnIndex);
+            String addres = cursor.getString(addresColumnIndex);
+            int housenumber = cursor.getInt(houseColumnIndex);
+            double lat = cursor.getDouble(latColumnIndex);
+            double lng = cursor.getDouble(lngColumnIndex);
+            final int match = cursor.getInt(matchColumnIndex);
+
+            /*Depended if the stone has been located by user (DB Match 0 or 1) the marker is colored blue
+            * (case 0) or green (case 1)
+            */
+
+            String uri = "";
+            if (match == 1) {
+                uri = "@drawable/marker_green" + Integer.toString(run);
+            } else {
+                uri = "@drawable/marker_blue" + Integer.toString(run);
+            }
+            int markerResource = getResources().getIdentifier(uri, null, getActivity().getPackageName());
+
+            // Update the views on the screen with the values from the database
+            // depended on the language of the device select EN, NL or DE content
+            // Get the system language of user's device
+            String language = Locale.getDefault().getLanguage();
+
+            if (language.equals("en")) {
+                name = name;
+            } else if (language.equals("nl")) {
+                name = stoneNameNL;
+            } else if (language.equals("de")) {
+                name = stoneNameDE;
+            }
+
+            // Put the markers to the map
+/*            Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
+            https://github.com/Concept211/Google-Maps-Markers
+            then put into drawable and called from there*/
+            mGoogleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title(run + " " +name)
+                    .snippet(addres + " " + housenumber)
+                    .icon(BitmapDescriptorFactory.fromResource(markerResource))
+            );
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }
-
-
