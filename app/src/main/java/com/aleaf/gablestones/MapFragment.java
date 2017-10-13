@@ -76,6 +76,7 @@ public class MapFragment extends Fragment implements
     MapView mMapView;
     //save markers in list
     private ArrayList<Marker> markersLibrary = new ArrayList<>();
+    Marker mM = null;
 
     public MainActivity main_activity;
     /**
@@ -141,6 +142,13 @@ public class MapFragment extends Fragment implements
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));
 
         enableMyLocation();
+        onInfoWindowClick(mM);
+
+    }
+
+    public void onInfoWindowClick(Marker marker) {
+//        Toast.makeText(getActivity(), "Info window clicked",
+//                Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -383,16 +391,17 @@ public class MapFragment extends Fragment implements
 /*            Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
             https://github.com/Concept211/Google-Maps-Markers
             then put into drawable and called from there*/
-            m = mGoogleMap.addMarker(new MarkerOptions()
+            mM = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .title(run + " " + name)
                     .snippet(addres + " " + housenumber)
                     .icon(BitmapDescriptorFactory.fromResource(markerResource))
             );
-            markersLibrary.add(m);
+            markersLibrary.add(mM);
         }
         //Log.i("arrayList MarkerLibr", "Length:" + markersLibrary.size());
         openInfoWindow();
+        onInfoWindowClick(mM);
     }
 
     @Override
