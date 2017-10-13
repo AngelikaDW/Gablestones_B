@@ -39,8 +39,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import java.util.Locale;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 
 public class MapFragment extends Fragment implements
@@ -54,7 +57,6 @@ public class MapFragment extends Fragment implements
      * Identifier for the stone data loader
      */
     private static final int EXISTING_STONE_LOADER = 0;
-
 
     /**
      * Adapter for the ListView
@@ -72,30 +74,8 @@ public class MapFragment extends Fragment implements
     GoogleMap mGoogleMap;
     View mView;
     MapView mMapView;
-
-
-    Marker mMarkerRun1;
-    Marker mMarkerRun2;
-    Marker mMarkerRun3;
-    Marker mMarkerRun4;
-    Marker mMarkerRun5;
-    Marker mMarkerRun6;
-    Marker mMarkerRun7;
-    Marker mMarkerRun8;
-    Marker mMarkerRun9;
-    Marker mMarkerRun10;
-    Marker mMarkerRun11;
-    Marker mMarkerRun12;
-    Marker mMarkerRun13;
-    Marker mMarkerRun14;
-    Marker mMarkerRun15;
-    Marker mMarkerRun16;
-    Marker mMarkerRun17;
-    Marker mMarkerRun18;
-    Marker mMarkerRun19;
-    Marker mMarkerRun20;
-    int mMarkerRessource;
-
+    //save markers in list
+    private ArrayList<Marker> markersLibrary = new ArrayList<>();
 
     public MainActivity main_activity;
     /**
@@ -120,12 +100,10 @@ public class MapFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.map_fragment, container, false);
 
-
         // Kick off the loader
         getLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
         return mView;
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -143,7 +121,6 @@ public class MapFragment extends Fragment implements
                 .build();
 
         configureLocationUpdates();
-
     }
 
     @Override
@@ -154,9 +131,6 @@ public class MapFragment extends Fragment implements
         LatLng Amsterdam = new LatLng(52.376376, 4.887343);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-
-        /*Opens Infowindow of marker that has been click on in ClueDetailActivity*/
-        //openInfoWindow();
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -198,7 +172,6 @@ public class MapFragment extends Fragment implements
                 mGoogleApiClient, mLocationRequest, this);
     }
 
-
     //     @Override
     public void onRequestPermissionResult(int requestCode, @NonNull String[] permissions,
                                           @NonNull int[] grantResults) {
@@ -239,77 +212,16 @@ public class MapFragment extends Fragment implements
         * MainActivity then stores the runNbr in a global Variable mRunNbr, which is accessed by
         * MapFragment
         * https://stackoverflow.com/questions/13067033/how-to-access-activity-variables-from-a-fragment-android
+        * As the ArrayList starts with index 0, and the runNbr with 1, adjusted RunNbr (-1)!
         * */
         main_activity = (MainActivity) getActivity();
+
         int runNbr = main_activity.mRunNbr;
-        //Log.i("MAP Log", String.valueOf(runNbr));
-
-        switch (runNbr) {
-            //case 0: markerRun0.showInfoWindow(); break;
-            case 1:
-                mMarkerRun1.showInfoWindow();
-                break;
-            case 2:
-                mMarkerRun2.showInfoWindow();
-                break;
-            case 3:
-                mMarkerRun3.showInfoWindow();
-                break;
-            case 4:
-                mMarkerRun4.showInfoWindow();
-                break;
-            case 5:
-                mMarkerRun5.showInfoWindow();
-                break;
-            case 6:
-                mMarkerRun6.showInfoWindow();
-                break;
-            case 7:
-                mMarkerRun7.showInfoWindow();
-                break;
-            case 8:
-                mMarkerRun8.showInfoWindow();
-                break;
-            case 9:
-                mMarkerRun9.showInfoWindow();
-                break;
-            case 10:
-                mMarkerRun10.showInfoWindow();
-                break;
-            case 11:
-                mMarkerRun11.showInfoWindow();
-                break;
-            case 12:
-                mMarkerRun12.showInfoWindow();
-                break;
-            case 13:
-                mMarkerRun13.showInfoWindow();
-                break;
-            case 14:
-                mMarkerRun14.showInfoWindow();
-                break;
-            case 15:
-                mMarkerRun15.showInfoWindow();
-                break;
-            case 16:
-                mMarkerRun16.showInfoWindow();
-                break;
-            case 17:
-                mMarkerRun17.showInfoWindow();
-                break;
-            case 18:
-                mMarkerRun18.showInfoWindow();
-                break;
-            case 19:
-                mMarkerRun19.showInfoWindow();
-                break;
-            case 20:
-                mMarkerRun20.showInfoWindow();
-                break;
-
-            default:
-                Log.e("", "no Marker");
-                return;
+        if (runNbr == 0) {
+            //do nothing
+        } else {
+            int runNbrAdjusted = runNbr - 1;
+            markersLibrary.get(runNbrAdjusted).showInfoWindow();
         }
     }
 
@@ -373,11 +285,7 @@ public class MapFragment extends Fragment implements
     /*Getting current Location LatLng of device, to be used in checking if gablestone has been found*/
     @Override
     public void onLocationChanged(Location location) {
-        //Log.v("CURRENT LOCATION", location.toString());
-        LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-        //Log.v("CURRENT LOCATION", currentLoc.toString());
         mCurrentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
     }
 
     @Override
@@ -393,7 +301,6 @@ public class MapFragment extends Fragment implements
         mGoogleApiClient.disconnect();
         super.onStop();
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -423,6 +330,8 @@ public class MapFragment extends Fragment implements
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
+
+        Marker m = null;
         while (cursor.moveToNext()) {
             int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
             int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
@@ -449,7 +358,6 @@ public class MapFragment extends Fragment implements
             /*Depended if the stone has been located by user (DB Match 0 or 1) the marker is colored blue
             * (case 0) or green (case 1)
             */
-
             String uri = "";
             if (match == 1) {
                 uri = "@drawable/marker_green" + Integer.toString(run);
@@ -471,17 +379,20 @@ public class MapFragment extends Fragment implements
                 name = stoneNameDE;
             }
 
-            // Put the markers to the map
+            // Put the markers to the map and save marker in ArrayList markersLibrary
 /*            Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
             https://github.com/Concept211/Google-Maps-Markers
             then put into drawable and called from there*/
-            mGoogleMap.addMarker(new MarkerOptions()
+            m = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
-                    .title(run + " " +name)
+                    .title(run + " " + name)
                     .snippet(addres + " " + housenumber)
                     .icon(BitmapDescriptorFactory.fromResource(markerResource))
             );
+            markersLibrary.add(m);
         }
+        //Log.i("arrayList MarkerLibr", "Length:" + markersLibrary.size());
+        openInfoWindow();
     }
 
     @Override

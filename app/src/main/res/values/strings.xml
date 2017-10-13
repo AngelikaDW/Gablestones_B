@@ -74,9 +74,7 @@
     <string name="fragment_map">Map</string>
 
     <!--Text-->
-    <string name="welcome_msg">Follow the quest, and locate the gable stones.
-            Discover unique details of Amsterdam\'s history.
-    </string>
+    <string name="welcome_msg">Follow the quest, locate all gable stones. \nDiscover unique details of Amsterdam\'s history.</string>
     <string name="title_activity_info" translatable="false">Info</string>
 
 

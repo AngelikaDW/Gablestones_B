@@ -68,22 +68,15 @@
                             />
                     </LinearLayout>
             </LinearLayout>
-
-            <Button
+            <ImageButton
                 android:id="@+id/locate_on_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:padding="4dp"
+                android:src="@drawable/show_on_map"
                 android:layout_alignParentRight="true"
-                android:text="@string/locate_on_map"
-                android:drawableLeft="@drawable/marker_white"
-                android:textAllCaps="false"
-                android:drawablePadding="4dp"
-                android:elevation="4dp"
-                android:background="@drawable/mybutton"
-                android:textColor="@android:color/white"
-                style="?android:attr/borderlessButtonStyle"/>
+                android:layout_alignParentTop="true"
+                />
+
         </RelativeLayout>
 
         <ImageView

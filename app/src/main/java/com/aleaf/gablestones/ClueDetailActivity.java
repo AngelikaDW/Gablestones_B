@@ -29,6 +29,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -254,7 +255,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mRun = run;
             // When Button "show on Map" is clicked, open the info window of the marker in the
             // MapFragment
-            Button markerLocation = (Button) findViewById(R.id.locate_on_map);
+            ImageButton markerLocation = (ImageButton) findViewById(R.id.locate_on_map);
             markerLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -378,7 +379,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         float[] distance = new float[1];
         Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
-        if (distance[0] < 1000.0) {
+        if (distance[0] < 8.0) {
             Log.i("Is user within 1000m?", "YES");
             Toast.makeText(this, getString(R.string.stone_located),
                     Toast.LENGTH_SHORT).show();
