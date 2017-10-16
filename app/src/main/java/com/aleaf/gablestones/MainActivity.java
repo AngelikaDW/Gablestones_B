@@ -111,6 +111,11 @@ public class MainActivity extends AppCompatActivity
                 Intent infoIntent = new Intent(MainActivity.this, Info.class);
                 startActivity(infoIntent);
                 return true;
+            case R.id.info_tour:
+                Intent tourIntent = new Intent(MainActivity.this, Introslider.class);
+                startActivity(tourIntent);
+                return true;
+
             default:
                 int id = item.getItemId();
 

@@ -11,6 +11,11 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if App is launched for first time
+        // show intro Slides Tour
+        // if not: show MainActivity
+
         PrefManager prefManager = new PrefManager(getApplicationContext());
         Intent i;
         if (prefManager.isFirstTimeLaunch()) {

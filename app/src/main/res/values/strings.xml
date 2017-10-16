@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Gablestone Quest</string>
     <string name="action_settings">Info</string>
+    <string name="app_tour_slides">How does it work</string>
     <string name="title_activity_toolbar" translatable="false">Toolbar</string>
     <string name="title_activity_tabbed" translatable="false">TabbedActivity</string>
     <string name="intro_title">About Gable Stones</string>
