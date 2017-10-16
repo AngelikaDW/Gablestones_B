@@ -74,7 +74,7 @@ public class MissionFragment extends Fragment implements
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
 
-                Log.i("Position in List", String.valueOf(position));
+                //Log.i("Position in List", String.valueOf(position));
                 mPositionClicked = position;
 
                            }

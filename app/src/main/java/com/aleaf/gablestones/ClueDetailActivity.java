@@ -379,7 +379,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         float[] distance = new float[1];
         Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
-        if (distance[0] < 1000.0) {
+        if (distance[0] < 100.0) {
             Log.i("Is user within 1000m?", "YES");
             Toast.makeText(this, getString(R.string.stone_located),
                     Toast.LENGTH_SHORT).show();

@@ -129,9 +129,7 @@ public class MapFragment extends Fragment implements
         MapsInitializer.initialize(getContext());
 
         mGoogleMap = googleMap;
-        LatLng Amsterdam = new LatLng(52.376376, 4.887343);
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -339,7 +337,7 @@ public class MapFragment extends Fragment implements
             return;
         }
 
-        Marker m = null;
+        //Marker m = null;
         while (cursor.moveToNext()) {
             int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
             int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
@@ -352,7 +350,7 @@ public class MapFragment extends Fragment implements
             int matchColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_MATCH);
 
 
-            // Extract out the value from the Cursor for the given column index
+            // Extract the value from the Cursor for the given column index
             String name = cursor.getString(nameColumnIndex);
             String stoneNameNL = cursor.getString(nameNLColumnIndex);
             String stoneNameDE = cursor.getString(nameDEColumnIndex);
@@ -374,7 +372,7 @@ public class MapFragment extends Fragment implements
             }
             int markerResource = getResources().getIdentifier(uri, null, getActivity().getPackageName());
 
-            // Update the views on the screen with the values from the database
+            // Update the content displayed in the infowindow with the values from the database
             // depended on the language of the device select EN, NL or DE content
             // Get the system language of user's device
             String language = Locale.getDefault().getLanguage();

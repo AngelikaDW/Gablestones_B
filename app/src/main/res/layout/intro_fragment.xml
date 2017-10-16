@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/quest_startpoint"
-                android:text="@string/start"
+                android:text="@string/start_tour"
                 style="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:layout_width="wrap_content"

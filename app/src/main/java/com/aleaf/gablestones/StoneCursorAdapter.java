@@ -107,9 +107,9 @@ public class StoneCursorAdapter extends CursorAdapter{
         //Image of Checkbox, if the data is 0, no match yet --> unchecked box
         // if data in db is 1, location of user and stone matched --> checked box
         if (stoneMatch.equals("0")){
-            checkboxImageView.setImageResource(R.drawable.cast_ic_stop_circle_filled_grey600);
+            checkboxImageView.setImageResource(R.drawable.match_grey);
         } else {
-            checkboxImageView.setImageResource(R.drawable.checked_box);}
+            checkboxImageView.setImageResource(R.drawable.match_green);}
     }
 
 }

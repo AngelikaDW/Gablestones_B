@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity
         // and open Map Fragment. If no intent, open default Fragment 0 (listview)
         mViewPager.setCurrentItem(mFragmentId);
 
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
