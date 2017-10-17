@@ -370,8 +370,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
     // Compares the current Location (Lat and Lng) of user with the location of the stone
     // as saved in db
-    // if distance is less than 1000m (!!!) positive result gets written into db
-    // if distance is more than !!!! 1000m !!!! db is not updated
+    // if distance is less than 50m (!!!) positive result gets written into db
+    // if distance is more than !!!! 50m !!!! db is not updated
     public void distanceBetween(double startLatitude,
                                 double startLongitude,
                                 double endLatitude,
@@ -379,8 +379,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         float[] distance = new float[1];
         Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
-        if (distance[0] < 100.0) {
-            Log.i("Is user within 1000m?", "YES");
+        if (distance[0] < 50.0) {
+            Log.i("Is user within 50m?", "YES");
             Toast.makeText(this, getString(R.string.stone_located),
                     Toast.LENGTH_SHORT).show();
             mMatchResult = 1;

@@ -50,6 +50,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Icons designed by smashicons.com from Flaticon " />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="More information about gablestones:  www.gevelstenenvanamsterdam.nl" />
     </LinearLayout>
 

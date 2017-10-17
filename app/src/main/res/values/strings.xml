@@ -5,7 +5,7 @@
     <string name="title_activity_toolbar" translatable="false">Toolbar</string>
     <string name="title_activity_tabbed" translatable="false">TabbedActivity</string>
     <string name="intro_title">About Gable Stones</string>
-    <string name="about_gable_stones">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.\nBesides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.\nExplore Amsterdam and immerse into its rich history in a unique and memorable way.</string>
+    <string name="about_gable_stones">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.\nBesides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.\nExplore Amsterdam and immerse into its rich history in an unique and memorable way.</string>
     <string name="topic_tour">Welcome to Gable Stone Quest Amsterdam </string>
     <string name="explanation">"Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.\nDiscover hidden architectonic gems and enjoy the unique ambiance of Amsterdam's historic center.\n    "</string>
     <string name="quest_explanation">Your scavenger hunt adventure will begin in Brouwersgracht and will take you around the Jordaan District.\nFollow the quest and discover special gable stones.\nYour quest will give you a new perspective on the city as you weave through picturesque streets and along idyllic canals to find your next location.\nDiscover special gable stones, architectonic gems and enjoy the unique ambiance of\nAmsterdam\'s historic center in a fun and memorable way.</string>
@@ -65,8 +65,8 @@
     <string name="gablestone_19">The gilded fortune</string>
     <string name="gablestone_20">Fox and Crab</string>
 
-    <string name="lat_1">52.379295</string>
-    <string name="lng_1">4.892488</string>
+    <string name="lat_1" translatable="false">52.379295</string>
+    <string name="lng_1" translatable="false">4.892488</string>
 
     <!--Headers of fragments and activities-->
     <string name="stone_detail">Clue Detail</string>
@@ -82,10 +82,10 @@
     <string name="header_colofon" translatable="false">Colofon</string>
     <string name="text_development" translatable="false">Design and Development: aleaf.nl</string>
     <string name="text_version" translatable="false">Version: 1.0</string>
-    <string name="text_icons" translatable="false">Icon adapted from Noun Project (A. Vasiliev)</string>
+    <string name="text_icons" translatable="false">Logo adapted from Noun Project (A. Vasiliev)</string>
     <string name="intro_enjoy">Discover and Enjoy!</string>
 
-    <string name="start_tour">Start</string>
+    <string name="start_tour" translatable="false">Start</string>
     <string name="duration_hours" translatable="false">2.5 hours</string>
     <string name="duration_in_hours">2.5 hours</string>
 
@@ -95,24 +95,24 @@
     <string name="title_activity_tryout" translatable="false">TryoutActivity</string>
 
     <!--IntroSlider-->
-    <string name="title_activity_welcome">Home Screen</string>
+    <string name="title_activity_welcome" translatable="false">Home Screen</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
+    <string name="slide_1_title">Gable Stone Quest \n Amsterdam</string>
+    <string name="slide_1_desc">Follow the quest, locate all gable stones and discover unique details of Amsterdam\'s history. \n Explore and discover the city in an unique and memorable way. </string>
 
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
+    <string name="slide_2_title">Discover the way of life in historic Amsterdam</string>
+    <string name="slide_2_desc">Learn more about gable stones and the stories they tell about former owners of houses they decorate.</string>
 
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
+    <string name="slide_3_title">Mission accomplished </string>
+    <string name="slide_3_desc">Once you find a gable stone, press the \"Green Check\" button.</string>
 
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
+    <string name="slide_4_title">Locate Me</string>
+    <string name="slide_4_desc">Use the "Locate Me" button to see your current location and find the way to the next gable stone in the quest. </string>
 
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again_desc">To see the welcome slider again, go to Settings - How does it work</string>
     <string name="play_again">Play Again</string>
 
 </resources>

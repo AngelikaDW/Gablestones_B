@@ -1,5 +1,7 @@
 package com.aleaf.gablestones;
 
+//https://www.androidhive.info/2016/05/android-build-intro-slider-app/
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
