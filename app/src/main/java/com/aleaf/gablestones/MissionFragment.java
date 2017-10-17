@@ -2,6 +2,7 @@ package com.aleaf.gablestones;
 
 import android.content.ContentUris;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
 import android.content.Intent;
 import android.support.v4.content.Loader;
@@ -34,6 +35,9 @@ public class MissionFragment extends Fragment implements
 
     String mLanguage;
     ListView mStoneListView;
+
+    // Stores the scroll position of the ListView
+    private static  Parcelable mListViewScrollPos = null;
 
     public  MainActivity main_activity;
 
@@ -74,20 +78,35 @@ public class MissionFragment extends Fragment implements
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
 
-                //Log.i("Position in List", String.valueOf(position));
+                // Log.i("Position in List", String.valueOf(position));
                 mPositionClicked = position;
 
                            }
         });
-//        //ToDo: Scroll doesn't work
-//        //Scroll to the position clicked before doesn't work!!
-//        Log.i("MissionFrag Pos", String.valueOf((mPositionClicked)));
-//        stoneListView.smoothScrollToPosition(mPositionClicked);
 
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
 
         return view;
+    }
+
+
+    // Maintains ListView Position when returning to Mission Fragment
+    // ToDo: on back arrow in app doesn't work, only on return function
+//    https://michaelcarrano.com/blog/maintain-listview-position-in-android-application
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //Restore the ListView position
+        if (mListViewScrollPos != null) {
+            mStoneListView.onRestoreInstanceState(mListViewScrollPos);}
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the ListView position
+        mListViewScrollPos = mStoneListView.onSaveInstanceState();
     }
 
     @Override
@@ -131,7 +150,7 @@ public class MissionFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        //Log.i("Which position clicked", String.valueOf(mPositionClicked));
+
     }
 }
 

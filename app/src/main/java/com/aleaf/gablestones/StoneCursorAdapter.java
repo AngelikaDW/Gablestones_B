@@ -60,7 +60,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         ImageView stoneImageView = (ImageView) view.findViewById(R.id.image_list_view);
         ImageView checkboxImageView = (ImageView) view.findViewById(R.id.checkbox);
 
-        // Find the columns of stone attributes that we're interested in
+        // Find the columns of stone attributes that I'm interested in
         int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
         int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
         int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
@@ -82,7 +82,6 @@ public class StoneCursorAdapter extends CursorAdapter{
         String language = Locale.getDefault().getLanguage();
 
         // Update the TextViews with the attributes for the current stone
-
         if (language.equals("en")) {
             nameTextView.setText(stoneName);
         }
