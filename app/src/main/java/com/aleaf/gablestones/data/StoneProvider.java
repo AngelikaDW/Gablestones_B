@@ -113,7 +113,7 @@ public class StoneProvider extends ContentProvider {
                 selection = StoneContract.StoneEntry._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
 
-                // This will perform a query on the pets table where the _id equals 3 to return a
+                // This will perform a query on the stones table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = database.query(
                         StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs,

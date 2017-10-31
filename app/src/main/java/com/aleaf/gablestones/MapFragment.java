@@ -337,7 +337,6 @@ public class MapFragment extends Fragment implements
             return;
         }
 
-        //Marker m = null;
         while (cursor.moveToNext()) {
             int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
             int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
@@ -397,7 +396,6 @@ public class MapFragment extends Fragment implements
             );
             markersLibrary.add(mM);
         }
-        //Log.i("arrayList MarkerLibr", "Length:" + markersLibrary.size());
         openInfoWindow();
         onInfoWindowClick(mM);
     }

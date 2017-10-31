@@ -55,4 +55,7 @@
     <string name="slide_3_title">Mission erfolgreich abgeschlossen</string>
     <string name="slide_4_desc">Verwenden Sie den \"Finde mich auf der Karte\" Button um Ihren Standort zu bestimmen, und den Weg zum folgenden Giebelstein zu finden.</string>
     <string name="slide_4_title">Wo befinde ich mich?</string>
+    <string name="all_stones_located">Herzlichen Glückwunsch - Sie haben alle Giebelsteine der Tour gefunden!</string>
+    <string name="please_leave_rating">Wir hoffen, Sie haben die Tour genossen. Bitte teilen Sie Ihre Erfahrungen im Google Play Store - Danke!</string>
+    <string name="title_activity_confetti">Herzlichen Glückwunsch</string>
 </resources>

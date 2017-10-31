@@ -35,7 +35,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- A Child of the main activity -->
+
+        <!-- A Clue Detail Activity a Child of Main Activiy -->
         <activity
             android:name=".ClueDetailActivity"
             android:label="@string/title_activity_clue_detail_activiy"
@@ -47,7 +48,6 @@
 
             <intent-filter>
                 <action android:name="com.aleaf.gablestones.ClueDetailActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -66,6 +66,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.aleaf.gablestones.MainActivity" />
         </activity>
+
         <!-- Splash Activity Launch Screen -->
         <activity
             android:name=".SplashActivity"
@@ -76,15 +77,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--IntroSlider Activity-->
-        <activity android:name=".Introslider"
-            android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <!-- IntroSlider Activity -->
+        <activity
+            android:name=".Introslider"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <!-- Confetti Activity To be Launched when all Gablestones are located and green ticked -->
+        <activity
+            android:name=".ConfettiActivity"
+            android:label="@string/title_activity_confetti"
+            ></activity>
+
+
     </application>
 
 </manifest>

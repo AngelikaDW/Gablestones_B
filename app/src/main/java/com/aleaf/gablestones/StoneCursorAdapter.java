@@ -16,10 +16,12 @@
 package com.aleaf.gablestones;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +31,14 @@ import android.widget.TextView;
 
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 
+import java.util.ArrayList;
 import java.util.Locale;
+
+import static java.security.AccessController.getContext;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
-
+    ArrayList<String> matches = new ArrayList<>();
     public StoneCursorAdapter(Context context, Cursor c) {
         super(context,c, 0);
     }
@@ -107,8 +112,15 @@ public class StoneCursorAdapter extends CursorAdapter{
         // if data in db is 1, location of user and stone matched --> checked box
         if (stoneMatch.equals("0")){
             checkboxImageView.setImageResource(R.drawable.match_grey);
+
         } else {
-            checkboxImageView.setImageResource(R.drawable.match_green);}
+            checkboxImageView.setImageResource(R.drawable.match_green);
+            // Extract how many matches there are
+            matches.add(stoneMatch);}
+
+        //Log.i("StoneCursorAdapter ", "HOw long is the list matches "+ matches.size());
+
     }
+
 
 }

@@ -55,4 +55,7 @@
     <string name="slide_3_title">Missie voltooid</string>
     <string name="slide_4_desc">Gebruik de \"Locate Me\" button en zie waar je je bevindt en waar de volgende gevelsteen op je wacht.</string>
     <string name="slide_4_title">Locate Me</string>
+    <string name="all_stones_located">Gefeliciteerd - je habt alle gevelstenen gevonden!</string>
+    <string name="please_leave_rating">Wij hopen dat je van de tour genoten hebt. Deel alstublieft uw ervaring in de Google Play Store - bedankt!</string>
+    <string name="title_activity_confetti">Gefeliciteerd</string>
 </resources>

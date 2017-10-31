@@ -1,6 +1,8 @@
 package com.aleaf.gablestones;
 
 import android.content.ContentUris;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneContract;
+import com.aleaf.gablestones.data.StoneDbHelper;
 
 import java.util.Locale;
 
@@ -27,6 +30,7 @@ public class MissionFragment extends Fragment implements
 
     /** Identifier for the stone data loader */
     private static final int STONE_LOADER = 0;
+
 
     /** Adapter for the ListView */
     StoneCursorAdapter mCursorAdapter;
@@ -111,7 +115,6 @@ public class MissionFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-
         // Define a projection that specifies the columns from the table we care about.
         String[] projection = {
                 StoneContract.StoneEntry._ID,
@@ -125,6 +128,7 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_LNG,
                 StoneContract.StoneEntry.COLUMN_STONE_MATCH
          };
+
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context
                 StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
@@ -147,11 +151,6 @@ public class MissionFragment extends Fragment implements
         mCursorAdapter.swapCursor(null);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 }
 
 

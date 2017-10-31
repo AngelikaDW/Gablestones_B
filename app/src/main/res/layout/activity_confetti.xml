@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/congratulations_confetti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/all_stones_located"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:padding="16dp"
+        android:textAlignment="center"/>
+    <TextView
+        android:id="@+id/feedback_pls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/congratulations_confetti"
+        android:text="@string/please_leave_rating"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:padding="16dp"
+        android:textAlignment="center"/>
+
+</RelativeLayout>

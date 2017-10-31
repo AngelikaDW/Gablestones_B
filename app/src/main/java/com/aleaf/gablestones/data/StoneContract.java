@@ -138,6 +138,10 @@ public class StoneContract {
         * User has found gable stone, result of matching current location of user with saved
         * location of stone*/
         public final static String COLUMN_STONE_MATCH = "match";
+
+        /*Possible vlaues for the match of location user - stone*/
+        public static final int MATCH_FALSE = 0;
+        public static final int MATCH_TRUE = 1;
     }
 
 }

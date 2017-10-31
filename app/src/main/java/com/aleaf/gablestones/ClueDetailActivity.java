@@ -44,6 +44,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /*
@@ -59,6 +60,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
      * Identifier for the stone data loader
      */
     private static final int EXISTING_STONE_LOADER = 0;
+    private static final int LOADER_ID_CURSOR_1 = 1;
+    private static final int LOADER_ID_CURSOR_2 = 2;
 
 
     /**
@@ -90,6 +93,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
     private boolean mStoneHasChanged = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +216,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             mLng = lng;
             final int match = cursor.getInt(matchColumnIndex);
 
+
             // Update the views on the screen with the values from the database
             // depended on the language of the device select EN, NL or DE content
             // Get the system language of user's device
@@ -276,6 +281,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mRunningNumberText.setText("");
         mAddressText.setText("");
     }
+
+
 
     @Override
     protected void onStart() {
