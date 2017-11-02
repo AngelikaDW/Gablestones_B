@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,8 +61,11 @@ public class ClueDetailActivity extends AppCompatActivity implements
      * Identifier for the stone data loader
      */
     private static final int EXISTING_STONE_LOADER = 0;
+    /*2nd loader*/
     private static final int LOADER_ID_CURSOR_1 = 1;
     private static final int LOADER_ID_CURSOR_2 = 2;
+    private Cursor cursor1 = null;
+    private Cursor cursor2 = null;
 
 
     /**
@@ -106,8 +110,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
-            getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
-
+            //getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
+            /*start Loading of the 2 cursors */
+            getSupportLoaderManager().initLoader(LOADER_ID_CURSOR_1,null, this);
+            getSupportLoaderManager().initLoader(LOADER_ID_CURSOR_2, null, this);
         }
         // Define GoogleApiClient which was initiated onStart()
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -155,9 +161,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Define a projection that contains columns in all languages from the stones table
+    /*return CursorLoader for cursor 1*/
+    private CursorLoader getCursor1Loader() {
         String[] projection = {
                 StoneEntry._ID,
                 StoneEntry.COLUMN_STONE_NAME,
@@ -180,97 +185,137 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 null,
                 null);
     }
+    /*return CursorLoader for cursor2*/
+    private CursorLoader getCursor2Loader() {
+        String[] projection = {
+                StoneContract.StoneEntry._ID,
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH};
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_MATCH + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(StoneContract.StoneEntry.MATCH_TRUE)};
+
+        return new CursorLoader(this,
+                StoneEntry.CONTENT_URI, // Parent activity context
+                projection, // Columns to include in the resulting Cursor
+                selection, // No selection clause
+                selectionArgs, // Selection Arguments
+                null);  // Default sort order
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        if (i==1){
+        return getCursor1Loader();}
+        else {
+            return getCursor2Loader();
+        }
+    }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor == null || cursor.getCount() < 1) {
-            return;
-        }
-        if (cursor.moveToFirst()) {
-            int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
-            int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
-            int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
-            int runColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
-            int descColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION);
-            int descNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_NL);
-            int descDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
-            int addresColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
-            int houseColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
-            int latColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LAT);
-            int lngColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LNG);
-            int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
-
-            // Extract out the value from the Cursor for the given column index
-            String name = cursor.getString(nameColumnIndex);
-            String stoneNameNL = cursor.getString(nameNLColumnIndex);
-            String stoneNameDE = cursor.getString(nameDEColumnIndex);
-            final int run = cursor.getInt(runColumnIndex);
-            String description = cursor.getString(descColumnIndex);
-            String descriptionNL = cursor.getString(descNLColumnIndex);
-            String descriptionDE = cursor.getString(descDEColumnIndex);
-            String addres = cursor.getString(addresColumnIndex);
-            int housenumber = cursor.getInt(houseColumnIndex);
-            double lat = cursor.getDouble(latColumnIndex);
-            mLat = lat;
-            double lng = cursor.getDouble(lngColumnIndex);
-            mLng = lng;
-            final int match = cursor.getInt(matchColumnIndex);
-
-
-            // Update the views on the screen with the values from the database
-            // depended on the language of the device select EN, NL or DE content
-            // Get the system language of user's device
-            String language = Locale.getDefault().getLanguage();
-
-            if (language.equals("en")) {
-                mNameText.setText(name);
-                mDescriptionText.setText(description);
-            } else if (language.equals("nl")) {
-                mNameText.setText(stoneNameNL);
-                mDescriptionText.setText(descriptionNL);
-            } else if (language.equals("de")) {
-                mNameText.setText(stoneNameDE);
-                mDescriptionText.setText(descriptionDE);
+        switch (loader.getId()) {
+            case LOADER_ID_CURSOR_1:
+            // Load the information needed to display details of the stone
+            if (cursor == null || cursor.getCount() < 1) {
+                return;
             }
+            if (cursor.moveToFirst()) {
+                int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
+                int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
+                int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
+                int runColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
+                int descColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION);
+                int descNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_NL);
+                int descDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
+                int addresColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
+                int houseColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
+                int latColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LAT);
+                int lngColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LNG);
+                int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
 
-            //No translation required for this fields
-            mRunningNumberText.setText(Integer.toString(run));
-            mAddressText.setText(addres);
-            mHousenumberText.setText(Integer.toString(housenumber));
-            mCurrentLocationText.setText(Integer.toString(match));
+                // Extract out the value from the Cursor for the given column index
+                String name = cursor.getString(nameColumnIndex);
+                String stoneNameNL = cursor.getString(nameNLColumnIndex);
+                String stoneNameDE = cursor.getString(nameDEColumnIndex);
+                final int run = cursor.getInt(runColumnIndex);
+                String description = cursor.getString(descColumnIndex);
+                String descriptionNL = cursor.getString(descNLColumnIndex);
+                String descriptionDE = cursor.getString(descDEColumnIndex);
+                String addres = cursor.getString(addresColumnIndex);
+                int housenumber = cursor.getInt(houseColumnIndex);
+                double lat = cursor.getDouble(latColumnIndex);
+                mLat = lat;
+                double lng = cursor.getDouble(lngColumnIndex);
+                mLng = lng;
+                final int match = cursor.getInt(matchColumnIndex);
 
-            // Set image in the detail view from drawable folder, based on the running Number
-            // as extracted from the database
-            String uri = "@drawable/image" + Integer.toString(run);
-            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-            mClueImage.setImageResource(imageResource);
 
-            //Set OnClickListener on the ImageView to open full screen image
-            //https://github.com/juliomarcos/ImageViewPopUpHelper
-            mClueImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                   ImageViewPopUpHelper.enablePopUpOnClick(ClueDetailActivity.this, mClueImage,
-                           mClueImage.getDrawable());
-                    Toast.makeText(ClueDetailActivity.this, getText(R.string.click_on_img),
-                            Toast.LENGTH_SHORT).show();
+                // Update the views on the screen with the values from the database
+                // depended on the language of the device select EN, NL or DE content
+                // Get the system language of user's device
+                String language = Locale.getDefault().getLanguage();
+
+                if (language.equals("en")) {
+                    mNameText.setText(name);
+                    mDescriptionText.setText(description);
+                } else if (language.equals("nl")) {
+                    mNameText.setText(stoneNameNL);
+                    mDescriptionText.setText(descriptionNL);
+                } else if (language.equals("de")) {
+                    mNameText.setText(stoneNameDE);
+                    mDescriptionText.setText(descriptionDE);
                 }
-            });
 
-            mRun = run;
-            // When Button "show on Map" is clicked, open the info window of the marker in the
-            // MapFragment
-            ImageButton markerLocation = (ImageButton) findViewById(R.id.locate_on_map);
-            markerLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-                    mapIntent.putExtra("Fragment_ID", 1);
-                    mapIntent.putExtra("Run#", run);
-                    mapIntent.putExtra("LocMatch", match);
-                    startActivity(mapIntent);
-                }
-            });
+                //No translation required for this fields
+                mRunningNumberText.setText(Integer.toString(run));
+                mAddressText.setText(addres);
+                mHousenumberText.setText(Integer.toString(housenumber));
+                mCurrentLocationText.setText(Integer.toString(match));
+
+                // Set image in the detail view from drawable folder, based on the running Number
+                // as extracted from the database
+                String uri = "@drawable/image" + Integer.toString(run);
+                int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                mClueImage.setImageResource(imageResource);
+
+                //Set OnClickListener on the ImageView to open full screen image
+                //https://github.com/juliomarcos/ImageViewPopUpHelper
+                mClueImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       ImageViewPopUpHelper.enablePopUpOnClick(ClueDetailActivity.this, mClueImage,
+                               mClueImage.getDrawable());
+                        Toast.makeText(ClueDetailActivity.this, getText(R.string.click_on_img),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mRun = run;
+                // When Button "show on Map" is clicked, open the info window of the marker in the
+                // MapFragment
+                ImageButton markerLocation = (ImageButton) findViewById(R.id.locate_on_map);
+                markerLocation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
+                        mapIntent.putExtra("Fragment_ID", 1);
+                        mapIntent.putExtra("Run#", run);
+                        mapIntent.putExtra("LocMatch", match);
+                        startActivity(mapIntent);
+                    }
+                });
+            }
+            break;
+        case LOADER_ID_CURSOR_2:
+         /*Filter result to get number of green Checkmarks. If user located all 20 gablestones,
+         ConfettiActivity is being launched
+         */
+            int mNbrMatches = cursor.getCount();
+            Log.i("ClueDetailActivity", "Number of Matches True: "+String.valueOf(mNbrMatches));
+            if (mNbrMatches >=20) {
+                Intent confettiIntent = new Intent(this, ConfettiActivity.class);
+                startActivity(confettiIntent);
+            }
+            break;
         }
     }
 
@@ -424,6 +469,3 @@ public class ClueDetailActivity extends AppCompatActivity implements
     }
 
 }
-//Query, Select and COUNT in database how often 1 is in the match column,
-// if quant ==20 display confetti!
-//https://stackoverflow.com/questions/5202269/sqlite-query-in-android-to-count-rows

@@ -9,9 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-/**
- * Created by angelika on 30/06/2017.
- */
 
 /**
  * Utility class for access to runtime permissions.

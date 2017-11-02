@@ -25,7 +25,12 @@
             android:layout_gravity="center"
             android:src="@drawable/image_gablestones" />
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/feedback"
+            android:text="@string/please_leave_rating"
+            style="@style/Base.TextAppearance.AppCompat.Small"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

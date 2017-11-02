@@ -1,11 +1,9 @@
 package com.aleaf.gablestones;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,9 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-
 
 import com.aleaf.gablestones.data.StoneContract;
 import com.google.android.gms.common.ConnectionResult;
@@ -41,9 +36,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+
 
 
 public class MapFragment extends Fragment implements
@@ -145,7 +139,7 @@ public class MapFragment extends Fragment implements
     }
 
     public void onInfoWindowClick(Marker marker) {
-//        Toast.makeText(getActivity(), "Info window clicked",
+//        Toast.makeText(getActivity(), "InfoActivity window clicked",
 //                Toast.LENGTH_SHORT).show();
     }
 
@@ -385,7 +379,7 @@ public class MapFragment extends Fragment implements
             }
 
             // Put the markers to the map and save marker in ArrayList markersLibrary
-/*            Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
+            /* Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
             https://github.com/Concept211/Google-Maps-Markers
             then put into drawable and called from there*/
             mM = mGoogleMap.addMarker(new MarkerOptions()

@@ -50,9 +50,9 @@
     <string name="slide_1_desc">Folgen Sie der Route, finden Sie alle Giebelsteine und entdecken Sie einzigartige Details der Geschichte Amsterdams. Erkunden Sie die Amsterdam auf eine einzigartige und unvergessliche Weise.</string>
     <string name="slide_1_title">Giebelsteine Amsterdam</string>
     <string name="slide_2_desc">Erfahren Sie mehr über Giebelsteine und die Geschichten, die der Stein über die ehemaligen Besizter und das Leben in Amsterdam erzählt.</string>
-    <string name="slide_2_title">Erfahren Sie mehr über die Lebensweise im historischen Amsterdam</string>
+    <string name="slide_2_title">Erfahren Sie mehr über das historische Amsterdam</string>
     <string name="slide_3_desc">Sobald Sie einen Giebelstein gefunden haben, drücken Sie auf den Button \"Grüner Haken\".</string>
-    <string name="slide_3_title">Mission erfolgreich abgeschlossen</string>
+    <string name="slide_3_title">Gefunden</string>
     <string name="slide_4_desc">Verwenden Sie den \"Finde mich auf der Karte\" Button um Ihren Standort zu bestimmen, und den Weg zum folgenden Giebelstein zu finden.</string>
     <string name="slide_4_title">Wo befinde ich mich?</string>
     <string name="all_stones_located">Herzlichen Glückwunsch - Sie haben alle Giebelsteine der Tour gefunden!</string>

@@ -58,7 +58,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".Info"
+            android:name=".InfoActivity"
             android:label="@string/title_activity_info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

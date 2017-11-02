@@ -71,10 +71,13 @@
             <ImageButton
                 android:id="@+id/locate_on_map"
                 android:layout_width="wrap_content"
+                android:maxWidth="32dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/show_on_map"
+                android:maxHeight="32dp"
+                android:src="@drawable/technology"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+
                 />
 
         </RelativeLayout>

@@ -2,9 +2,7 @@ package com.aleaf.gablestones;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -15,7 +13,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends AppCompatActivity
-        implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>
+
         {
 
         private static final String TAG = "MainActivity";
@@ -29,8 +27,7 @@ public class MainActivity extends AppCompatActivity
         public int mRunNbr;
         public int mFragmentId;
         public int mMatch;
-        private static final int EXISTING_STONE_LOADER = 0;
-        int mNbrMatches;
+
 
 
     @Override
@@ -65,19 +62,17 @@ public class MainActivity extends AppCompatActivity
                 }
                 if (bundle.containsKey("LocMatch")) {
                     mMatch = bundle.getInt("LocMatch");
-                    Log.i("MainActivity LOG", "Location MatchY/N: "+String.valueOf(mMatch));
+                    //Log.i("MainActivity LOG", "Location MatchY/N: "+String.valueOf(mMatch));
                 }
             }
             else {
-                Log.i("ClueDetail LOG", "Run# is Null");
+                //Log.i("ClueDetail LOG", "Run# is Null");
             }
         }
         //If ClueDetailActivity sends mapIntent to open Map, get Fragment_ID from intent
         // and open Map Fragment. If no intent, open default Fragment 0 (listview)
         mViewPager.setCurrentItem(mFragmentId);
 
-        // Kick off the loader
-        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -104,17 +99,17 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Intent infoIntent = new Intent(MainActivity.this, Info.class);
+                Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(infoIntent);
                 return true;
             case R.id.info_tour:
                 Intent tourIntent = new Intent(MainActivity.this, Introslider.class);
                 startActivity(tourIntent);
                 return true;
-            case R.id.confetti:
-                Intent confettiIntent = new Intent(MainActivity.this, ConfettiActivity.class);
-                startActivity(confettiIntent);
-                return true;
+//            case R.id.confetti:
+//                Intent confettiIntent = new Intent(MainActivity.this, ConfettiActivity.class);
+//                startActivity(confettiIntent);
+//                return true;
             default:
                 int id = item.getItemId();
 
@@ -125,30 +120,4 @@ public class MainActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor == null || cursor.getCount() < 1) {
-            return;
-        }
-        mNbrMatches = cursor.getCount();
-        Log.i("MainActivity", "Number of Matches True: "+String.valueOf(mRunNbr));
-
-//        if (mNbrMatches >=2) {
-//            Intent confettiIntent = new Intent(getContext(), ConfettiActivity.class);
-//            startActivity(confettiIntent);
-//        }
-
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-    }
-
 }

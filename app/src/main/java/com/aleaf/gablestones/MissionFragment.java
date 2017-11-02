@@ -1,8 +1,6 @@
 package com.aleaf.gablestones;
 
 import android.content.ContentUris;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
@@ -11,7 +9,6 @@ import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneContract;
-import com.aleaf.gablestones.data.StoneDbHelper;
 
 import java.util.Locale;
 

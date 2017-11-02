@@ -12,9 +12,9 @@
         android:orderInCategory="200"
         android:title="@string/app_tour_slides"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/confetti"
-        android:orderInCategory="300"
-        android:title="Confetti"
-        app:showAsAction="never"/>
+    <!--<item-->
+        <!--android:id="@+id/confetti"-->
+        <!--android:orderInCategory="300"-->
+        <!--android:title="Confetti"-->
+        <!--app:showAsAction="never"/>-->
 </menu>

@@ -16,7 +16,7 @@
     <string name="stone_located">Congratulations - you have located the gable stone!</string>
     <string name="stone_too_far">Not there yet - Keep on looking!</string>
     <string name="all_stones_located">Congratulations - you have located all gable stones of your tour!</string>
-    <string name="please_leave_rating">Hope you enjoyed the tour. Please share your experience with us in at Google Play Store - Thank you!</string>
+    <string name="please_leave_rating">Hope you enjoyed the tour. Please share your experience with us at Google Play Store - Thank you!</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location" translatable="false">Access to the location service is required to demonstrate the "Show me my current location on the map" feature, which shows your current location on the map.</string>
@@ -106,10 +106,10 @@
     <string name="slide_1_title">Gable Stone Quest \n Amsterdam</string>
     <string name="slide_1_desc">Follow the quest, locate all gable stones and discover unique details of Amsterdam\'s history. \n Explore and discover the city in an unique and memorable way. </string>
 
-    <string name="slide_2_title">Discover the way of life in historic Amsterdam</string>
+    <string name="slide_2_title">Discover more about historic Amsterdam</string>
     <string name="slide_2_desc">Learn more about gable stones and the stories they tell about former owners of houses they decorate.</string>
 
-    <string name="slide_3_title">Mission accomplished </string>
+    <string name="slide_3_title">Gable stone located</string>
     <string name="slide_3_desc">Once you find a gable stone, press the \"Green Check\" button.</string>
 
     <string name="slide_4_title">Locate Me</string>
