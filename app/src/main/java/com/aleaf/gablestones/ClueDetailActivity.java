@@ -37,6 +37,8 @@ import android.widget.Toast;
 
 import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneContract.StoneEntry;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -66,7 +68,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private static final int LOADER_ID_CURSOR_2 = 2;
     private Cursor cursor1 = null;
     private Cursor cursor2 = null;
-
+    private AdView mAdView;
 
     /**
      * Content URI for the existing stone (null if it's a new stone)
@@ -158,6 +160,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
 //                        .setAction("Action", null).show();
             }
         });
+//        mAdView = (AdView) findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
     }
 

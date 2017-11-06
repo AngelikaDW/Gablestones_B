@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="300dp"
-            android:src="@drawable/screen_detail_check" />
+            android:src="@drawable/screen_detail_check_green" />
 
         <TextView
             android:layout_width="wrap_content"
