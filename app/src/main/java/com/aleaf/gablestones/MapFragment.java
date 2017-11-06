@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aleaf.gablestones.data.StoneContract;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -86,6 +88,7 @@ public class MapFragment extends Fragment implements
      */
     private boolean mPermissionDenied = false;
 
+    private AdView mAdView;
 
     public MapFragment() {
         //Required empty public constructor
@@ -97,6 +100,12 @@ public class MapFragment extends Fragment implements
 
         // Kick off the loader
         getLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
+
+        // Display the Admob Ad
+        mAdView = (AdView) mView.findViewById(R.id.adViewMap);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
         return mView;
     }
 

@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneContract;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.Locale;
 
@@ -40,6 +42,8 @@ public class MissionFragment extends Fragment implements
     private static  Parcelable mListViewScrollPos = null;
 
     public  MainActivity main_activity;
+
+    private AdView mAdView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,6 +90,11 @@ public class MissionFragment extends Fragment implements
 
         // Kick off the loader
         getLoaderManager().initLoader(STONE_LOADER, null, this);
+
+        // Display the Admob Ad
+        mAdView = (AdView) view.findViewById(R.id.adViewMission);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         return view;
     }
