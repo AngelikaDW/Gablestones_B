@@ -12,7 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginBottom="32dp">
         <TextView
             android:id="@+id/clueRunningNumber"
             android:layout_width="wrap_content"
@@ -81,11 +82,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="sans-serif"
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="#424242"
             android:text="description of Stone"
             android:layout_below="@id/image_clue_detail"
+
             />
         <TextView
             android:layout_width="wrap_content"
