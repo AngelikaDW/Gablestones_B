@@ -18,20 +18,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +37,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 /*
@@ -66,8 +56,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
     /*2nd loader*/
     private static final int LOADER_ID_CURSOR_1 = 1;
     private static final int LOADER_ID_CURSOR_2 = 2;
-    private Cursor cursor1 = null;
-    private Cursor cursor2 = null;
     private AdView mAdView;
 
     /**
@@ -148,16 +136,12 @@ public class ClueDetailActivity extends AppCompatActivity implements
             public void onClick(View view) {
 
                 requestLocationUpdate();
-                /*WATCH OUT CURRRENTLY 1000m distance!*/
                 distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                         mLat, mLng);
                 // depending if user is close enough to the gable stone, the database is being
                 // updated and the image in the ListView in the MissionFragment is changed from
                 // unchecked to checked box
                 updateStone();
-
-//                Snackbar.make(view, "You found it - congrats!", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
 //        Display AdMob Banner Ad
@@ -317,7 +301,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
          ConfettiActivity is being launched
          */
             int mNbrMatches = cursor.getCount();
-            Log.i("ClueDetailActivity", "Number of Matches True: "+String.valueOf(mNbrMatches));
             if (mNbrMatches >=20) {
                 Intent confettiIntent = new Intent(this, ConfettiActivity.class);
                 startActivity(confettiIntent);
@@ -415,9 +398,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        //Log.v("Loc in DetailClue", location.toString());
-        LatLng currentLoc = new LatLng(location.getLatitude(), location.getLongitude());
-        //Log.i("LatLn in DetailClue", currentLoc.toString());
         mCurrentLocation = location;
     }
     private void configureLocationUpdates() {
@@ -429,8 +409,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
     // Compares the current Location (Lat and Lng) of user with the location of the stone
     // as saved in db
-    // if distance is less than 50m (!!!) positive result gets written into db
-    // if distance is more than !!!! 50m !!!! db is not updated
+    // if distance is less than 50m match (1) gets written into db
+    // if distance is more than 50m db is not updated
     public void distanceBetween(double startLatitude,
                                 double startLongitude,
                                 double endLatitude,
@@ -439,12 +419,10 @@ public class ClueDetailActivity extends AppCompatActivity implements
         float[] distance = new float[1];
         Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
         if (distance[0] < 50.0) {
-            Log.i("Is user within 50m?", "YES");
             Toast.makeText(this, getString(R.string.stone_located),
                     Toast.LENGTH_SHORT).show();
             mMatchResult = 1;
         } else {
-            Log.i("is user near?", "No");
             Toast.makeText(this, getString(R.string.stone_too_far),
                     Toast.LENGTH_LONG).show();
             mMatchResult = 0;

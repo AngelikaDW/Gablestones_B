@@ -65,7 +65,6 @@ public class MapFragment extends Fragment implements
     private LocationRequest mLocationRequest;
     private LatLng mCurrentLocation;
 
-    //private static final String TAG = "MapFragment";
     private final String LOG_TAG = AppCompatActivity.class.getSimpleName();
     GoogleMap mGoogleMap;
     View mView;
@@ -148,8 +147,6 @@ public class MapFragment extends Fragment implements
     }
 
     public void onInfoWindowClick(Marker marker) {
-//        Toast.makeText(getActivity(), "InfoActivity window clicked",
-//                Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -274,7 +271,6 @@ public class MapFragment extends Fragment implements
 
                     requestLocationUpdate();
                 } else {
-                    Log.i("No permission", "sorry");
                 }
                 return;
             }
@@ -283,12 +279,11 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(LOG_TAG, "GoogleApiClient connection has been suspended");
+
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.i(LOG_TAG, "GoogleApiClient connection has failed");
     }
 
     /*Getting current Location LatLng of device, to be used in checking if gablestone has been found*/

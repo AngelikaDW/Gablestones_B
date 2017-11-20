@@ -54,25 +54,20 @@ public class MainActivity extends AppCompatActivity
         if (bundle != null) {
             if (bundle.containsKey("Run#")) {
                 mRunNbr = bundle.getInt("Run#");
-                //Log.i("MainActivity LOG", "RunNbr: "+String.valueOf(mRunNbr));
 
                 if (bundle.containsKey("Fragment_ID")) {
                     mFragmentId = bundle.getInt("Fragment_ID");
-                    //Log.i("MainActivity LOG", "FragmentID: "+String.valueOf(mFragmentId));
                 }
                 if (bundle.containsKey("LocMatch")) {
                     mMatch = bundle.getInt("LocMatch");
-                    //Log.i("MainActivity LOG", "Location MatchY/N: "+String.valueOf(mMatch));
                 }
             }
-            else {
-                //Log.i("ClueDetail LOG", "Run# is Null");
+            else{
             }
         }
         //If ClueDetailActivity sends mapIntent to open Map, get Fragment_ID from intent
         // and open Map Fragment. If no intent, open default Fragment 0 (listview)
         mViewPager.setCurrentItem(mFragmentId);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {

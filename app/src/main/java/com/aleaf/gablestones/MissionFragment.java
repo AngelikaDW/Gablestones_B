@@ -82,7 +82,6 @@ public class MissionFragment extends Fragment implements
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
 
-                // Log.i("Position in List", String.valueOf(position));
                 mPositionClicked = position;
 
                            }
@@ -100,9 +99,6 @@ public class MissionFragment extends Fragment implements
     }
 
 
-    // Maintains ListView Position when returning to Mission Fragment
-    // ToDo: on back arrow in app doesn't work, only on return function
-//    https://michaelcarrano.com/blog/maintain-listview-position-in-android-application
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

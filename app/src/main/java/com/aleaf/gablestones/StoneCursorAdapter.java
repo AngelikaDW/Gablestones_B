@@ -118,8 +118,6 @@ public class StoneCursorAdapter extends CursorAdapter{
             // Extract how many matches there are
             matches.add(stoneMatch);}
 
-        //Log.i("StoneCursorAdapter ", "HOw long is the list matches "+ matches.size());
-
     }
 
 
