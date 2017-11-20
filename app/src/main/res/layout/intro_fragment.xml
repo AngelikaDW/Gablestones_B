@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
     <ScrollView android:layout_height="match_parent"
         android:layout_width="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:paddingBottom="32dp"
+            android:paddingBottom="56dp"
             android:id="@+id/intro"
             style="@style/AppTheme">
             <TextView
@@ -34,13 +32,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/intro_quest_explanation"
-                android:text="Start:"
+                android:text="@string/intro_start"
                 style="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:id="@+id/start_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Brouwersgracht 52"
+                android:text="@string/intro_start_adress"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:paddingLeft="8dp"
                 android:layout_below="@+id/intro_quest_explanation"
@@ -50,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/quest_startpoint"
-                android:text="End:"
+                android:text="@string/intro_end"
                 style="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:id="@+id/end_location"
@@ -59,7 +57,7 @@
                 android:layout_below="@id/quest_startpoint"
                 android:layout_alignRight="@id/quest_endpoint"
                 android:layout_alignParentRight="true"
-                android:text="Noordermarkt"
+                android:text="@string/intro_end_adress"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:paddingLeft="8dp"/>
             <TextView
@@ -67,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/quest_distance"
                 android:layout_below="@id/quest_endpoint"
-                android:text="Distance:"
+                android:text="@string/intro_distance"
                 style="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -76,7 +74,7 @@
                 android:layout_alignRight="@id/quest_distance"
                 android:layout_below="@id/quest_endpoint"
                 android:layout_alignParentRight="true"
-                android:text="2.5km"
+                android:text="@string/intro_distance_km"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:paddingLeft="8dp"/>
             <TextView
@@ -84,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/quest_Time"
                 android:layout_below="@id/quest_distance"
-                android:text="Time:"
+                android:text="@string/intro_time"
                 style="@style/Base.TextAppearance.AppCompat.Medium"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +91,7 @@
                 android:layout_alignRight="@id/quest_Time"
                 android:layout_below="@id/quest_distance"
                 android:layout_alignParentRight="true"
-                android:text="@string/duration_hours"
+                android:text="@string/intro_time_hours"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:paddingLeft="8dp"/>
             <TextView
@@ -119,18 +117,16 @@
     </ScrollView>
     <!-- LinearLayour for AdView-->
 
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/adViewIntro"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
         </com.google.android.gms.ads.AdView>
-    </LinearLayout>
 
-    </LinearLayout>
+
+    </RelativeLayout>

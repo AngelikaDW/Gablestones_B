@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="40dp"
             android:fontFamily="sans-serif"
             style="@style/Base.TextAppearance.AppCompat.Medium"
@@ -96,7 +96,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/currentLocMatch"
             android:text="Current Location of User"
-            android:layout_below="@id/clueDescription"/>
+            android:layout_below="@id/clueDescription"
+            style="@style/Base.TextAppearance.AppCompat.Small"/>
 
         <!-- This initially-hidden ImageView will hold the expanded/zoomed version of
                 the images above. Without transformations applied, it takes up the entire
@@ -114,4 +115,3 @@
     </RelativeLayout>
 
 </ScrollView>
-

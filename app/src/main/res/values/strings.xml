@@ -88,10 +88,6 @@
     <string name="text_icons" translatable="false">Logo adapted from Noun Project (A. Vasiliev)</string>
     <string name="intro_enjoy">Discover and Enjoy!</string>
 
-    <string name="start_tour" translatable="false">Start</string>
-    <string name="duration_hours" translatable="false">2.5 hours</string>
-    <string name="duration_in_hours">2.5 hours</string>
-
     <string name="title_activity_fullscreen" translatable="false">FullscreenActivity</string>
     <string name="dummy_button" translatable="false">Dummy Button</string>
     <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
@@ -110,12 +106,22 @@
     <string name="slide_2_desc">Learn more about gable stones and the stories they tell about former owners of houses they decorate.</string>
 
     <string name="slide_3_title">Gable stone located</string>
-    <string name="slide_3_desc">Once you find a gable stone, press the \"Green Check\" button.</string>
+    <string name="slide_3_desc">Once you find a gable stone, press the green \"check\" button.</string>
 
     <string name="slide_4_title">Locate Me</string>
-    <string name="slide_4_desc">Use the "Locate Me" button to see your current location and find the way to the next gable stone in the quest. </string>
+    <string name="slide_4_desc">Use the \"locate me\" button to see your current location and find the way to the next gable stone in the quest.</string>
 
     <string name="play_again_desc">To see the welcome slider again, go to Settings - How does it work</string>
     <string name="play_again">Play Again</string>
+
+    <!--Intro Fragment-->
+    <string name="intro_start">Start:</string>
+    <string name="intro_start_adress">Brouwersgracht 52"</string>
+    <string name="intro_end">End:</string>
+    <string name="intro_end_adress">Noordermarkt</string>
+    <string name="intro_distance">Distance:</string>
+    <string name="intro_distance_km">2.5km</string>
+    <string name="intro_time">Time:</string>
+    <string name="intro_time_hours">2.5 hours</string>
 
 </resources>
