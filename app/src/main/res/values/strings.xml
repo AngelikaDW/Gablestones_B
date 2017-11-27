@@ -115,13 +115,14 @@
     <string name="play_again">Play Again</string>
 
     <!--Intro Fragment-->
-    <string name="intro_start">Start:</string>
-    <string name="intro_start_adress">Brouwersgracht 52"</string>
+    <string name="intro_start" translatable="false">Start:</string>
+    <string name="intro_start_adress" translatable="false">Brouwersgracht 52"</string>
     <string name="intro_end">End:</string>
-    <string name="intro_end_adress">Noordermarkt</string>
+    <string name="intro_end_adress" translatable="false">Noordermarkt</string>
     <string name="intro_distance">Distance:</string>
-    <string name="intro_distance_km">2.5km</string>
+    <string name="intro_distance_km" translatable="false">2.5 km</string>
     <string name="intro_time">Time:</string>
     <string name="intro_time_hours">2.5 hours</string>
+    <string name="duration_in_hours">about 2.5 hours</string>
 
 </resources>

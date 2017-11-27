@@ -50,7 +50,7 @@ public class StoneContract {
      * looking at pet data. content://com.example.android.pets/staff/ will fail,
      * as the ContentProvider hasn't been given any information on what to do with "staff".
      */
-    public static final String PATH_STONES = "stones"; //String PATH_PETS = "pets";
+    public static final String PATH_STONES = "stones";
 
     /**
      * Inner class that defines constant values for the stones database table.

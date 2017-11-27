@@ -42,7 +42,6 @@
     <string name="stone_located">Gefeliciteerd - je hebt de gevelsteen gevonden!</string>
     <string name="stone_too_far">Nog even verder zoeken!</string>
     <string name="app_tour_slides">Zo werkt het</string>
-    <string name="next" translatable="false">MEER</string>
     <string name="play_again">Opnieuw</string>
     <string name="play_again_desc">Om de uitleg nog een keer te bekijken, klik op: Settings - Zo werkt het</string>
     <string name="start">Hebbes</string>
@@ -58,4 +57,9 @@
     <string name="all_stones_located">Gefeliciteerd - je habt alle gevelstenen gevonden!</string>
     <string name="please_leave_rating">Wij hopen dat je van de tour genoten hebt. Deel alstublieft uw ervaring in de Google Play Store - bedankt!</string>
     <string name="title_activity_confetti">Gefeliciteerd</string>
+    <string name="intro_end">Eindpunt:</string>
+    <string name="intro_distance">Afstand:</string>
+    <string name="intro_time">Duur:</string>
+    <string name="intro_time_hours">2.5 uur</string>
+    <string name="next">MEER</string>
 </resources>

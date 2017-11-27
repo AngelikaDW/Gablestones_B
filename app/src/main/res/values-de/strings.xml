@@ -42,7 +42,6 @@
     <string name="stone_located">Gratulation - Sie haben den Giebelstein gefunden!</string>
     <string name="stone_too_far">Hier ist es noch nicht - suchen Sie weiter</string>
     <string name="app_tour_slides">So funktioniert es</string>
-    <string name="next" translatable="false">WEITER</string>
     <string name="play_again">Nochmal</string>
     <string name="play_again_desc">Um die Erklärung nochmals zu sehen, klicken Sie auf: Settings - So funktioniert es</string>
     <string name="start">Verstanden</string>
@@ -58,4 +57,9 @@
     <string name="all_stones_located">Herzlichen Glückwunsch - Sie haben alle Giebelsteine der Tour gefunden!</string>
     <string name="please_leave_rating">Wir hoffen, Sie haben die Tour genossen. Bitte teilen Sie Ihre Erfahrungen im Google Play Store - Danke!</string>
     <string name="title_activity_confetti">Herzlichen Glückwunsch</string>
+    <string name="intro_end">Ende:</string>
+    <string name="intro_distance">Distanz:</string>
+    <string name="intro_time">Dauer:</string>
+    <string name="intro_time_hours">2,5 Stunden</string>
+    <string name="next">WEITER</string>
 </resources>
