@@ -130,5 +130,6 @@
     <string name="duration_in_hours">about 2.5 hours</string>
     <string name="title_activity_select_tour">SelectTourActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_mission">MissionActivity</string>
 
 </resources>

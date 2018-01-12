@@ -3,8 +3,6 @@ package com.aleaf.gablestones;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
@@ -106,11 +104,11 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.madeByColofon:
                 Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(infoIntent);
                 return true;
-            case R.id.info_tour:
+            case R.id.intro_tour:
                 Intent tourIntent = new Intent(MainActivity.this, Introslider.class);
                 startActivity(tourIntent);
                 return true;
@@ -126,12 +124,20 @@ public class MainActivity extends AppCompatActivity
                 Intent openMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(openMapIntent);
                 return true;
+            case R.id.open_clueDetail:
+                Intent clueDetailIntent = new Intent(MainActivity.this, ClueDetailActivity.class);
+                startActivity(clueDetailIntent);
+                return true;
+            case R.id.open_info:
+                Intent infoTourIntent = new Intent(MainActivity.this, ClueDetailActivity.class);
+                startActivity(infoTourIntent);
+                return true;
 
             default:
                 int id = item.getItemId();
 
                 //noinspection SimplifiableIfStatement
-                if (id == R.id.action_settings) {
+                if (id == R.id.madeByColofon) {
                     return true;
                 }
                 return super.onOptionsItemSelected(item);

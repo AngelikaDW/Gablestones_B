@@ -22,6 +22,7 @@ import com.aleaf.gablestones.data.StoneContract;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -68,6 +69,7 @@ public class MapsActivity extends AppCompatActivity
 
     int mNumberTour;
     private Marker mMarker;
+    private LatLng mMarkerPosition;
 
     //Identifier for the stone data loader
     private static final int EXISTING_STONE_LOADER = 0;
@@ -75,6 +77,8 @@ public class MapsActivity extends AppCompatActivity
     //save markers in list
     private ArrayList<Marker> markersLibrary = new ArrayList<>();
     private AdView mAdView;
+    private int mRunNbr;
+    private int mMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +95,27 @@ public class MapsActivity extends AppCompatActivity
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
         Log.i("TourNbr MapsAct", String.valueOf(mNumberTour));
 
-
+        //Kick off Loader to extract data from db to set markers and display info
         getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER,null, this);
+
+        /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone to open infoWindow*/
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey("Run#")) {
+                mRunNbr = bundle.getInt("Run#");
+
+                if (bundle.containsKey("LocMatch")) {
+                    mMatch = bundle.getInt("LocMatch");
+
+                if (bundle.containsKey("CurrentLoc")) {
+                    mCurrentLocation = bundle.getParcelable("CurrentLoc");
+                    Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+                }
+                }}
+        }
+        //Log.i("RunNbr sent ClueDetail", String.valueOf(mRunNbr) +" " + String.valueOf(mMatch));
+
+
     // TODO: implement Banner AD
 //         // Display the Admob Ad
 //        mAdView = (AdView) findViewById(R.id.adViewMapAct);
@@ -105,6 +128,7 @@ public class MapsActivity extends AppCompatActivity
         mMap = map;
 
         //TODO: get current location and zoom in, if current location is more than 5km outside AMS, then go to default location
+        //TODO: infact need to get the position of the marker called from ClueDetail and use FLYTO after set up the map
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -112,7 +136,16 @@ public class MapsActivity extends AppCompatActivity
                 .bearing(0)
                 .tilt(0)
                 .build();
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));
+        CameraPosition currentLocation = CameraPosition.builder()
+                .target(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+                .zoom(16)
+                .bearing(0)
+                .tilt(0)
+                .build();
+        if (mCurrentLocation != null) {
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(currentLocation));
+        } else {
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));}
 
         mMap.setOnMyLocationButtonClickListener(this);
         //mMap.setOnMyLocationClick(this);
@@ -139,6 +172,8 @@ public class MapsActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+        //TODO find position for the code snipped, currently mMarkerPosition = null
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(mMarkerPosition));
     }
 
     /**
@@ -216,6 +251,7 @@ public class MapsActivity extends AppCompatActivity
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(15 * 10000); //Update location every 15 sec
     }
+
 
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         // Define a projection that contains columns in all languages from the stones table
@@ -309,14 +345,36 @@ public class MapsActivity extends AppCompatActivity
                                                    .snippet(addres + " " + housenumber)
                                                    .icon(BitmapDescriptorFactory.fromResource(markerResource))
             );
-            //NOT SURE IF NEEDED LATER
+            //Add marker to ArrayList to be able to call later in openInfoWindow()
             markersLibrary.add(mMarker);
         }
-
+        //Log.i("MarkersLibr", String.valueOf(markersLibrary.get(mRunNbr-1).getTitle()));
+        openInfoWindow();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
+    public void openInfoWindow() {
+         /*Open InfoWindow of marker that has been viewed in ClueDetailActivity
+        * Based on runnumber which is sent by intent from ClueDetailActivity to MissionActivity
+        * MainActivity then stores the runNbr in a global Variable mRunNbr
+        * As the ArrayList starts with index 0, but the runNbr with 1, adjusted RunNbr (-1)!
+        * */
+        int runNbr = mRunNbr;
+        if (runNbr == 0) {
+            //do nothing
+        } else {
+            int runNbrAdjusted = runNbr - 1;
+            markersLibrary.get(runNbrAdjusted).showInfoWindow();
+            //mMarkerPosition = markersLibrary.get(runNbrAdjusted).getPosition();
+            Log.i("position of Marker",String.valueOf(markersLibrary.get(runNbrAdjusted).getPosition()));
+        }
+    }
+
+    public void updateCamera() {
 
     }
 

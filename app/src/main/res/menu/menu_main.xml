@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.aleaf.gablestones.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/madeByColofon"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/info_tour"
+        android:id="@+id/intro_tour"
         android:orderInCategory="200"
         android:title="@string/app_tour_slides"
         app:showAsAction="never" />
@@ -26,5 +26,16 @@
         android:id="@+id/open_map"
         android:orderInCategory="400"
         android:title="Map"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/open_clueDetail"
+        android:orderInCategory="500"
+        android:title="ClueDetail"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/open_info"
+        android:orderInCategory="600"
+        android:title="Info"
         app:showAsAction="never"/>
 </menu>

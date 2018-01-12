@@ -87,10 +87,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
     Location mCurrentLocation;
     int mMatchResult;
     int mTourOpen;
-    /**
-     * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
-     */
-    private boolean mStoneHasChanged = false;
 
 
     @Override
@@ -101,7 +97,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
         /*Get Tournumber from SelectTourActivity*/
         SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
         int numberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        Log.i("TourNbr ClueDetailAct", String.valueOf(numberTour));
+        //Log.i("TourNbr ClueDetailAct", String.valueOf(numberTour));
 
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
@@ -115,7 +111,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
-            //getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
+
             /*start Loading of the 2 cursors */
             getSupportLoaderManager().initLoader(LOADER_ID_CURSOR_1,null, this);
             getSupportLoaderManager().initLoader(LOADER_ID_CURSOR_2, null, this);
@@ -142,6 +138,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
         mClueImage = (ImageView) findViewById(R.id.image_clue_detail);
 
+
+
         // Set up FAB Button: when clicked gets current Location and calculates distance between
         // current location of user and location of stone
         // Depending on the distance, the db is being updated
@@ -151,10 +149,11 @@ public class ClueDetailActivity extends AppCompatActivity implements
             public void onClick(View view) {
 
                 requestLocationUpdate();
+                //Log.i("CUrrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
                 distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                         mLat, mLng);
                 // depending if user is close enough to the gable stone, the database is being
-                // updated and the image in the ListView in the MissionFragment is changed from
+                // updated and the image in the ListView in the MissionActivity is changed from
                 // unchecked to checked box
                 updateStone();
             }
@@ -306,10 +305,13 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 markerLocation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent mapIntent = new Intent(ClueDetailActivity.this,MainActivity.class);
-                        mapIntent.putExtra("Fragment_ID", 1);
+                        requestLocationUpdate();
+                        //Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+                        Intent mapIntent = new Intent(ClueDetailActivity.this,MapsActivity.class);
+                        //mapIntent.putExtra("Fragment_ID", 1);
                         mapIntent.putExtra("Run#", run);
                         mapIntent.putExtra("LocMatch", match);
+                        mapIntent.putExtra("CurrentLoc", mCurrentLocation);
                         startActivity(mapIntent);
                     }
                 });

@@ -12,13 +12,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_image_gablestone"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_image_gablestone"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".MyApplication">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -39,19 +39,17 @@
             <!-- </intent-filter> -->
         </activity>
 
-        <!-- A Clue Detail Activity a Child of Main Activiy -->
+        <!-- A Clue Detail Activity a Child of Mission Activiy -->
         <activity
             android:name=".ClueDetailActivity"
             android:label="@string/title_activity_clue_detail_activiy"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MissionActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aleaf.gablestones.MainActivity" />
-
+                android:value="com.aleaf.gablestones.MissionActivity" />
             <intent-filter>
                 <action android:name="com.aleaf.gablestones.ClueDetailActivity" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -64,11 +62,11 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".MissionActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aleaf.gablestones.MainActivity" />
+                android:value="com.aleaf.gablestones.MissionActivity" />
         </activity>
 
         <!-- Splash Activity Launch Screen -->
@@ -99,7 +97,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -108,7 +105,21 @@
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aleaf.gablestones.MainActivity" />
+                android:value="com.aleaf.gablestones.MissionActivity" />
+        </activity>
+        <activity
+            android:name=".MissionActivity"
+            android:label="@string/title_activity_mission"
+            android:parentActivityName=".SelectTourActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aleaf.gablestones.SelectTourActivity" />
+
+            <intent-filter>
+                <action android:name="com.aleaf.gablestones.MissionActiviy" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 
