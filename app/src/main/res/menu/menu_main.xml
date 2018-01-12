@@ -17,4 +17,14 @@
         <!--android:orderInCategory="300"-->
         <!--android:title="Confetti"-->
         <!--app:showAsAction="never"/>-->
+    <item
+        android:id="@+id/select_tour"
+        android:orderInCategory="300"
+        android:title="Select the tour"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/open_map"
+        android:orderInCategory="400"
+        android:title="Map"
+        app:showAsAction="never"/>
 </menu>

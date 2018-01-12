@@ -6,7 +6,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,6 +25,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,6 +86,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     private TextView mCurrentLocationText;
     Location mCurrentLocation;
     int mMatchResult;
+    int mTourOpen;
     /**
      * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
      */
@@ -94,9 +98,20 @@ public class ClueDetailActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clue_detail_activiy);
 
+        /*Get Tournumber from SelectTourActivity*/
+        SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
+        int numberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
+        Log.i("TourNbr ClueDetailAct", String.valueOf(numberTour));
+
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
         mCurrentStoneUri = intent.getData();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            if (bundle.containsKey("Tour")) {
+                mTourOpen = bundle.getInt("Tour");
+            }
+        }
 
         if (mCurrentStoneUri != null) {
             setTitle(R.string.stone_detail);
@@ -145,11 +160,9 @@ public class ClueDetailActivity extends AppCompatActivity implements
             }
         });
 //        Display AdMob Banner Ad
-
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
     }
 
     /*return CursorLoader for cursor 1*/
@@ -167,19 +180,25 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 StoneEntry.COLUMN_STONE_HOUSENUMBER,
                 StoneEntry.COLUMN_STONE_LAT,
                 StoneEntry.COLUMN_STONE_LNG,
-                StoneEntry.COLUMN_STONE_MATCH};
+                StoneEntry.COLUMN_STONE_MATCH,
+                StoneEntry.COLUMN_STONE_TOUR};
+
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(mTourOpen)};
 
         return new CursorLoader(this,
                 mCurrentStoneUri,
                 projection,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null);
     }
     /*return CursorLoader for cursor2*/
+    /*ToDo: how to select entries for tour 1 or 2 only, --> 2 selection and 2 selection Args*/
     private CursorLoader getCursor2Loader() {
         String[] projection = {
                 StoneContract.StoneEntry._ID,
+                StoneEntry.COLUMN_STONE_TOUR,
                 StoneContract.StoneEntry.COLUMN_STONE_MATCH};
         String selection = StoneContract.StoneEntry.COLUMN_STONE_MATCH + "=?";
         String[] selectionArgs = new String[]{String.valueOf(StoneContract.StoneEntry.MATCH_TRUE)};

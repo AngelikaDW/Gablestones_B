@@ -1,6 +1,8 @@
 package com.aleaf.gablestones;
 
 import android.content.ContentUris;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.content.CursorLoader;
@@ -9,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class MissionFragment extends Fragment implements
@@ -37,6 +42,7 @@ public class MissionFragment extends Fragment implements
 
     String mLanguage;
     ListView mStoneListView;
+    int mTourOpen;
 
     // Stores the scroll position of the ListView
     private static  Parcelable mListViewScrollPos = null;
@@ -78,6 +84,7 @@ public class MissionFragment extends Fragment implements
 
                 // Set the URI on the data field of the intent
                 intent.setData(currentStoneUri);
+                intent.putExtra("Tour", mTourOpen);
 
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
@@ -94,6 +101,13 @@ public class MissionFragment extends Fragment implements
         mAdView = (AdView) view.findViewById(R.id.adViewMission);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+
+        //GEt Shared Preferences
+        /*Get Tournumber from SelectTourActivity*/
+        SharedPreferences tourselected = getActivity().getSharedPreferences(SelectTourActivity.PREFS_NAME, MODE_PRIVATE);
+        int numberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
+        Log.i("TourNbr Mission", String.valueOf(numberTour));
 
         return view;
     }
@@ -127,16 +141,25 @@ public class MissionFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
                 StoneContract.StoneEntry.COLUMN_STONE_LAT,
                 StoneContract.StoneEntry.COLUMN_STONE_LNG,
-                StoneContract.StoneEntry.COLUMN_STONE_MATCH
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH,
+                StoneContract.StoneEntry.COLUMN_STONE_TOUR
          };
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?";
+
+        /*Get mTourOpen from MainActivity to set which Tour should be displayed*/
+        main_activity = (MainActivity) getActivity();
+        mTourOpen = main_activity.mTourOpen;
+        Log.i("Mission Tour",String.valueOf(mTourOpen));
+
+        String[] selectionArgs = new String[]{String.valueOf(mTourOpen)};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getActivity(),   // Parent activity context
-                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
-                null);                  // Default sort order
+                                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
+                                projection,             // Columns to include in the resulting Cursor
+                                selection,              // Selection based on TOUR
+                                selectionArgs,          // Tournumber (1, 2)
+                                null);        // Default sort order
     }
 
     @Override

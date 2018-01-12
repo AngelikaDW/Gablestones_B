@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,11 +52,7 @@ public class MapFragment extends Fragment implements
      * Identifier for the stone data loader
      */
     private static final int EXISTING_STONE_LOADER = 0;
-
-    /**
-     * Adapter for the ListView
-     */
-    StoneCursorAdapter mCursorAdapter;
+    int mTourOpen;
 
     //for location extraction
     private static final int MY_PERMISSIONS_REQUEST = 1;
@@ -71,7 +66,7 @@ public class MapFragment extends Fragment implements
     MapView mMapView;
     //save markers in list
     private ArrayList<Marker> markersLibrary = new ArrayList<>();
-    Marker mM = null;
+    Marker mMarker = null;
 
     public MainActivity main_activity;
     /**
@@ -89,9 +84,6 @@ public class MapFragment extends Fragment implements
 
     private AdView mAdView;
 
-    public MapFragment() {
-        //Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,7 +134,7 @@ public class MapFragment extends Fragment implements
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));
 
         enableMyLocation();
-        onInfoWindowClick(mM);
+        onInfoWindowClick(mMarker);
 
     }
 
@@ -319,14 +311,27 @@ public class MapFragment extends Fragment implements
                 StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
                 StoneContract.StoneEntry.COLUMN_STONE_LAT,
                 StoneContract.StoneEntry.COLUMN_STONE_LNG,
-                StoneContract.StoneEntry.COLUMN_STONE_MATCH};
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH,
+                StoneContract.StoneEntry.COLUMN_STONE_TOUR};
 
-        return new CursorLoader(getActivity(),
-                StoneContract.StoneEntry.CONTENT_URI,
-                projection,
-                null,
-                null,
-                null);
+
+
+
+        /*Get mTourOpen from MainActivity to set which Tour should be displayed*/
+        main_activity = (MainActivity) getActivity();
+        int tourOpen = main_activity.mTourOpen;
+
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(tourOpen)};
+
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(getActivity(),   // Parent activity context
+                                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
+                                projection,             // Columns to include in the resulting Cursor
+                                selection,              // Selection based on TOUR
+                                selectionArgs,          // Tournumber (1, 2)
+                                null);        // Default sort order
     }
 
     @Override
@@ -386,16 +391,16 @@ public class MapFragment extends Fragment implements
             /* Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
             https://github.com/Concept211/Google-Maps-Markers
             then put into drawable and called from there*/
-            mM = mGoogleMap.addMarker(new MarkerOptions()
+            mMarker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .title(run + " " + name)
                     .snippet(addres + " " + housenumber)
                     .icon(BitmapDescriptorFactory.fromResource(markerResource))
             );
-            markersLibrary.add(mM);
+            markersLibrary.add(mMarker);
         }
         openInfoWindow();
-        onInfoWindowClick(mM);
+        onInfoWindowClick(mMarker);
     }
 
     @Override

@@ -21,12 +21,11 @@ public class SplashActivity extends AppCompatActivity {
             i = new Intent(SplashActivity.this, Introslider.class);
             prefManager.setFirstTimeLaunch(false);
         } else {
-            i = new Intent(SplashActivity.this, MainActivity.class);
+            i = new Intent(SplashActivity.this, SelectTourActivity.class);
         }
 
         // Start home activity
         startActivity(i);
-        //startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
         // close splash activity
         finish();

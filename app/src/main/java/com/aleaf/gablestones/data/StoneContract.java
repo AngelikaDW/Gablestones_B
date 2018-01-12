@@ -51,7 +51,6 @@ public class StoneContract {
      * as the ContentProvider hasn't been given any information on what to do with "staff".
      */
     public static final String PATH_STONES = "stones";
-
     /**
      * Inner class that defines constant values for the stones database table.
      * Each entry in the table represents a single pet.
@@ -61,8 +60,7 @@ public class StoneContract {
          * The content URI to access the stones data in the provider
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_STONES);
-
-        /**
+         /**
          * The MIME type of the {@link #CONTENT_URI} for a list of stones.
          */
         public static final String CONTENT_LIST_TYPE =
@@ -79,7 +77,6 @@ public class StoneContract {
          * Name of database table for stones
          */
         public final static String TABLE_NAME = "stones";
-
 
         /**
          * Unique ID number for the stone (only for use in the database table).
@@ -142,6 +139,8 @@ public class StoneContract {
         /*Possible vlaues for the match of location user - stone*/
         public static final int MATCH_FALSE = 0;
         public static final int MATCH_TRUE = 1;
+
+        public final static String COLUMN_STONE_TOUR = "tour";
     }
 
 }

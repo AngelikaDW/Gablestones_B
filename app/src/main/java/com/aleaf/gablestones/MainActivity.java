@@ -1,7 +1,10 @@
 package com.aleaf.gablestones;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.view.ViewPager;
@@ -27,6 +30,10 @@ public class MainActivity extends AppCompatActivity
         public int mRunNbr;
         public int mFragmentId;
         public int mMatch;
+        public int mTourOpen;
+
+
+        Context context;
 
 
 
@@ -50,6 +57,8 @@ public class MainActivity extends AppCompatActivity
 
         /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone and
         Fragment_ID*/
+        /*Intent sent by SelectTourActivity send information with tour to display
+        mTourOpen 1 or 2*/
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             if (bundle.containsKey("Run#")) {
@@ -61,13 +70,17 @@ public class MainActivity extends AppCompatActivity
                 if (bundle.containsKey("LocMatch")) {
                     mMatch = bundle.getInt("LocMatch");
                 }
-            }
-            else{
+            } else {
+                if (bundle.containsKey("Tour")) {
+                    mTourOpen = bundle.getInt("Tour");
+                }
             }
         }
         //If ClueDetailActivity sends mapIntent to open Map, get Fragment_ID from intent
         // and open Map Fragment. If no intent, open default Fragment 0 (listview)
         mViewPager.setCurrentItem(mFragmentId);
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -105,6 +118,15 @@ public class MainActivity extends AppCompatActivity
 //                Intent confettiIntent = new Intent(MainActivity.this, ConfettiActivity.class);
 //                startActivity(confettiIntent);
 //                return true;
+            case R.id.select_tour:
+                Intent selectTourIntent = new Intent(MainActivity.this, SelectTourActivity.class);
+                startActivity(selectTourIntent);
+                return true;
+            case R.id.open_map:
+                Intent openMapIntent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(openMapIntent);
+                return true;
+
             default:
                 int id = item.getItemId();
 

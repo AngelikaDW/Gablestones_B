@@ -53,6 +53,7 @@ public class Introslider extends AppCompatActivity {
         // add few more layouts if you want
         layouts = new int[]{
                 R.layout.welcome_slide1,
+                R.layout.welcome_slide1a,
                 R.layout.welcome_slide2,
                 R.layout.welcome_slide3,
                 R.layout.welcome_slide4};
@@ -115,7 +116,7 @@ public class Introslider extends AppCompatActivity {
 
     private void launchHomeScreen() {
         //prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(Introslider.this, MainActivity.class));
+        startActivity(new Intent(Introslider.this, SelectTourActivity.class));
         finish();
     }
 

@@ -17,7 +17,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_image_gablestone"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".MyApplication">
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -29,11 +30,13 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
         <!-- A Clue Detail Activity a Child of Main Activiy -->
@@ -48,6 +51,7 @@
 
             <intent-filter>
                 <action android:name="com.aleaf.gablestones.ClueDetailActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -81,15 +85,31 @@
         <!-- IntroSlider Activity -->
         <activity
             android:name=".Introslider"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- Confetti Activity To be Launched when all Gablestones are located and green ticked -->
         <activity
             android:name=".ConfettiActivity"
-            android:label="@string/title_activity_confetti"
-            ></activity>
+            android:label="@string/title_activity_confetti" />
 
+        <!-- Select Tour Activity shows at the start of the app. User can choose which tour he wants to follow -->
+        <activity
+            android:name=".SelectTourActivity"
+            android:label="@string/title_activity_select_tour"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.aleaf.gablestones.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
