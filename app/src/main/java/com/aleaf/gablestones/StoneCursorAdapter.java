@@ -16,11 +16,8 @@
 package com.aleaf.gablestones;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +31,14 @@ import com.aleaf.gablestones.data.StoneContract.StoneEntry;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static java.security.AccessController.getContext;
+import static com.aleaf.gablestones.SelectTourActivity.PREFS_NAME;
 
 
 public class StoneCursorAdapter extends CursorAdapter{
     ArrayList<String> matches = new ArrayList<>();
+    public ArrayList<String> stones = new ArrayList<String>();
+    private Cursor mCursor;
+
     public StoneCursorAdapter(Context context, Cursor c) {
         super(context,c, 0);
     }
@@ -47,6 +47,7 @@ public class StoneCursorAdapter extends CursorAdapter{
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         // Inflate a list item view using the layout specified in list_item.xml
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
+
     }
 
     /**
@@ -73,6 +74,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         int addressColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
         int housenumberColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
         int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
+        int tourColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_TOUR);
 
         // Read the stone attributes from the Cursor for the current stone
         String stoneName = cursor.getString(nameColumnIndex);
@@ -82,6 +84,7 @@ public class StoneCursorAdapter extends CursorAdapter{
         String stoneAddress = cursor.getString(addressColumnIndex);
         String stoneHousenumber = cursor.getString(housenumberColumnIndex);
         String stoneMatch = cursor.getString(matchColumnIndex);
+        String tourNbr = cursor.getString(matchColumnIndex);
 
         //Get the system language of user's device
         String language = Locale.getDefault().getLanguage();
@@ -89,12 +92,9 @@ public class StoneCursorAdapter extends CursorAdapter{
         // Update the TextViews with the attributes for the current stone
         if (language.equals("en")) {
             nameTextView.setText(stoneName);
-        }
-        else if (language.equals("nl")) {
+        } else if (language.equals("nl")) {
             nameTextView.setText(stoneNameNL);
-        }
-
-        else if (language.equals("de")) {
+        } else if (language.equals("de")) {
             nameTextView.setText(stoneNameDE);
         }
         runNbrTextView.setText(stoneRunNbr);
@@ -104,21 +104,36 @@ public class StoneCursorAdapter extends CursorAdapter{
 
         // Set image in the detail view from drawable folder, based on the running Number
         // as extracted from the database
-        String uri = "@drawable/image" + stoneRunNbr;
+
+        /*Get Tournumber from SelectTourActivity*/
+        SharedPreferences tourselected = MyApplication.getInstance().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        int numberTour = tourselected.getInt("TourNbr", 0);
+        //Log.i("TourNbr StoneClass", String.valueOf(numberTour));
+
+        String uri = "@drawable/image" + numberTour + "_" + stoneRunNbr;
         int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
         stoneImageView.setImageResource(imageResource);
 
         //Image of Checkbox, if the data is 0, no match yet --> unchecked box
         // if data in db is 1, location of user and stone matched --> checked box
-        if (stoneMatch.equals("0")){
+        if (stoneMatch.equals("0")) {
             checkboxImageView.setImageResource(R.drawable.match_grey);
 
         } else {
             checkboxImageView.setImageResource(R.drawable.match_green);
             // Extract how many matches there are
-            matches.add(stoneMatch);}
+            matches.add(stoneMatch);
+        }
+
+        //Log.i("Count stones", String.valueOf(cursor.getCount()));
+        int countStones = cursor.getCount();
+        SharedPreferences settings = MyApplication.getInstance().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("countStones", countStones);
+        editor.commit();
+
+
+        }
 
     }
 
-
-}

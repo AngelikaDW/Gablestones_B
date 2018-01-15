@@ -1,6 +1,7 @@
 package com.aleaf.gablestones;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class MapsActivity extends AppCompatActivity
         OnMyLocationButtonClickListener,
         //OnMyLocationClickListener,
         OnMapReadyCallback,
-        android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>{
+        android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
 
     /**
      * Request code for location permission request.
@@ -80,6 +81,8 @@ public class MapsActivity extends AppCompatActivity
     private int mRunNbr;
     private int mMatch;
 
+    //ToDo: when device is turned, shuts off - arraylist is empty?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +99,7 @@ public class MapsActivity extends AppCompatActivity
         Log.i("TourNbr MapsAct", String.valueOf(mNumberTour));
 
         //Kick off Loader to extract data from db to set markers and display info
-        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER,null, this);
+        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
 
         /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone to open infoWindow*/
         Bundle bundle = getIntent().getExtras();
@@ -107,16 +110,19 @@ public class MapsActivity extends AppCompatActivity
                 if (bundle.containsKey("LocMatch")) {
                     mMatch = bundle.getInt("LocMatch");
 
-                if (bundle.containsKey("CurrentLoc")) {
-                    mCurrentLocation = bundle.getParcelable("CurrentLoc");
-                    Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+                    if (bundle.containsKey("CurrentLoc")) {
+                        mCurrentLocation = bundle.getParcelable("CurrentLoc");
+                        Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+                    }
                 }
-                }}
+            }
         }
+        //openInfoWindow();
+
         //Log.i("RunNbr sent ClueDetail", String.valueOf(mRunNbr) +" " + String.valueOf(mMatch));
 
 
-    // TODO: implement Banner AD
+        // TODO: implement Banner AD
 //         // Display the Admob Ad
 //        mAdView = (AdView) findViewById(R.id.adViewMapAct);
 //        AdRequest adRequest = new AdRequest.Builder().build();
@@ -128,7 +134,6 @@ public class MapsActivity extends AppCompatActivity
         mMap = map;
 
         //TODO: get current location and zoom in, if current location is more than 5km outside AMS, then go to default location
-        //TODO: infact need to get the position of the marker called from ClueDetail and use FLYTO after set up the map
 
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
@@ -136,25 +141,26 @@ public class MapsActivity extends AppCompatActivity
                 .bearing(0)
                 .tilt(0)
                 .build();
-        CameraPosition currentLocation = CameraPosition.builder()
-                .target(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                .zoom(16)
-                .bearing(0)
-                .tilt(0)
-                .build();
-        if (mCurrentLocation != null) {
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(currentLocation));
-        } else {
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));}
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));
+
+//        if (mCurrentLocation != null) {
+////            CameraPosition currentLocation = CameraPosition.builder()
+////                    .target(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+////                    .zoom(16)
+////                    .bearing(0)
+////                    .tilt(0)
+////                    .build();
+////            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(currentLocation));
+//        } else {
+//            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));}
 
         mMap.setOnMyLocationButtonClickListener(this);
         //mMap.setOnMyLocationClick(this);
         enableMyLocation();
         //onLocationChanged();
 
-
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            public void onInfoWindowClick(Marker marker){
+            public void onInfoWindowClick(Marker marker) {
                 //Gets title of marker, splits it and parses into an int
                 String markerTitle = marker.getTitle();
                 String[] separated = markerTitle.split(" ");
@@ -172,8 +178,6 @@ public class MapsActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
-        //TODO find position for the code snipped, currently mMarkerPosition = null
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(mMarkerPosition));
     }
 
     /**
@@ -274,14 +278,15 @@ public class MapsActivity extends AppCompatActivity
 
 
         // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(this,   // Parent activity context
-                                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
-                                projection,             // Columns to include in the resulting Cursor
-                                selection,              // Selection based on TOUR Column
-                                selectionArgs,          // Tournumber (1, 2)
-                                null);        // Default sort order
+        return new CursorLoader(
+                this,   // Parent activity context
+                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                selection,              // Selection based on TOUR Column
+                selectionArgs,          // Tournumber (1, 2)
+                null
+        );        // Default sort order
     }
-
 
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -335,51 +340,77 @@ public class MapsActivity extends AppCompatActivity
             } else if (language.equals("de")) {
                 name = stoneNameDE;
             }
+
+            //TODO: all markers disapear when phone is turned,
             // Put the markers to the map and save marker in ArrayList markersLibrary
             /* Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
             https://github.com/Concept211/Google-Maps-Markers
             then put into drawable and called from there*/
             mMarker = mMap.addMarker(new MarkerOptions()
-                                                   .position(new LatLng(lat, lng))
-                                                   .title(run + " " + name)
-                                                   .snippet(addres + " " + housenumber)
-                                                   .icon(BitmapDescriptorFactory.fromResource(markerResource))
+                                             .position(new LatLng(lat, lng))
+                                             .title(run + " " + name)
+                                             .snippet(addres + " " + housenumber)
+                                             .icon(BitmapDescriptorFactory.fromResource(markerResource))
             );
             //Add marker to ArrayList to be able to call later in openInfoWindow()
             markersLibrary.add(mMarker);
+
         }
-        //Log.i("MarkersLibr", String.valueOf(markersLibrary.get(mRunNbr-1).getTitle()));
-        openInfoWindow();
+        //openInfoWindow();
+
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        //TODo: swap cursor??
+        // If the loader is invalidated, clear out all the data from the input fields.
+        //markersLibrary.add(mMarker);
+
 
     }
 
     public void openInfoWindow() {
-         /*Open InfoWindow of marker that has been viewed in ClueDetailActivity
+         /*Open InfoWindow of marker that has been viewed in ClueDetailActivity and focuses the map to the location of marker
         * Based on runnumber which is sent by intent from ClueDetailActivity to MissionActivity
         * MainActivity then stores the runNbr in a global Variable mRunNbr
         * As the ArrayList starts with index 0, but the runNbr with 1, adjusted RunNbr (-1)!
         * */
+
+//        double markerLat = marker.getPosition().latitude;
+//        double markerLng = marker.getPosition().longitude;
+//
+//        CameraPosition markerClicked = CameraPosition.builder()
+//                .target(new LatLng(markerLat, markerLng))
+//                .zoom(16)
+//                .bearing(0)
+//                .tilt(0)
+//                .build();
+//        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(markerClicked));
+
         int runNbr = mRunNbr;
         if (runNbr == 0) {
             //do nothing
         } else {
             int runNbrAdjusted = runNbr - 1;
             markersLibrary.get(runNbrAdjusted).showInfoWindow();
-            //mMarkerPosition = markersLibrary.get(runNbrAdjusted).getPosition();
-            Log.i("position of Marker",String.valueOf(markersLibrary.get(runNbrAdjusted).getPosition()));
+            Log.i("position of Marker", String.valueOf(markersLibrary.get(runNbrAdjusted).getPosition()));
+            LatLng markerPosition = markersLibrary.get(runNbrAdjusted).getPosition();
+            double markerPosLat = markerPosition.latitude;
+            double markerPosLng = markerPosition.longitude;
+
+            CameraPosition markerClicked = CameraPosition.builder()
+                    .target(new LatLng(markerPosLat, markerPosLng))
+                    .zoom(16)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(markerClicked));
         }
     }
-
-    public void updateCamera() {
-
-    }
-
-
 }
+
+
+
 
 
 

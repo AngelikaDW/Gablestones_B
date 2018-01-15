@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.madeByColofon:
-                Intent infoIntent = new Intent(MainActivity.this, InfoActivity.class);
+                Intent infoIntent = new Intent(MainActivity.this, ColofonActivity.class);
                 startActivity(infoIntent);
                 return true;
             case R.id.intro_tour:

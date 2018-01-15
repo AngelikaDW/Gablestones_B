@@ -2,40 +2,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.aleaf.gablestones.MainActivity">
+
     <item
-        android:id="@+id/madeByColofon"
+        android:id="@+id/select_tour"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Select the tour"
         app:showAsAction="never" />
     <item
         android:id="@+id/intro_tour"
         android:orderInCategory="200"
         android:title="@string/app_tour_slides"
         app:showAsAction="never" />
-    <!--<item-->
-        <!--android:id="@+id/confetti"-->
-        <!--android:orderInCategory="300"-->
-        <!--android:title="Confetti"-->
-        <!--app:showAsAction="never"/>-->
-    <item
-        android:id="@+id/select_tour"
-        android:orderInCategory="300"
-        android:title="Select the tour"
-        app:showAsAction="never" />
     <item
         android:id="@+id/open_map"
-        android:orderInCategory="400"
+        android:orderInCategory="300"
         android:title="Map"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/madeByColofon"
+        android:orderInCategory="400"
+        android:title="Info"
+        app:showAsAction="never" />
+
+    <!--<item-->
+        <!--android:id="@+id/confetti"-->
+        <!--android:orderInCategory="500"-->
+        <!--android:title="Confetti"-->
+        <!--app:showAsAction="never"/>-->
+
+
 
     <item
         android:id="@+id/open_clueDetail"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         android:title="ClueDetail"
         app:showAsAction="never"/>
     <item
         android:id="@+id/open_info"
-        android:orderInCategory="600"
-        android:title="Info"
+        android:orderInCategory="700"
+        android:title="Background of Tour"
         app:showAsAction="never"/>
 </menu>

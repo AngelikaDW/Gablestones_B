@@ -87,6 +87,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
     Location mCurrentLocation;
     int mMatchResult;
     int mTourOpen;
+    private int mStonesInTour;
+    int mCountStones;
 
 
     @Override
@@ -94,10 +96,11 @@ public class ClueDetailActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clue_detail_activiy);
 
-        /*Get Tournumber from SelectTourActivity*/
+        /*Get Tournumber from SelectTourActivity and count of Stones in Tour from StoneCursor Adapter VIA SharedPreferences*/
         SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
         int numberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        //Log.i("TourNbr ClueDetailAct", String.valueOf(numberTour));
+        mCountStones = tourselected.getInt("countStones", MODE_PRIVATE);
+
 
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
@@ -150,6 +153,8 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
                 requestLocationUpdate();
                 //Log.i("CUrrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+
+                //ToDO: Current location is empty BUG depends where user clicks first??
                 distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                         mLat, mLng);
                 // depending if user is close enough to the gable stone, the database is being
@@ -192,15 +197,15 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 selectionArgs,
                 null);
     }
-    /*return CursorLoader for cursor2*/
-    /*ToDo: how to select entries for tour 1 or 2 only, --> 2 selection and 2 selection Args*/
+    /*return CursorLoader for cursor2
+    * Cursor2 counts if all stones are located on the tour*/
     private CursorLoader getCursor2Loader() {
         String[] projection = {
                 StoneContract.StoneEntry._ID,
                 StoneEntry.COLUMN_STONE_TOUR,
                 StoneContract.StoneEntry.COLUMN_STONE_MATCH};
-        String selection = StoneContract.StoneEntry.COLUMN_STONE_MATCH + "=?";
-        String[] selectionArgs = new String[]{String.valueOf(StoneContract.StoneEntry.MATCH_TRUE)};
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_MATCH + "=?" + "AND " + StoneEntry.COLUMN_STONE_TOUR + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(StoneContract.StoneEntry.MATCH_TRUE) , String.valueOf(mTourOpen)};
 
         return new CursorLoader(this,
                 StoneEntry.CONTENT_URI, // Parent activity context
@@ -223,6 +228,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         switch (loader.getId()) {
             case LOADER_ID_CURSOR_1:
+
             // Load the information needed to display details of the stone
             if (cursor == null || cursor.getCount() < 1) {
                 return;
@@ -240,6 +246,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 int latColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LAT);
                 int lngColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LNG);
                 int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
+                int tourColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_TOUR);
 
                 // Extract out the value from the Cursor for the given column index
                 String name = cursor.getString(nameColumnIndex);
@@ -256,6 +263,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
                 double lng = cursor.getDouble(lngColumnIndex);
                 mLng = lng;
                 final int match = cursor.getInt(matchColumnIndex);
+                String tourNumber = cursor.getString(tourColumnIndex);
 
 
                 // Update the views on the screen with the values from the database
@@ -282,7 +290,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
 
                 // Set image in the detail view from drawable folder, based on the running Number
                 // as extracted from the database
-                String uri = "@drawable/image" + Integer.toString(run);
+                String uri = "@drawable/image" +tourNumber+"_"+Integer.toString(run);
                 int imageResource = getResources().getIdentifier(uri, null, getPackageName());
                 mClueImage.setImageResource(imageResource);
 
@@ -322,7 +330,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
          ConfettiActivity is being launched
          */
             int mNbrMatches = cursor.getCount();
-            if (mNbrMatches >=20) {
+            if (mNbrMatches >=mCountStones) {
                 Intent confettiIntent = new Intent(this, ConfettiActivity.class);
                 startActivity(confettiIntent);
             }
@@ -422,7 +430,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mCurrentLocation = location;
     }
     private void configureLocationUpdates() {
-
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(15*10000); //Update location every 15 sec

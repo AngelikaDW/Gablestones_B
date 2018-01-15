@@ -60,7 +60,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".InfoActivity"
+            android:name=".ColofonActivity"
             android:label="@string/title_activity_info"
             android:parentActivityName=".MissionActivity"
             android:theme="@style/AppTheme.NoActionBar">

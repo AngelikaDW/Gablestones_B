@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,11 +48,11 @@ public class Introslider extends AppCompatActivity {
 
 
         // layouts of all welcome sliders
-        // add few more layouts if you want
+        // add few more layouts if you want and add color array in values/colors.xml
         layouts = new int[]{
                 R.layout.welcome_slide1,
-                R.layout.welcome_slide1a,
                 R.layout.welcome_slide2,
+                R.layout.welcome_slide5,
                 R.layout.welcome_slide3,
                 R.layout.welcome_slide4};
 
