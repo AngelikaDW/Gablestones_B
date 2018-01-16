@@ -152,7 +152,7 @@ public class ClueDetailActivity extends AppCompatActivity implements
             public void onClick(View view) {
 
                 requestLocationUpdate();
-                //Log.i("CUrrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
+                //Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
 
                 //ToDO: Current location is empty BUG depends where user clicks first??
                 distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
@@ -345,8 +345,6 @@ public class ClueDetailActivity extends AppCompatActivity implements
         mRunningNumberText.setText("");
         mAddressText.setText("");
     }
-
-
 
     @Override
     protected void onStart() {

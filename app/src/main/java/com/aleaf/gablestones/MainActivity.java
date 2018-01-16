@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
                 Intent openMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(openMapIntent);
                 return true;
-            case R.id.open_clueDetail:
+            case R.id.open_detailFragment:
                 Intent clueDetailIntent = new Intent(MainActivity.this, ClueDetailActivity.class);
                 startActivity(clueDetailIntent);
                 return true;

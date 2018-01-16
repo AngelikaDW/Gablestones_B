@@ -4,25 +4,21 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneDbHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 import static com.aleaf.gablestones.data.StoneContract.*;
@@ -43,7 +39,6 @@ public class MissionActivity extends AppCompatActivity implements
     /** Database helper object */
     public StoneDbHelper mDbHelper;
     ArrayList<String> stonesArrayList = new ArrayList<>();
-    HashMap<Integer, String> stonesHashMap = new HashMap<>();
 
 
     @Override
@@ -101,8 +96,6 @@ public class MissionActivity extends AppCompatActivity implements
         // Kick off the loader
         getSupportLoaderManager().initLoader(STONE_LOADER, null, this);
 
-        //mDbHelper = new StoneDbHelper(this);
-        queryDatabase();
 
         /*// Display the Admob Ad
         mAdView = (AdView) view.findViewById(R.id.adViewMission);
@@ -142,9 +135,7 @@ public class MissionActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // Update StoneAdapter with this new cursor containing updated stone data
-
         mCursorAdapter.swapCursor(data);
-
     }
 
     @Override
@@ -152,7 +143,6 @@ public class MissionActivity extends AppCompatActivity implements
         // Callback called when the data needs to be deleted
         mCursorAdapter.swapCursor(null);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,8 +178,8 @@ public class MissionActivity extends AppCompatActivity implements
                 Intent openMapIntent = new Intent(MissionActivity.this, MapsActivity.class);
                 startActivity(openMapIntent);
                 return true;
-            case R.id.open_clueDetail:
-                Intent clueDetailIntent = new Intent(MissionActivity.this, ClueDetailActivity.class);
+            case R.id.open_detailFragment:
+                Intent clueDetailIntent = new Intent(MissionActivity.this, DetailActivity.class);
                 startActivity(clueDetailIntent);
                 return true;
             default:
@@ -202,69 +192,6 @@ public class MissionActivity extends AppCompatActivity implements
                 return super.onOptionsItemSelected(item);
         }
     }
-    
-    private void queryDatabase() {
-        //TODO: create DB Helper Class and access readable DB to get all info in the arraylist, which should then be used to:
-        // - put Markers on the map (don't disappear when the phone is turned)
-        // - get data for Clue detail activiy (arraylist.get(i)
-        mDbHelper = new StoneDbHelper(this);
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        String[] projection = {
-                StoneEntry._ID,
-                StoneEntry.COLUMN_STONE_NAME,
-                StoneEntry.COLUMN_STONE_ADDRESS,
-                StoneEntry.COLUMN_STONE_HOUSENUMBER,
-                StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
-                StoneEntry.COLUMN_STONE_NAME_NL,
-                StoneEntry.COLUMN_STONE_NAME_DE,
-                StoneEntry.COLUMN_STONE_LAT,
-                StoneEntry.COLUMN_STONE_LNG,
-                StoneEntry.COLUMN_STONE_MATCH,
-                StoneEntry.COLUMN_STONE_TOUR};
-
-
-        String selection = StoneEntry.COLUMN_STONE_TOUR + "=?";
-        String[] selectionArgs = new String[]{String.valueOf(mTourNbr)};
-
-        Cursor cursor = db.query(StoneEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
-
-        int nameColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME);
-        int nameNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_NL);
-        int nameDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_NAME_DE);
-        int runColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
-//        int descColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION);
-//        int descNLColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_NL);
-//        int descDEColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_DESCRIPTION_DE);
-        int addresColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_ADDRESS);
-        int houseColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_HOUSENUMBER);
-        int latColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LAT);
-        int lngColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_LNG);
-//        int matchColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_MATCH);
-//        int tourColumnIndex = cursor.getColumnIndex(StoneEntry.COLUMN_STONE_TOUR);
-
-        while(cursor.moveToNext()) {
-            int run = cursor.getInt(runColumnIndex);
-            String name = cursor.getString(nameColumnIndex);
-            String stoneNameNL = cursor.getString(nameNLColumnIndex);
-            String stoneNameDE = cursor.getString(nameDEColumnIndex);
-//            String description = cursor.getString(descColumnIndex);
-//            String descriptionNL = cursor.getString(descNLColumnIndex);
-//            String descriptionDE = cursor.getString(descDEColumnIndex);
-            String addres = cursor.getString(addresColumnIndex);
-            int housenumber = cursor.getInt(houseColumnIndex);
-            double lat = cursor.getDouble(latColumnIndex);
-            double lng = cursor.getDouble(lngColumnIndex);
-//            final int match = cursor.getInt(matchColumnIndex);
-//            String tourNumber = cursor.getString(tourColumnIndex);
-
-            stonesHashMap.put(run, name);
-            stonesArrayList.add(run +", " + name +", " + stoneNameDE +", " +stoneNameNL+", " + addres+", " +housenumber+", " +lat+", " +lng); // + "," + stoneNameDE +", " + stoneNameNL +", " + description +", " +descriptionDE +", " + descriptionNL +", " + addres +", " + housenumber +", " + lat +", " + lng +", " +match);
-        }
-
-        Log.i("arraylist", stonesArrayList.get(1).split(",")[6]);
-        Log.i("hashmap", stonesHashMap.get(19));
-        //TODO: save Arraylist or hashmap to SharedPref
-    }
 
 }

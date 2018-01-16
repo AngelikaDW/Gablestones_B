@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.aleaf.gablestones.data.StoneContract;
+import com.aleaf.gablestones.data.StoneDbHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.location.LocationRequest;
@@ -36,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -48,8 +51,7 @@ public class MapsActivity extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,
         //OnMyLocationClickListener,
-        OnMapReadyCallback,
-        android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor> {
+        OnMapReadyCallback {
 
     /**
      * Request code for location permission request.
@@ -81,6 +83,12 @@ public class MapsActivity extends AppCompatActivity
     private int mRunNbr;
     private int mMatch;
 
+    /**
+     * Database helper object
+     */
+    public StoneDbHelper mDbHelper;
+    ArrayList<String> stonesArrayList = new ArrayList<>();
+
     //ToDo: when device is turned, shuts off - arraylist is empty?
 
     @Override
@@ -98,9 +106,6 @@ public class MapsActivity extends AppCompatActivity
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
         Log.i("TourNbr MapsAct", String.valueOf(mNumberTour));
 
-        //Kick off Loader to extract data from db to set markers and display info
-        getSupportLoaderManager().initLoader(EXISTING_STONE_LOADER, null, this);
-
         /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone to open infoWindow*/
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -109,18 +114,11 @@ public class MapsActivity extends AppCompatActivity
 
                 if (bundle.containsKey("LocMatch")) {
                     mMatch = bundle.getInt("LocMatch");
-
-                    if (bundle.containsKey("CurrentLoc")) {
-                        mCurrentLocation = bundle.getParcelable("CurrentLoc");
-                        Log.i("CurrentLoc", String.valueOf(mCurrentLocation.getLatitude()));
-                    }
                 }
             }
         }
-        //openInfoWindow();
 
-        //Log.i("RunNbr sent ClueDetail", String.valueOf(mRunNbr) +" " + String.valueOf(mMatch));
-
+        queryDatabase();
 
         // TODO: implement Banner AD
 //         // Display the Admob Ad
@@ -133,8 +131,6 @@ public class MapsActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        //TODO: get current location and zoom in, if current location is more than 5km outside AMS, then go to default location
-
         CameraPosition AmsterdamCenter = CameraPosition.builder()
                 .target(new LatLng(52.378777, 4.892577))
                 .zoom(14)
@@ -143,16 +139,7 @@ public class MapsActivity extends AppCompatActivity
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));
 
-//        if (mCurrentLocation != null) {
-////            CameraPosition currentLocation = CameraPosition.builder()
-////                    .target(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-////                    .zoom(16)
-////                    .bearing(0)
-////                    .tilt(0)
-////                    .build();
-////            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(currentLocation));
-//        } else {
-//            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(AmsterdamCenter));}
+        drawMarkers();
 
         mMap.setOnMyLocationButtonClickListener(this);
         //mMap.setOnMyLocationClick(this);
@@ -178,6 +165,7 @@ public class MapsActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+        openInfoWindow();
     }
 
     /**
@@ -256,137 +244,8 @@ public class MapsActivity extends AppCompatActivity
         mLocationRequest.setInterval(15 * 10000); //Update location every 15 sec
     }
 
-
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Define a projection that contains columns in all languages from the stones table
-        String[] projection = {
-                StoneContract.StoneEntry._ID,
-                StoneContract.StoneEntry.COLUMN_STONE_NAME,
-                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
-                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
-                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
-                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
-                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
-                StoneContract.StoneEntry.COLUMN_STONE_LAT,
-                StoneContract.StoneEntry.COLUMN_STONE_LNG,
-                StoneContract.StoneEntry.COLUMN_STONE_MATCH,
-                StoneContract.StoneEntry.COLUMN_STONE_TOUR};
-
-
-        String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?";
-        String[] selectionArgs = new String[]{String.valueOf(mNumberTour)};
-
-
-        // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(
-                this,   // Parent activity context
-                StoneContract.StoneEntry.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                selection,              // Selection based on TOUR Column
-                selectionArgs,          // Tournumber (1, 2)
-                null
-        );        // Default sort order
-    }
-
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor == null || cursor.getCount() < 1) {
-            return;
-        }
-
-        while (cursor.moveToNext()) {
-            int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
-            int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
-            int nameDEColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_DE);
-            int runColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
-            int addresColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
-            int houseColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER);
-            int latColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LAT);
-            int lngColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LNG);
-            int matchColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_MATCH);
-
-
-            // Extract the value from the Cursor for the given column index
-            String name = cursor.getString(nameColumnIndex);
-            String stoneNameNL = cursor.getString(nameNLColumnIndex);
-            String stoneNameDE = cursor.getString(nameDEColumnIndex);
-            final int run = cursor.getInt(runColumnIndex);
-            String addres = cursor.getString(addresColumnIndex);
-            int housenumber = cursor.getInt(houseColumnIndex);
-            double lat = cursor.getDouble(latColumnIndex);
-            double lng = cursor.getDouble(lngColumnIndex);
-            final int match = cursor.getInt(matchColumnIndex);
-
-            /*Depended if the stone has been located by user (DB Match 0 or 1) the marker is colored blue
-            * (case 0) or green (case 1)
-            */
-            String uri = "";
-            if (match == 1) {
-                uri = "@drawable/marker_green" + Integer.toString(run);
-            } else {
-                uri = "@drawable/marker_blue" + Integer.toString(run);
-            }
-            int markerResource = getResources().getIdentifier(uri, null, this.getPackageName());
-
-            // Update the content displayed in the infowindow with the values from the database
-            // depended on the language of the device select EN, NL or DE content
-            // Get the system language of user's device
-            String language = Locale.getDefault().getLanguage();
-
-            if (language.equals("en")) {
-                name = name;
-            } else if (language.equals("nl")) {
-                name = stoneNameNL;
-            } else if (language.equals("de")) {
-                name = stoneNameDE;
-            }
-
-            //TODO: all markers disapear when phone is turned,
-            // Put the markers to the map and save marker in ArrayList markersLibrary
-            /* Markers downloaded from: https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_[color][character].png
-            https://github.com/Concept211/Google-Maps-Markers
-            then put into drawable and called from there*/
-            mMarker = mMap.addMarker(new MarkerOptions()
-                                             .position(new LatLng(lat, lng))
-                                             .title(run + " " + name)
-                                             .snippet(addres + " " + housenumber)
-                                             .icon(BitmapDescriptorFactory.fromResource(markerResource))
-            );
-            //Add marker to ArrayList to be able to call later in openInfoWindow()
-            markersLibrary.add(mMarker);
-
-        }
-        //openInfoWindow();
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        //TODo: swap cursor??
-        // If the loader is invalidated, clear out all the data from the input fields.
-        //markersLibrary.add(mMarker);
-
-
-    }
-
+    // Opens InfoWindow when coming from ClueDetailActivity
     public void openInfoWindow() {
-         /*Open InfoWindow of marker that has been viewed in ClueDetailActivity and focuses the map to the location of marker
-        * Based on runnumber which is sent by intent from ClueDetailActivity to MissionActivity
-        * MainActivity then stores the runNbr in a global Variable mRunNbr
-        * As the ArrayList starts with index 0, but the runNbr with 1, adjusted RunNbr (-1)!
-        * */
-
-//        double markerLat = marker.getPosition().latitude;
-//        double markerLng = marker.getPosition().longitude;
-//
-//        CameraPosition markerClicked = CameraPosition.builder()
-//                .target(new LatLng(markerLat, markerLng))
-//                .zoom(16)
-//                .bearing(0)
-//                .tilt(0)
-//                .build();
-//        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(markerClicked));
-
         int runNbr = mRunNbr;
         if (runNbr == 0) {
             //do nothing
@@ -406,6 +265,102 @@ public class MapsActivity extends AppCompatActivity
                     .build();
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(markerClicked));
         }
+    }
+
+    // Queries DB to create ArrayList where drawMarkers() reads from and gets markers on the map
+    private void queryDatabase() {
+        //TODO: create DB Helper Class and access readable DB to get all info in the arraylist, which should then be used to:
+        // - put Markers on the map (don't disappear when the phone is turned) DONE
+        // - get data for Clue detail activiy (arraylist.get(i)
+        mDbHelper = new StoneDbHelper(this);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                StoneContract.StoneEntry._ID,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME,
+                StoneContract.StoneEntry.COLUMN_STONE_ADDRESS,
+                StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_NL,
+                StoneContract.StoneEntry.COLUMN_STONE_NAME_DE,
+                StoneContract.StoneEntry.COLUMN_STONE_LAT,
+                StoneContract.StoneEntry.COLUMN_STONE_LNG,
+                StoneContract.StoneEntry.COLUMN_STONE_MATCH,
+                StoneContract.StoneEntry.COLUMN_STONE_TOUR};
+
+
+        String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?";
+        String[] selectionArgs = new String[]{String.valueOf(mNumberTour)};
+
+        Cursor cursor = db.query(StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        int nameColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME);
+        int nameNLColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_NL);
+        int nameDEColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_NAME_DE);
+        int runColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER);
+        int addresColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_ADDRESS);
+        int houseColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_HOUSENUMBER);
+        int latColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LAT);
+        int lngColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_LNG);
+        int matchColumnIndex = cursor.getColumnIndex(StoneContract.StoneEntry.COLUMN_STONE_MATCH);
+
+        while (cursor.moveToNext()) {
+            int run = cursor.getInt(runColumnIndex);
+            String name = cursor.getString(nameColumnIndex);
+            String stoneNameNL = cursor.getString(nameNLColumnIndex);
+            String stoneNameDE = cursor.getString(nameDEColumnIndex);
+            String addres = cursor.getString(addresColumnIndex);
+            int housenumber = cursor.getInt(houseColumnIndex);
+            double lat = cursor.getDouble(latColumnIndex);
+            double lng = cursor.getDouble(lngColumnIndex);
+            final int match = cursor.getInt(matchColumnIndex);
+
+            // Update the content displayed in the infowindow with the values from the database
+            // depended on the language of the device select EN, NL or DE content
+            // Get the system language of user's device
+            String language = Locale.getDefault().getLanguage();
+            if (language.equals("en")) {
+                name = name;
+            } else if (language.equals("nl")) {
+                name = stoneNameNL;
+            } else if (language.equals("de")) {
+                name = stoneNameDE;
+            }
+            stonesArrayList.add(run + ", " + name + ", " + addres + ", " + housenumber + ", " + lat + ", " + lng + ", " + match);
+        }
+
+    }
+    private void drawMarkers() {
+        for (int i = 0; i < stonesArrayList.size(); i++) {
+            int run = Integer.parseInt(stonesArrayList.get(i).split(",")[0]);
+            String name = stonesArrayList.get(i).split(",")[1];
+            String address = stonesArrayList.get(i).split(",")[2];
+            String housenumber = stonesArrayList.get(i).split(",")[3];
+            double lat = Double.parseDouble(stonesArrayList.get(i).split(",")[4]);
+            double lng = Double.parseDouble(stonesArrayList.get(i).split(",")[5]);
+            String match = stonesArrayList.get(i).split(",")[6];
+            String uri ="";
+            if (match.equals("1")){
+                uri = "@drawable/marker_green" + Integer.toString(run);
+
+            } else {
+                uri = "@drawable/marker_blue" + Integer.toString(run);
+            }
+
+            int markerResource = getResources().getIdentifier(uri, null, this.getPackageName());
+
+            mMarker = mMap.addMarker(new MarkerOptions()
+                                             .position(new LatLng(lat, lng))
+                                             .title(run + " " + name)
+                                             .snippet(address + " " + housenumber)
+                                     .icon(BitmapDescriptorFactory.fromResource(markerResource))
+            );
+            //Add marker to ArrayList to be able to call later in openInfoWindow()
+            markersLibrary.add(mMarker);
+        }
+        Log.i("StoneArry Match2", stonesArrayList.get(1).split(",")[6]);
+        Log.i("StoneArry Match16", stonesArrayList.get(15).split(",")[6]);
+        //Log.i("MarkersLibr", String.valueOf(markersLibrary.get(1)));
     }
 }
 
