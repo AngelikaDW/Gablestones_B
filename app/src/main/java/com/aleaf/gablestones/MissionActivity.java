@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aleaf.gablestones.data.StoneDbHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -39,6 +41,7 @@ public class MissionActivity extends AppCompatActivity implements
     /** Database helper object */
     public StoneDbHelper mDbHelper;
     ArrayList<String> stonesArrayList = new ArrayList<>();
+    private AdView mAdView;
 
 
     @Override
@@ -97,10 +100,10 @@ public class MissionActivity extends AppCompatActivity implements
         getSupportLoaderManager().initLoader(STONE_LOADER, null, this);
 
 
-        /*// Display the Admob Ad
-        mAdView = (AdView) view.findViewById(R.id.adViewMission);
+        // Display the Admob Ad
+        mAdView = (AdView) findViewById(R.id.adViewMission);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);*/
+        mAdView.loadAd(adRequest);
     }
 
     @Override

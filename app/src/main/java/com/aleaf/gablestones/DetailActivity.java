@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,16 +23,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneDbHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 import java.util.Locale;
-
-import javax.security.auth.login.LoginException;
 
 public class DetailActivity extends AppCompatActivity {
     int mNumberTour;
@@ -57,6 +59,7 @@ public class DetailActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,17 +80,24 @@ public class DetailActivity extends AppCompatActivity {
         //Get Tournumber from SelectTourActivity
         SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        Log.i("TourNbr DetailAc", String.valueOf(mNumberTour));
+        //Log.i("TourNbr DetailAc", String.valueOf(mNumberTour));
 
+        //TODO: move the FAB into the Fragment as each Fragment has its own action
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
             }
         });
         queryDatabase();
+
+        // Display AdMob Banner Ad
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
 
@@ -175,19 +185,31 @@ public class DetailActivity extends AppCompatActivity {
             detail_activity = (DetailActivity) getActivity();
 
             ArrayList stonesArrayList = detail_activity.mStonesArrayList;
+            int mNumberTour = detail_activity.mNumberTour;
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
+            //Find all views and populate views with data from ArrayList
+            TextView runNbrtextView = (TextView) rootView.findViewById(R.id.tv_stone_runNbr);
             TextView nameTextView = (TextView) rootView.findViewById(R.id.tv_stone_name);
             TextView descriptionTextView = (TextView) rootView.findViewById(R.id.tv_stone_description);
+            descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
+            ImageView stoneImageView = (ImageView) rootView.findViewById(R.id.imageView_stone_detail);
 
-            int runNbr = (getArguments().getInt(ARG_SECTION_NUMBER)-1);
-            String name = stonesArrayList.get(runNbr).toString().split(",, ")[2];
+            // runNbrArrayList to extract from Arraylist (Arraylist starts with 0, runNbr Stone with 1)
+            int runNbrArrayList = (getArguments().getInt(ARG_SECTION_NUMBER)-1);
+            int runNbrStone = (getArguments().getInt(ARG_SECTION_NUMBER));
+
+            runNbrtextView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            String name = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[2];
             nameTextView.setText(name);
-            String description = stonesArrayList.get(runNbr).toString().split(",, ")[4];
+
+            String description = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[4];
             descriptionTextView.setText(description);
+
+            String uri = "@drawable/image"+ String.valueOf(mNumberTour) + "_" + String.valueOf(runNbrStone);
+            int imageResource = getContext().getResources().getIdentifier(uri, null, getContext().getPackageName());
+            stoneImageView.setImageResource(imageResource);
 
             return rootView;
         }
@@ -219,8 +241,7 @@ public class DetailActivity extends AppCompatActivity {
 
     // Queries DB to create ArrayList where data for textviews are stored
     public void queryDatabase() {
-        //TODO: create DB Helper Class and access readable DB to get all info in the arraylist, which should then be used to:
-        // - get data for Clue detail activiy (arraylist.get(i)
+
         mDbHelper = new StoneDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
