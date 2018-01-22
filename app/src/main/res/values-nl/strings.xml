@@ -62,4 +62,10 @@
     <string name="intro_time">Duur:</string>
     <string name="intro_time_hours">2.5 uur</string>
     <string name="next">MEER</string>
+    <string name="slide_1a_title">Selecteer een Tour</string>
+    <string name="slide_1a_desc">Selecteer een tour. Elke tour is rond 2km en duurt rond 2.5 uur.</string>
+    <string name="title_activity_select_tour">Welkom to Gevelsteen zoektocht</string>
+    <string name="title_activity_maps">Kaart</string>
+    <string name="title_activity_mission">Volg de zoektocht</string>
+    <string name="title_activity_detail">Gevelsteen</string>
 </resources>

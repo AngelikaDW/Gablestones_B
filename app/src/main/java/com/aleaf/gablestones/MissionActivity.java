@@ -10,6 +10,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,8 +70,7 @@ public class MissionActivity extends AppCompatActivity implements
 
                 // Create new intent to go to ClueDetailActivity
                 Intent intent = new Intent();
-                intent.setClass(MissionActivity.this, ClueDetailActivity.class);
-                intent.putExtra("Fragment", TAG);
+                intent.setClass(MissionActivity.this, DetailActivity.class);
 
                 // From the content URI that represents the specific stone that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the.
@@ -80,6 +80,8 @@ public class MissionActivity extends AppCompatActivity implements
                 // Set the URI on the data field of the intent
                 intent.setData(currentStoneUri);
                 intent.putExtra("Tour", mTourNbr);
+                intent.putExtra("Fragment", position);
+                Log.i("MissionAct Position", "Position clicked: " + position);
 
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);

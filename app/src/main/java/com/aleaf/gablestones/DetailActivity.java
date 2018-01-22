@@ -1,12 +1,21 @@
 package com.aleaf.gablestones;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationListener;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -23,22 +32,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneDbHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.maps.model.Marker;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class DetailActivity extends AppCompatActivity {
-    int mNumberTour;
+    static int mNumberTour;
+    private Uri mCurrentStoneUri;
+    int mPosition;
+
     //save markers in list
-    private ArrayList<Marker> markersLibrary = new ArrayList<>();
+    //private ArrayList<Marker> markersLibrary = new ArrayList<>();
     /**
      * Database helper object
      */
@@ -82,17 +106,21 @@ public class DetailActivity extends AppCompatActivity {
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
         //Log.i("TourNbr DetailAc", String.valueOf(mNumberTour));
 
-        //TODO: move the FAB into the Fragment as each Fragment has its own action
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
+        // Examine the intent that was used to launch this activity
+        Intent intent = getIntent();
+        mCurrentStoneUri = intent.getData();
+        mPosition = 0;
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            if (bundle.containsKey("Fragment")) {
+                mPosition = bundle.getInt("Fragment");
             }
-        });
+        }
+
         queryDatabase();
+        //Open Fragment, that was selected in the Mission Activity
+        openFragment(mPosition);
+
 
         // Display AdMob Banner Ad
         mAdView = (AdView) findViewById(R.id.adView);
@@ -150,11 +178,13 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements
+            GoogleApiClient.ConnectionCallbacks,
+            GoogleApiClient.OnConnectionFailedListener,
+            com.google.android.gms.location.LocationListener {
 
         public DetailActivity detail_activity;
         /**
@@ -162,6 +192,18 @@ public class DetailActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+
+        protected static final String TAG = "Location Services";
+        protected GoogleApiClient mGoogleApiClient;
+        protected Location mLastLocation;
+
+        Location mCurrentLocation;
+        int mMatchResult;
+        int mRunNbrStone;
+
+        protected LocationRequest mLocationRequest;
+
 
         public PlaceholderFragment() {
         }
@@ -186,33 +228,193 @@ public class DetailActivity extends AppCompatActivity {
 
             ArrayList stonesArrayList = detail_activity.mStonesArrayList;
             int mNumberTour = detail_activity.mNumberTour;
+            Uri mCurrentStoneUri = detail_activity.mCurrentStoneUri;
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+
             //Find all views and populate views with data from ArrayList
             TextView runNbrtextView = (TextView) rootView.findViewById(R.id.tv_stone_runNbr);
             TextView nameTextView = (TextView) rootView.findViewById(R.id.tv_stone_name);
+            TextView addressTextView = (TextView) rootView.findViewById(R.id.tv_stone_address);
             TextView descriptionTextView = (TextView) rootView.findViewById(R.id.tv_stone_description);
             descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
             ImageView stoneImageView = (ImageView) rootView.findViewById(R.id.imageView_stone_detail);
+            TextView matchTextView = (TextView) rootView.findViewById(R.id.textViewMatchStone);
+
+            Button showMapButton = (Button) rootView.findViewById(R.id.button_show_on_map);
 
             // runNbrArrayList to extract from Arraylist (Arraylist starts with 0, runNbr Stone with 1)
-            int runNbrArrayList = (getArguments().getInt(ARG_SECTION_NUMBER)-1);
-            int runNbrStone = (getArguments().getInt(ARG_SECTION_NUMBER));
+            int runNbrArrayList = (getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+            mRunNbrStone = (getArguments().getInt(ARG_SECTION_NUMBER));
 
             runNbrtextView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
-            String name = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[2];
+            String name = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[1];
             nameTextView.setText(name);
+
+            String address = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[2];
+            String housenumber = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[3];
+            addressTextView.setText(address + " " + housenumber);
 
             String description = stonesArrayList.get(runNbrArrayList).toString().split(",, ")[4];
             descriptionTextView.setText(description);
 
-            String uri = "@drawable/image"+ String.valueOf(mNumberTour) + "_" + String.valueOf(runNbrStone);
+            String uri = "@drawable/image" + String.valueOf(mNumberTour) + "_" + String.valueOf(mRunNbrStone);
             int imageResource = getContext().getResources().getIdentifier(uri, null, getContext().getPackageName());
             stoneImageView.setImageResource(imageResource);
 
+            final int matchStone = Integer.parseInt(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[7]);
+            matchTextView.setText(String.valueOf(matchStone));
+
+            final Double latStone = Double.parseDouble(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[5]);
+            final Double lngStone = Double.parseDouble(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[6]);
+
+
+            buildGoogleApiClient();
+
+            FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
+                                    latStone, lngStone);
+                    // depending if user is close enough to the gable stone, the database is being
+                    // updated and the image in the ListView in the MissionActivity is changed from
+                    // unchecked to checked box
+
+
+                }
+            });
+
+            // When Button "show on Map" is clicked, open the info window of the marker in the
+            // MapFragment
+            showMapButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent mapIntent = new Intent(getContext(), MapsActivity.class);
+                    //mapIntent.putExtra("Fragment_ID", 1);
+                    mapIntent.putExtra("Run#", mRunNbrStone);
+                    mapIntent.putExtra("LocMatch", matchStone);
+                    //mapIntent.putExtra("CurrentLoc", mCurrentLocation);
+                    startActivity(mapIntent);
+                }
+            });
+
+
             return rootView;
         }
+
+        protected synchronized void buildGoogleApiClient() {
+            mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            mGoogleApiClient.connect();
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            if (mGoogleApiClient.isConnected()) {
+                mGoogleApiClient.disconnect();
+            }
+        }
+
+        /**
+         * Runs when a GoogleApiClient object successfully connects.
+         */
+        @Override
+        public void onConnected(Bundle connectionHint) {
+            mLocationRequest = LocationRequest.create();
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            mLocationRequest.setInterval(10000*30); //every 30 seconds
+            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    getContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                return;
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, mLocationRequest, this);
+
+
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.i(TAG, location.toString());
+            mCurrentLocation = location;
+        }
+
+        @Override
+        public void onConnectionFailed(ConnectionResult result) {
+            // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
+            // onConnectionFailed.
+            Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
+        }
+
+        /*
+        * Called by Google Play services if the connection to GoogleApiClient drops because of an
+        * error.
+        */
+        public void onDisconnected() {
+            Log.i(TAG, "Disconnected");
+        }
+
+        @Override
+        public void onConnectionSuspended(int cause) {
+            // The connection to Google Play services was lost for some reason. We call connect() to
+            // attempt to re-establish the connection.
+            Log.i(TAG, "Connection suspended");
+            mGoogleApiClient.connect();
+        }
+
+
+         /*
+         * Compares the current Location (Lat and Lng) of user with the location of the stone as saved in db
+         * if distance is less than 50m match (1) gets written into db
+         * if distance is more than 50m db is not updated*/
+
+        public void distanceBetween(double startLatitude, double startLongitude, double endLatitude,
+                                    double endLongitude) {
+
+            float[] distance = new float[1];
+            Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
+            if (distance[0] < 50.0) {
+                Toast.makeText(getContext(), getString(R.string.stone_located),
+                               Toast.LENGTH_SHORT).show();
+                mMatchResult = 1;
+            } else {
+                Toast.makeText(getContext(), getString(R.string.stone_too_far),
+                               Toast.LENGTH_LONG).show();
+                mMatchResult = 0;
+            }
+            updateStoneInDb();
+        }
+
+        // Get update from location of user and save it to stones database
+        public void updateStoneInDb() {
+            StoneDbHelper dBHelper = detail_activity.mDbHelper;
+            dBHelper = new StoneDbHelper(getContext());
+            SQLiteDatabase db = dBHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(StoneContract.StoneEntry.COLUMN_STONE_MATCH, mMatchResult);
+            String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?" + "AND " + StoneContract.StoneEntry.COLUMN_STONE_RUNNINGNUMBER + "=?";
+            String[] selectionArgs = new String[]{String.valueOf(mNumberTour), String.valueOf(mRunNbrStone)};
+
+            db.update(StoneContract.StoneEntry.TABLE_NAME, values, selection , selectionArgs);
+
+        }
+
     }
 
     /**
@@ -308,8 +510,15 @@ public class DetailActivity extends AppCompatActivity {
                 name = stoneNameDE;
                 description = descriptionDE;
             }
-            mStonesArrayList.add(run + ",, " + name + ",, " + addres + ",, " + housenumber + ",, " + description +",, " + lat + ",, " + lng + ",, " + match);
+            mStonesArrayList.add(run + ",, " + name + ",, " + addres + ",, " + housenumber + ",, " + description + ",, " + lat + ",, " + lng + ",, " + match);
         }
 
     }
+
+    // Open Fragment based on selected Stone in Mission Activity
+    public void openFragment(int position) {
+        mViewPager.setCurrentItem(position, true);
+    }
+
 }
+

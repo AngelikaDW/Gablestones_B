@@ -62,4 +62,10 @@
     <string name="intro_time">Dauer:</string>
     <string name="intro_time_hours">2,5 Stunden</string>
     <string name="next">WEITER</string>
+    <string name="slide_1a_title">Wählen Sie eine Tour aus</string>
+    <string name="slide_1a_desc">Wählen Sie eine Tour aus. Alle Touren sind rund 2km lang und dauern rund 2.5 Stunden.</string>
+    <string name="title_activity_select_tour">Willkommen bei Giebelstein Tour</string>
+    <string name="title_activity_maps">Karte</string>
+    <string name="title_activity_mission">Folgen Sie der Route§</string>
+    <string name="title_activity_detail">Giebelstein</string>
 </resources>

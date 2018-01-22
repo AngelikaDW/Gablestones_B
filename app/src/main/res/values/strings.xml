@@ -128,10 +128,12 @@
     <string name="intro_time">Time:</string>
     <string name="intro_time_hours">2.5 hours</string>
     <string name="duration_in_hours">about 2.5 hours</string>
-    <string name="title_activity_select_tour">SelectTourActivity</string>
+    <string name="title_activity_select_tour">Welcome to Gablestone Quest</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_mission">MissionActivity</string>
-    <string name="title_activity_detail">DetailActivity</string>
-    <string name="section_format">%1$d</string>
+    <string name="title_activity_mission">Follow the quest</string>
+    <string name="title_activity_detail">Gablestone</string>
+
+
+    <string name="section_format" translatable="false">%1$d</string>
 
 </resources>

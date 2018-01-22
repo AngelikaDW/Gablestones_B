@@ -89,8 +89,6 @@ public class MapsActivity extends AppCompatActivity
     public StoneDbHelper mDbHelper;
     ArrayList<String> stonesArrayList = new ArrayList<>();
 
-    //ToDo: when device is turned, shuts off - arraylist is empty?
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,10 +151,10 @@ public class MapsActivity extends AppCompatActivity
                 String[] separated = markerTitle.split(" ");
                 int markerRunnbr = Integer.parseInt(separated[0]);
 
-                // Opens the Clue Detail activity with the corresponding stone (based on Nbr)
-                Intent i = new Intent(MapsActivity.this, ClueDetailActivity.class);
+                // Opens the Detail activity with the corresponding stone (based on Nbr)
+                Intent i = new Intent(MapsActivity.this, DetailActivity.class);
                 // From the content URI that represents the specific stone that was clicked on,
-                // by appending the "id" (passed as input to this method) onto the ClueDetail intent
+                // by appending the "id" (passed as input to this method) onto the Detail intent
                 Uri currentStoneUri = ContentUris.withAppendedId(
                         StoneContract.StoneEntry.CONTENT_URI, markerRunnbr);
 
@@ -269,9 +267,6 @@ public class MapsActivity extends AppCompatActivity
 
     // Queries DB to create ArrayList where drawMarkers() reads from and gets markers on the map
     private void queryDatabase() {
-        //TODO: create DB Helper Class and access readable DB to get all info in the arraylist, which should then be used to:
-        // - put Markers on the map (don't disappear when the phone is turned) DONE
-        // - get data for Clue detail activiy (arraylist.get(i)
         mDbHelper = new StoneDbHelper(this);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -338,11 +333,10 @@ public class MapsActivity extends AppCompatActivity
             String housenumber = stonesArrayList.get(i).split(",")[3];
             double lat = Double.parseDouble(stonesArrayList.get(i).split(",")[4]);
             double lng = Double.parseDouble(stonesArrayList.get(i).split(",")[5]);
-            String match = stonesArrayList.get(i).split(",")[6];
+            String match = stonesArrayList.get(i).split(",")[6].substring(1, 2);
             String uri ="";
             if (match.equals("1")){
                 uri = "@drawable/marker_green" + Integer.toString(run);
-
             } else {
                 uri = "@drawable/marker_blue" + Integer.toString(run);
             }
@@ -358,9 +352,6 @@ public class MapsActivity extends AppCompatActivity
             //Add marker to ArrayList to be able to call later in openInfoWindow()
             markersLibrary.add(mMarker);
         }
-        Log.i("StoneArry Match2", stonesArrayList.get(1).split(",")[6]);
-        Log.i("StoneArry Match16", stonesArrayList.get(15).split(",")[6]);
-        //Log.i("MarkersLibr", String.valueOf(markersLibrary.get(1)));
     }
 }
 
