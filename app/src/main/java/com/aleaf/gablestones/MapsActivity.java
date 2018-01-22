@@ -1,7 +1,6 @@
 package com.aleaf.gablestones;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,7 +22,6 @@ import com.aleaf.gablestones.data.StoneDbHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
@@ -36,9 +32,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -50,7 +44,6 @@ import java.util.Locale;
 public class MapsActivity extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,
-        //OnMyLocationClickListener,
         OnMapReadyCallback {
 
     /**
@@ -74,8 +67,6 @@ public class MapsActivity extends AppCompatActivity
     private Marker mMarker;
     private LatLng mMarkerPosition;
 
-    //Identifier for the stone data loader
-    private static final int EXISTING_STONE_LOADER = 0;
 
     //save markers in list
     private ArrayList<Marker> markersLibrary = new ArrayList<>();
@@ -102,7 +93,6 @@ public class MapsActivity extends AppCompatActivity
         //Get Tournumber from SelectTourActivity
         SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        Log.i("TourNbr MapsAct", String.valueOf(mNumberTour));
 
         /*Intent sent by ClueDetailActivity gets information about runNbr of Gablestone to open infoWindow*/
         Bundle bundle = getIntent().getExtras();
@@ -157,6 +147,7 @@ public class MapsActivity extends AppCompatActivity
                 // by appending the "id" (passed as input to this method) onto the Detail intent
                 Uri currentStoneUri = ContentUris.withAppendedId(
                         StoneContract.StoneEntry.CONTENT_URI, markerRunnbr);
+                i.putExtra("Fragment", markerRunnbr-1);
 
                 // Set the URI on the data field of the intent
                 i.setData(currentStoneUri);
@@ -314,17 +305,23 @@ public class MapsActivity extends AppCompatActivity
             // depended on the language of the device select EN, NL or DE content
             // Get the system language of user's device
             String language = Locale.getDefault().getLanguage();
-            if (language.equals("en")) {
-                name = name;
-            } else if (language.equals("nl")) {
-                name = stoneNameNL;
-            } else if (language.equals("de")) {
-                name = stoneNameDE;
+            switch (language) {
+                case "en":
+                    name = name;
+                    break;
+                case "nl":
+                    name = stoneNameNL;
+                    break;
+                case "de":
+                    name = stoneNameDE;
+                    break;
             }
             stonesArrayList.add(run + ", " + name + ", " + addres + ", " + housenumber + ", " + lat + ", " + lng + ", " + match);
         }
+        cursor.close();
 
     }
+    // Draw markers to map
     private void drawMarkers() {
         for (int i = 0; i < stonesArrayList.size(); i++) {
             int run = Integer.parseInt(stonesArrayList.get(i).split(",")[0]);
@@ -334,7 +331,7 @@ public class MapsActivity extends AppCompatActivity
             double lat = Double.parseDouble(stonesArrayList.get(i).split(",")[4]);
             double lng = Double.parseDouble(stonesArrayList.get(i).split(",")[5]);
             String match = stonesArrayList.get(i).split(",")[6].substring(1, 2);
-            String uri ="";
+            String uri;
             if (match.equals("1")){
                 uri = "@drawable/marker_green" + Integer.toString(run);
             } else {

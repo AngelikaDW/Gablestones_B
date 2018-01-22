@@ -86,7 +86,7 @@ public class ImageViewPopUpHelper {
         poppedImageView = new ImageView(context);
 
         dialog = new Dialog(context);
-        dialog.requestWindowFeature((int) Window.FEATURE_NO_TITLE);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(poppedImageView);
         dialog.getWindow().setBackgroundDrawable(null); // Without this line there is a very small border around the image (1px)
         dialog.setCanceledOnTouchOutside(true); // Gingerbread support

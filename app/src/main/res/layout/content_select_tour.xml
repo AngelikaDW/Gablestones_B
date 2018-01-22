@@ -9,11 +9,6 @@
     tools:layout_editor_absoluteY="81dp"
     tools:showIn="@layout/activity_select_tour">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/select_map"-->
-    <!--android:layout_width="360dp"-->
-    <!--android:layout_height="511dp"-->
-    <!--app:srcCompat="@mipmap/snazzy_ams" />-->
 
     <Button
         android:id="@+id/button_tour1"
@@ -69,7 +64,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="28dp"
         android:text="@string/explanation"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

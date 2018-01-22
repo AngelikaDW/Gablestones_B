@@ -7,14 +7,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationListener;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +28,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +41,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -104,7 +93,6 @@ public class DetailActivity extends AppCompatActivity {
         //Get Tournumber from SelectTourActivity
         SharedPreferences tourselected = getSharedPreferences(SelectTourActivity.PREFS_NAME, Context.MODE_PRIVATE);
         mNumberTour = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        //Log.i("TourNbr DetailAc", String.valueOf(mNumberTour));
 
         // Examine the intent that was used to launch this activity
         Intent intent = getIntent();
@@ -121,13 +109,11 @@ public class DetailActivity extends AppCompatActivity {
         //Open Fragment, that was selected in the Mission Activity
         openFragment(mPosition);
 
-
         // Display AdMob Banner Ad
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -177,7 +163,6 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -193,17 +178,14 @@ public class DetailActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-
         protected static final String TAG = "Location Services";
         protected GoogleApiClient mGoogleApiClient;
-        protected Location mLastLocation;
 
         Location mCurrentLocation;
         int mMatchResult;
         int mRunNbrStone;
 
         protected LocationRequest mLocationRequest;
-
 
         public PlaceholderFragment() {
         }
@@ -227,11 +209,9 @@ public class DetailActivity extends AppCompatActivity {
             detail_activity = (DetailActivity) getActivity();
 
             ArrayList stonesArrayList = detail_activity.mStonesArrayList;
-            int mNumberTour = detail_activity.mNumberTour;
-            Uri mCurrentStoneUri = detail_activity.mCurrentStoneUri;
+            int mNumberTour = DetailActivity.mNumberTour;
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
 
             //Find all views and populate views with data from ArrayList
             TextView runNbrtextView = (TextView) rootView.findViewById(R.id.tv_stone_runNbr);
@@ -240,8 +220,6 @@ public class DetailActivity extends AppCompatActivity {
             TextView descriptionTextView = (TextView) rootView.findViewById(R.id.tv_stone_description);
             descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
             ImageView stoneImageView = (ImageView) rootView.findViewById(R.id.imageView_stone_detail);
-            TextView matchTextView = (TextView) rootView.findViewById(R.id.textViewMatchStone);
-
             Button showMapButton = (Button) rootView.findViewById(R.id.button_show_on_map);
 
             // runNbrArrayList to extract from Arraylist (Arraylist starts with 0, runNbr Stone with 1)
@@ -265,8 +243,6 @@ public class DetailActivity extends AppCompatActivity {
             stoneImageView.setImageResource(imageResource);
 
             final int matchStone = Integer.parseInt(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[7]);
-            matchTextView.setText(String.valueOf(matchStone));
-
             final Double latStone = Double.parseDouble(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[5]);
             final Double lngStone = Double.parseDouble(stonesArrayList.get(runNbrArrayList).toString().split(",, ")[6]);
 
@@ -284,7 +260,7 @@ public class DetailActivity extends AppCompatActivity {
                     // updated and the image in the ListView in the MissionActivity is changed from
                     // unchecked to checked box
 
-
+                    checkNbrMatches();
                 }
             });
 
@@ -294,14 +270,11 @@ public class DetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent mapIntent = new Intent(getContext(), MapsActivity.class);
-                    //mapIntent.putExtra("Fragment_ID", 1);
                     mapIntent.putExtra("Run#", mRunNbrStone);
                     mapIntent.putExtra("LocMatch", matchStone);
-                    //mapIntent.putExtra("CurrentLoc", mCurrentLocation);
                     startActivity(mapIntent);
                 }
             });
-
 
             return rootView;
         }
@@ -351,7 +324,7 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         public void onLocationChanged(Location location) {
-            Log.i(TAG, location.toString());
+            //Log.i(TAG, location.toString());
             mCurrentLocation = location;
         }
 
@@ -367,7 +340,7 @@ public class DetailActivity extends AppCompatActivity {
         * error.
         */
         public void onDisconnected() {
-            Log.i(TAG, "Disconnected");
+            //Log.i(TAG, "Disconnected");
         }
 
         @Override
@@ -378,12 +351,10 @@ public class DetailActivity extends AppCompatActivity {
             mGoogleApiClient.connect();
         }
 
-
          /*
          * Compares the current Location (Lat and Lng) of user with the location of the stone as saved in db
          * if distance is less than 50m match (1) gets written into db
          * if distance is more than 50m db is not updated*/
-
         public void distanceBetween(double startLatitude, double startLongitude, double endLatitude,
                                     double endLongitude) {
 
@@ -399,12 +370,13 @@ public class DetailActivity extends AppCompatActivity {
                 mMatchResult = 0;
             }
             updateStoneInDb();
+
         }
 
-        // Get update from location of user and save it to stones database
+        // Get update from location of user and save new matcg value to stones database
         public void updateStoneInDb() {
-            StoneDbHelper dBHelper = detail_activity.mDbHelper;
-            dBHelper = new StoneDbHelper(getContext());
+
+            StoneDbHelper dBHelper = new StoneDbHelper(getContext());
             SQLiteDatabase db = dBHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(StoneContract.StoneEntry.COLUMN_STONE_MATCH, mMatchResult);
@@ -412,6 +384,27 @@ public class DetailActivity extends AppCompatActivity {
             String[] selectionArgs = new String[]{String.valueOf(mNumberTour), String.valueOf(mRunNbrStone)};
 
             db.update(StoneContract.StoneEntry.TABLE_NAME, values, selection , selectionArgs);
+
+        }
+
+        // Get Number of Matches, if all stones  are match = 1 --> open Confetti Activity
+        public void checkNbrMatches() {
+            StoneDbHelper dbHelper = new StoneDbHelper(getContext());
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String[] projection = {
+                    StoneContract.StoneEntry._ID,
+                    StoneContract.StoneEntry.COLUMN_STONE_TOUR,
+                    StoneContract.StoneEntry.COLUMN_STONE_MATCH};
+            String selection = StoneContract.StoneEntry.COLUMN_STONE_TOUR + "=?" + "AND " + StoneContract.StoneEntry.COLUMN_STONE_MATCH + "=?";
+            String[] selectionArgs = new String[]{String.valueOf(mNumberTour), String.valueOf(StoneContract.StoneEntry.MATCH_TRUE)};
+
+            Cursor cursor = db.query(StoneContract.StoneEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+            if(cursor.getCount()>=20) {
+                Intent confettiIntent = new Intent(getContext(), ConfettiActivity.class);
+                startActivity(confettiIntent);
+            } else {}
+            cursor.close();
+
 
         }
 
@@ -487,7 +480,7 @@ public class DetailActivity extends AppCompatActivity {
             String name = cursor.getString(nameColumnIndex);
             String stoneNameNL = cursor.getString(nameNLColumnIndex);
             String stoneNameDE = cursor.getString(nameDEColumnIndex);
-            String addres = cursor.getString(addresColumnIndex);
+            String address = cursor.getString(addresColumnIndex);
             int housenumber = cursor.getInt(houseColumnIndex);
             String description = cursor.getString(descriptionColumnIndex);
             String descriptionDE = cursor.getString(descriptionDEColumnIndex);
@@ -500,19 +493,22 @@ public class DetailActivity extends AppCompatActivity {
             // depended on the language of the device select EN, NL or DE content
             // Get the system language of user's device
             String language = Locale.getDefault().getLanguage();
-            if (language.equals("en")) {
-//                name = name;
-//                description = description;
-            } else if (language.equals("nl")) {
-                name = stoneNameNL;
-                description = descriptionNL;
-            } else if (language.equals("de")) {
-                name = stoneNameDE;
-                description = descriptionDE;
+            switch (language) {
+                case "de":
+                    name = stoneNameDE;
+                    description = descriptionDE;
+                    break;
+                case "nl":
+                    name = stoneNameNL;
+                    description = descriptionNL;
+                    break;
+                default:
+                    break;
             }
-            mStonesArrayList.add(run + ",, " + name + ",, " + addres + ",, " + housenumber + ",, " + description + ",, " + lat + ",, " + lng + ",, " + match);
-        }
 
+            mStonesArrayList.add(run + ",, " + name + ",, " + address + ",, " + housenumber + ",, " + description + ",, " + lat + ",, " + lng + ",, " + match);
+        }
+        cursor.close();
     }
 
     // Open Fragment based on selected Stone in Mission Activity
@@ -521,4 +517,3 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 }
-

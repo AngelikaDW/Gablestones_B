@@ -17,11 +17,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.aleaf.gablestones.data.StoneDbHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
-import java.util.ArrayList;
 import java.util.Locale;
 
 import static com.aleaf.gablestones.data.StoneContract.*;
@@ -29,19 +26,14 @@ import static com.aleaf.gablestones.data.StoneContract.*;
 public class MissionActivity extends AppCompatActivity implements
         android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String TAG = "MissionFragment";
     private ListView mStoneListView;
     private StoneCursorAdapter mCursorAdapter;
     private String mLanguage;
     private int mTourNbr;
-    private int mPositionClicked;
 
     /** Identifier for the stone data loader */
     private static final int STONE_LOADER = 0;
 
-    /** Database helper object */
-    public StoneDbHelper mDbHelper;
-    ArrayList<String> stonesArrayList = new ArrayList<>();
     private AdView mAdView;
 
 
@@ -86,21 +78,16 @@ public class MissionActivity extends AppCompatActivity implements
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);
 
-                mPositionClicked = position;
-
-
             }
         });
 
         //Get Shared Preferences
         /*Get number of Tour selected from SelectTourActivity*/
-        SharedPreferences tourselected = this.getSharedPreferences(SelectTourActivity.PREFS_NAME, MODE_PRIVATE);
-        mTourNbr = tourselected.getInt("TourNbr", MODE_PRIVATE);
-        //Log.i("TourNbr Mission", String.valueOf(mTourNbr));
+        SharedPreferences tourSelected = this.getSharedPreferences(SelectTourActivity.PREFS_NAME, MODE_PRIVATE);
+        mTourNbr = tourSelected.getInt("TourNbr", MODE_PRIVATE);
 
         // Kick off the loader
         getSupportLoaderManager().initLoader(STONE_LOADER, null, this);
-
 
         // Display the Admob Ad
         mAdView = (AdView) findViewById(R.id.adViewMission);
