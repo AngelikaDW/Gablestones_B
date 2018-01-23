@@ -16,7 +16,7 @@
     <string name="stone_located">Congratulations - you have located the gable stone!</string>
     <string name="stone_too_far">Not there yet - Keep on looking!</string>
     <string name="all_stones_located">Congratulations - you have located all gable stones of your tour!</string>
-    <string name="please_leave_rating">Hope you enjoyed the tour. Please share your experience with us at Google Play Store - Thank you!</string>
+    <string name="please_leave_rating">Hope you enjoyed the tour. Please share your experience <a href="https://play.google.com/store/apps/details?id=com.aleaf.gablestones">on Google Play</a> - Thank you!</string>
 
     <!--    Permissions    -->
     <string name="permission_rationale_location" translatable="false">Access to the location service is required to demonstrate the "Show me my current location on the map" feature, which shows your current location on the map.</string>
@@ -105,7 +105,6 @@
     <string name="slide_1a_title">Select your Tour</string>
     <string name="slide_1a_desc">Select a tour and enjoy. All tours are about 2km and will take you about 2.5 hours to  complete.</string>
 
-
     <string name="slide_2_title">Discover more about historic Amsterdam</string>
     <string name="slide_2_desc">Learn more about gable stones and the stories they tell about former owners of houses they decorate.</string>
 
@@ -135,5 +134,13 @@
 
 
     <string name="section_format" translatable="false">%1$d</string>
+
+    <!--Select Tour Activity-->
+    <string name="button_tour_1">JORDAAN   Charming canals and historic buildings</string>
+    <string name="button_tour_2"> OLD CENTER \n Ever since home to merchants and traders</string>
+
+    <!--Colofon Info Activity-->
+    <string name="reference_icon" translatable="false">Icons designed by smashicons.com from Flaticon</string>
+    <string name="reference_gablestones" translatable="false">More information about gablestones:  www.gevelstenenvanamsterdam.nlv</string>
 
 </resources>

@@ -1,9 +1,13 @@
 package com.aleaf.gablestones;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
@@ -54,5 +58,26 @@ public class ConfettiActivity extends AppCompatActivity {
                 finish();
             }
         }, 10000);
+
+
+        TextView linkToGooglePlay = (TextView) findViewById(R.id.feedback_pls);
+        ImageView linkToGooglePlayImage = (ImageView) findViewById(R.id.image_confetti);
+        linkToGooglePlayImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=com.aleaf.gablestones"));
+                startActivity(intent);
+            }
+        });
+
+        linkToGooglePlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=com.aleaf.gablestones"));
+                startActivity(intent);
+            }
+        });
     }
 }

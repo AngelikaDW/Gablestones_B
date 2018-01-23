@@ -129,6 +129,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_stone_runNbr" />
 
+        <!-- This initially-hidden ImageView will hold the expanded/zoomed version of
+                the images above. Without transformations applied, it takes up the entire
+                screen. To achieve the "zoom" animation, this view's bounds are animated
+                from the bounds of the thumbnail button above, to its final laid-out
+                bounds.
+                -->
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:contentDescription="description_zoom_touch_close" />
+
+
 </android.support.constraint.ConstraintLayout>
 </ScrollView>
 

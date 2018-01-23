@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_mission, menu);
         return true;
     }
 
@@ -123,14 +123,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.open_map:
                 Intent openMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(openMapIntent);
-                return true;
-            case R.id.open_detailFragment:
-                Intent clueDetailIntent = new Intent(MainActivity.this, ClueDetailActivity.class);
-                startActivity(clueDetailIntent);
-                return true;
-            case R.id.open_info:
-                Intent infoTourIntent = new Intent(MainActivity.this, ClueDetailActivity.class);
-                startActivity(infoTourIntent);
                 return true;
 
             default:

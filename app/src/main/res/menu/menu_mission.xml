@@ -6,7 +6,7 @@
     <item
         android:id="@+id/select_tour"
         android:orderInCategory="100"
-        android:title="Select the tour"
+        android:title="@string/slide_1a_title"
         app:showAsAction="never" />
     <item
         android:id="@+id/intro_tour"
@@ -16,7 +16,7 @@
     <item
         android:id="@+id/open_map"
         android:orderInCategory="300"
-        android:title="Map"
+        android:title="@string/title_activity_maps"
         app:showAsAction="never"/>
     <item
         android:id="@+id/madeByColofon"
@@ -30,16 +30,4 @@
         <!--android:title="Confetti"-->
         <!--app:showAsAction="never"/>-->
 
-
-
-    <item
-        android:id="@+id/open_detailFragment"
-        android:orderInCategory="600"
-        android:title="ClueDetail"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/open_info"
-        android:orderInCategory="700"
-        android:title="Background of Tour"
-        app:showAsAction="never"/>
 </menu>

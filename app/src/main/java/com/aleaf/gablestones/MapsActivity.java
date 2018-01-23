@@ -65,8 +65,6 @@ public class MapsActivity extends AppCompatActivity
 
     int mNumberTour;
     private Marker mMarker;
-    private LatLng mMarkerPosition;
-
 
     //save markers in list
     private ArrayList<Marker> markersLibrary = new ArrayList<>();
@@ -108,11 +106,10 @@ public class MapsActivity extends AppCompatActivity
 
         queryDatabase();
 
-        // TODO: implement Banner AD
-//         // Display the Admob Ad
-//        mAdView = (AdView) findViewById(R.id.adViewMapAct);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
+        // Display the Admob Ad
+        mAdView = (AdView) findViewById(R.id.adViewMapsAct);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

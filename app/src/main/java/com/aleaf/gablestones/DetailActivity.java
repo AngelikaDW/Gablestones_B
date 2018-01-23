@@ -26,22 +26,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.aleaf.gablestones.data.StoneContract;
 import com.aleaf.gablestones.data.StoneDbHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -50,8 +46,6 @@ public class DetailActivity extends AppCompatActivity {
     private Uri mCurrentStoneUri;
     int mPosition;
 
-    //save markers in list
-    //private ArrayList<Marker> markersLibrary = new ArrayList<>();
     /**
      * Database helper object
      */
@@ -118,7 +112,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_mission, menu);
         return true;
     }
 
@@ -147,10 +141,6 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.open_map:
                 Intent openMapIntent = new Intent(DetailActivity.this, MapsActivity.class);
                 startActivity(openMapIntent);
-                return true;
-            case R.id.open_detailFragment:
-                Intent clueDetailIntent = new Intent(DetailActivity.this, MissionActivity.class);
-                startActivity(clueDetailIntent);
                 return true;
             default:
                 int id = item.getItemId();
@@ -219,7 +209,7 @@ public class DetailActivity extends AppCompatActivity {
             TextView addressTextView = (TextView) rootView.findViewById(R.id.tv_stone_address);
             TextView descriptionTextView = (TextView) rootView.findViewById(R.id.tv_stone_description);
             descriptionTextView.setMovementMethod(new ScrollingMovementMethod());
-            ImageView stoneImageView = (ImageView) rootView.findViewById(R.id.imageView_stone_detail);
+            final ImageView stoneImageView = (ImageView) rootView.findViewById(R.id.imageView_stone_detail);
             Button showMapButton = (Button) rootView.findViewById(R.id.button_show_on_map);
 
             // runNbrArrayList to extract from Arraylist (Arraylist starts with 0, runNbr Stone with 1)
@@ -275,6 +265,19 @@ public class DetailActivity extends AppCompatActivity {
                     startActivity(mapIntent);
                 }
             });
+
+            //Set OnClickListener on the ImageView to open full screen image
+            //https://github.com/juliomarcos/ImageViewPopUpHelper
+            stoneImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageViewPopUpHelper.enablePopUpOnClick(getActivity(), stoneImageView,
+                                                            stoneImageView.getDrawable());
+                    Toast.makeText(getActivity(), getText(R.string.click_on_img),
+                                   Toast.LENGTH_SHORT).show();
+                }
+            });
+
 
             return rootView;
         }

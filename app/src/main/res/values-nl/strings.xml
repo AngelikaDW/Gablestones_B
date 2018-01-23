@@ -68,4 +68,6 @@
     <string name="title_activity_maps">Kaart</string>
     <string name="title_activity_mission">Volg de zoektocht</string>
     <string name="title_activity_detail">Gevelsteen</string>
+    <string name="button_tour_2">"Oud centrum: thuisbasis van handelaars "</string>
+    <string name="button_tour_1">JORDAAN Charmante grachten en historische gebouwen</string>
 </resources>

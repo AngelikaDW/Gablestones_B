@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:id="@+id/image_confetti"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:src="@drawable/image_gablestones" />
+
     <TextView
         android:id="@+id/congratulations_confetti"
         android:layout_width="wrap_content"
