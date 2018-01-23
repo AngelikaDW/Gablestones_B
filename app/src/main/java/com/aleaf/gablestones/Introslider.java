@@ -51,8 +51,8 @@ public class Introslider extends AppCompatActivity {
         // add few more layouts if you want and add color array in values/colors.xml
         layouts = new int[]{
                 R.layout.welcome_slide1,
-                R.layout.welcome_slide2,
                 R.layout.welcome_slide5,
+                R.layout.welcome_slide2,
                 R.layout.welcome_slide3,
                 R.layout.welcome_slide4};
 

@@ -26,35 +26,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBd-S1-5k5_gpU4Xiob3aPUHPO7OwAG-To" />
 
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-
         <!-- A Clue Detail Activity a Child of Mission Activiy -->
-        <activity
-            android:name=".ClueDetailActivity"
-            android:label="@string/title_activity_clue_detail_activiy"
-            android:parentActivityName=".MissionActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.aleaf.gablestones.MissionActivity" />
-
-            <intent-filter>
-                <action android:name="com.aleaf.gablestones.ClueDetailActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
 
         <provider
             android:name=".data.StoneProvider"

@@ -255,7 +255,7 @@ public class DetailActivity extends AppCompatActivity {
             });
 
             // When Button "show on Map" is clicked, open the info window of the marker in the
-            // MapFragment
+            // MapsActivity
             showMapButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
