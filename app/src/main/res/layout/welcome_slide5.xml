@@ -14,10 +14,10 @@
         tools:ignore="UselessParent">
 
         <ImageView
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/image_gablestones"
-            android:contentDescription="Logo Gabelstone Quest Amsterdam"/>
+            android:layout_width="276dp"
+            android:layout_height="282dp"
+            android:contentDescription="Logo Gabelstone Quest Amsterdam"
+            android:src="@drawable/screen_select_tour_green_highlight" />
 
         <TextView
             android:layout_width="wrap_content"

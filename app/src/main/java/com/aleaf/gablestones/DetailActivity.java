@@ -243,7 +243,9 @@ public class DetailActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.i("Current Loc:", String.valueOf(mCurrentLocation.getLatitude()));
 
+                    //TODO: Bug of immediately click on check --> null in
                     distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                                     latStone, lngStone);
                     // depending if user is close enough to the gable stone, the database is being
@@ -311,7 +313,7 @@ public class DetailActivity extends AppCompatActivity {
         public void onConnected(Bundle connectionHint) {
             mLocationRequest = LocationRequest.create();
             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            mLocationRequest.setInterval(10000*30); //every 30 seconds
+            mLocationRequest.setInterval(10*1000); //every 10 seconds
             if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                     getContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -327,7 +329,7 @@ public class DetailActivity extends AppCompatActivity {
 
         @Override
         public void onLocationChanged(Location location) {
-            //Log.i(TAG, location.toString());
+            Log.i(TAG, location.toString());
             mCurrentLocation = location;
         }
 
@@ -363,7 +365,7 @@ public class DetailActivity extends AppCompatActivity {
 
             float[] distance = new float[1];
             Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
-            if (distance[0] < 50.0) {
+            if (distance[0] < 75) {
                 Toast.makeText(getContext(), getString(R.string.stone_located),
                                Toast.LENGTH_SHORT).show();
                 mMatchResult = 1;

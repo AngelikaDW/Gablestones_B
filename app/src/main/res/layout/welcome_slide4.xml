@@ -20,7 +20,7 @@
                 android:id="@+id/screen_locate_user"
                 android:layout_width="160dp"
                 android:layout_height="300dp"
-                android:src="@drawable/screen_user_locate_green"
+                android:src="@drawable/screen_show_map_green_highlight"
                 android:layout_marginLeft="16dp"
                 android:layout_alignParentLeft="true"/>
 
