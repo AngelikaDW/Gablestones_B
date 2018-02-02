@@ -238,7 +238,7 @@ public class MapsActivity extends AppCompatActivity
         } else {
             int runNbrAdjusted = runNbr - 1;
             markersLibrary.get(runNbrAdjusted).showInfoWindow();
-            Log.i("position of Marker", String.valueOf(markersLibrary.get(runNbrAdjusted).getPosition()));
+            //Log.i("position of Marker", String.valueOf(markersLibrary.get(runNbrAdjusted).getPosition()));
             LatLng markerPosition = markersLibrary.get(runNbrAdjusted).getPosition();
             double markerPosLat = markerPosition.latitude;
             double markerPosLng = markerPosition.longitude;

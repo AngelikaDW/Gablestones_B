@@ -24,7 +24,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBd-S1-5k5_gpU4Xiob3aPUHPO7OwAG-To" />
+            android:value="AIzaSyDgldc18MFA19F8y5Ibmf0mqcxaWbHpdSI" />
 
         <!-- A Clue Detail Activity a Child of Mission Activiy -->
 
@@ -57,7 +57,14 @@
         <!-- IntroSlider Activity -->
         <activity
             android:name=".Introslider"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
 
         <!-- Confetti Activity To be Launched when all Gablestones are located and green ticked -->
         <activity

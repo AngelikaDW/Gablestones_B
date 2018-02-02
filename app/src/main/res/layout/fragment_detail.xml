@@ -61,7 +61,7 @@
         android:id="@+id/tv_stone_description"
         android:layout_width="match_parent"
         android:layout_height="246dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="56dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginStart="16dp"

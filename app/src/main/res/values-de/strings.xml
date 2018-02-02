@@ -69,5 +69,6 @@
     <string name="title_activity_mission">Folgen Sie der Route§</string>
     <string name="title_activity_detail">Giebelstein</string>
     <string name="button_tour_2">Altstadt: Seit jeher Heimat von Händlern und Kaufleuten</string>
-    <string name="button_tour_1">JORDAAN   Charmante Kanäle und historische Gebäude</string>
+    <string name="button_tour_1">Jordaan: Charmante Kanäle und historische Gebäude</string>
+    <string name="error_select_a_tour">Wählen Sie zuerst eine Tour aus</string>
 </resources>

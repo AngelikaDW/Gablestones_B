@@ -243,9 +243,8 @@ public class DetailActivity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i("Current Loc:", String.valueOf(mCurrentLocation.getLatitude()));
+                    //Log.i("Current Loc:", String.valueOf(mCurrentLocation.getLatitude()));
 
-                    //TODO: Bug of immediately click on check --> null in
                     distanceBetween(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(),
                                     latStone, lngStone);
                     // depending if user is close enough to the gable stone, the database is being

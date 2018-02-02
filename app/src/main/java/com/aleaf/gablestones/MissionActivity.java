@@ -73,7 +73,7 @@ public class MissionActivity extends AppCompatActivity implements
                 intent.setData(currentStoneUri);
                 intent.putExtra("Tour", mTourNbr);
                 intent.putExtra("Fragment", position);
-                Log.i("MissionAct Position", "Position clicked: " + position);
+                //Log.i("MissionAct Position", "Position clicked: " + position);
 
                 // Launch the ClueDetailActivity to display the information for the current stone.
                 startActivity(intent);

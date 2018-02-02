@@ -25,7 +25,7 @@
     <string name="gablestone_20">Vos en krab</string>
     <string name="about_gable_stones">Traditioneel werden huizen en herenhuizen versierd met gevelstenen: gehouen en geschilderde stenen, die aan de gevel bevestigd werden.\nVoordat er in Amsterdam straatnamen en huisnummern waren, werd een gebouw door zijn gevelsteen aangewezen.\nEen gevelsteen vertelt over de (voormalige) eigenaar, zijn beroep of overtuigingen.\nVerken Amsterdam en verdiep je in de rijke geschiedenis op een unieke manier.</string>
     <string name="action_settings">Info</string>
-    <string name="explanation">Volg de zoektocht en ontdek de speciale gevelstenen. De zoektocht leid u door pittoreske straten en langs idyllische grachten.\nOntdek verborgen architecturale bezonderheiden en geniet van de unieke sfeer van het historische centrum van Amsterdam.</string>
+    <string name="explanation">Volg de zoektocht en ontdek de speciale gevelstenen. De zoektocht leid u door pittoreske straten en langs idyllische grachten.\nOntdek verborgen architecturale schatten en geniet van de unieke sfeer van het historische centrum van Amsterdam.</string>
     <string name="fragment_mission">Zoektocht</string>
     <string name="fragment_map">Plan</string>
     <string name="fragment_about">Meer info</string>
@@ -69,5 +69,6 @@
     <string name="title_activity_mission">Volg de zoektocht</string>
     <string name="title_activity_detail">Gevelsteen</string>
     <string name="button_tour_2">"Oud centrum: thuisbasis van handelaars "</string>
-    <string name="button_tour_1">JORDAAN Charmante grachten en historische gebouwen</string>
+    <string name="button_tour_1">Jordaan: Charmante grachten en historische gebouwen</string>
+    <string name="error_select_a_tour">Kies eerst een tour</string>
 </resources>

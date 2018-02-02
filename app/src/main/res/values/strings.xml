@@ -7,8 +7,7 @@
     <string name="intro_title">About Gable Stones</string>
     <string name="about_gable_stones">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.\nBesides decorating the facade, a gable stone tells about the (former) owner, his profession or beliefs.\nExplore Amsterdam and immerse into its rich history in an unique and memorable way.</string>
     <string name="topic_tour">Welcome to Gable Stone Quest Amsterdam </string>
-    <string name="explanation">Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.\nDiscover hidden architectonic gems and enjoy the unique ambiance of Amsterdam\'s historic center.</string>
-    <string name="quest_explanation">Your scavenger hunt adventure will begin in Brouwersgracht and will take you around the Jordaan District.\nFollow the quest and discover special gable stones.\nYour quest will give you a new perspective on the city as you weave through picturesque streets and along idyllic canals to find your next location.\nDiscover special gable stones, architectonic gems and enjoy the unique ambiance of\nAmsterdam\'s historic center in a fun and memorable way.</string>
+
     <string name="quest_highlights">Quest Highlights</string>
     <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable  stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.</string>
     <string name="locate_on_map">Show my position on map</string>
@@ -136,8 +135,10 @@
     <string name="section_format" translatable="false">%1$d</string>
 
     <!--Select Tour Activity-->
-    <string name="button_tour_1">JORDAAN   Charming canals and historic buildings</string>
-    <string name="button_tour_2"> OLD CENTER \n Ever since home to merchants and traders</string>
+    <string name="button_tour_1">JORDAAN: Charming canals and historic buildings</string>
+    <string name="button_tour_2"> OLD CENTER: Ever since home to merchants and traders</string>
+    <string name="error_select_a_tour">Select a tour by clicking on of the circles</string>
+    <string name="explanation">Follow the quest and locate the special gable stones. The quest leads you through picturesque streets and along idyllic canals.\nDiscover hidden architectonic gems and enjoy the unique ambiance of Amsterdam\'s historic center.</string>
 
     <!--Colofon Info Activity-->
     <string name="reference_icon" translatable="false">Icons designed by smashicons.com from Flaticon</string>
