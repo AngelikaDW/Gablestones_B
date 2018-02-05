@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:background="@drawable/buttonshape"
-        android:text="Map"
+        android:text="@string/button_go_map"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_stone_name"
         app:layout_constraintRight_toRightOf="parent" />

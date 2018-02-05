@@ -9,11 +9,10 @@
     <string name="topic_tour">Welcome to Gable Stone Quest Amsterdam </string>
 
     <string name="quest_highlights">Quest Highlights</string>
-    <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable  stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.</string>
+    <string name="text_gablestones_info">Traditionally houses and mansions were decorated with gable stones: carved and painted stone tablets, fixed to the facade.\nBefore Amsterdam introduced a system of street names, a building was referred to by its gable stone.</string>
     <string name="locate_on_map">Show my position on map</string>
-    <string name="click_on_img">Click again to show image full screen</string>
-    <string name="stone_located">Congratulations - you have located the gable stone!</string>
-    <string name="stone_too_far">Not there yet - Keep on looking!</string>
+
+
     <string name="all_stones_located">Congratulations - you have located all gable stones of your tour!</string>
     <string name="please_leave_rating">Hope you enjoyed the tour. Please share your experience <a href="https://play.google.com/store/apps/details?id=com.aleaf.gablestones">on Google Play</a> - Thank you!</string>
 
@@ -23,51 +22,57 @@
     <string name="permission_required_toast" translatable="false">Location permission is required to show your location on the map.</string>
     <string name="title_activity_clue_detail_activiy">Clues Details</string>
 
+    <!--Detail Activity-->
+    <string name="button_go_map">Map</string>
+    <string name="click_on_img">Click again to show image full screen</string>
+    <string name="stone_located">Congratulations - you have located the gable stone!</string>
+    <string name="stone_too_far">Not there yet - Keep on looking!</string>
+
     <!--Gable Stones-->
-    <string name="street_address_1" translatable="false">Brouwersgracht 52</string>
-    <string name="street_address_2" translatable="false">Lange Straat 5</string>
-    <string name="street_address_3" translatable="false">Lange Straat 17</string>
-    <string name="street_address_4" translatable="false">Lange Straat 28</string>
-    <string name="street_address_5" translatable="false">Lange Straat 50</string>
-    <string name="street_address_6" translatable="false">Lange Straat 92</string>
-    <string name="street_address_7" translatable="false">Herengracht 105</string>
-    <string name="street_address_8" translatable="false">Keizersgracht 104</string>
-    <string name="street_address_9" translatable="false">Keizersgracht 172</string>
-    <string name="street_address_10" translatable="false">Egelantiersgracht 10</string>
-    <string name="street_address_11" translatable="false">Egelantiersgracht 15</string>
-    <string name="street_address_12" translatable="false">Egelantiersgracht 72</string>
-    <string name="street_address_13" translatable="false">Tweede Egelantiersdwarsst. 20</string>
-    <string name="street_address_14" translatable="false">Eerste Tuindwarsstraat 19</string>
-    <string name="street_address_15" translatable="false">Eerste Tuindwarsstraat 21</string>
-    <string name="street_address_16" translatable="false">Westerstraat 202</string>
-    <string name="street_address_17" translatable="false">Westerstraat 54</string>
-    <string name="street_address_18" translatable="false">Boomstraat 28</string>
-    <string name="street_address_19" translatable="false">Noordermarkt 17</string>
-    <string name="street_address_20" translatable="false">Noordermarkt 40</string>
+    <!--<string name="street_address_1" translatable="false">Brouwersgracht 52</string>-->
+    <!--<string name="street_address_2" translatable="false">Lange Straat 5</string>-->
+    <!--<string name="street_address_3" translatable="false">Lange Straat 17</string>-->
+    <!--<string name="street_address_4" translatable="false">Lange Straat 28</string>-->
+    <!--<string name="street_address_5" translatable="false">Lange Straat 50</string>-->
+    <!--<string name="street_address_6" translatable="false">Lange Straat 92</string>-->
+    <!--<string name="street_address_7" translatable="false">Herengracht 105</string>-->
+    <!--<string name="street_address_8" translatable="false">Keizersgracht 104</string>-->
+    <!--<string name="street_address_9" translatable="false">Keizersgracht 172</string>-->
+    <!--<string name="street_address_10" translatable="false">Egelantiersgracht 10</string>-->
+    <!--<string name="street_address_11" translatable="false">Egelantiersgracht 15</string>-->
+    <!--<string name="street_address_12" translatable="false">Egelantiersgracht 72</string>-->
+    <!--<string name="street_address_13" translatable="false">Tweede Egelantiersdwarsst. 20</string>-->
+    <!--<string name="street_address_14" translatable="false">Eerste Tuindwarsstraat 19</string>-->
+    <!--<string name="street_address_15" translatable="false">Eerste Tuindwarsstraat 21</string>-->
+    <!--<string name="street_address_16" translatable="false">Westerstraat 202</string>-->
+    <!--<string name="street_address_17" translatable="false">Westerstraat 54</string>-->
+    <!--<string name="street_address_18" translatable="false">Boomstraat 28</string>-->
+    <!--<string name="street_address_19" translatable="false">Noordermarkt 17</string>-->
+    <!--<string name="street_address_20" translatable="false">Noordermarkt 40</string>-->
 
-    <string name="gablestone_1">Two Chairs</string>
-    <string name="gablestone_2">Rowing Boat</string>
-    <string name="gablestone_3">Farmer</string>
-    <string name="gablestone_4">The Linden</string>
-    <string name="gablestone_5">Carriage House</string>
-    <string name="gablestone_6">Horse stables</string>
-    <string name="gablestone_7">Papermill</string>
-    <string name="gablestone_8">Red Hat</string>
-    <string name="gablestone_9">Hourglass</string>
-    <string name="gablestone_10">Beer brewer</string>
-    <string name="gablestone_11">The young carpenter</string>
-    <string name="gablestone_12">Bright sun</string>
-    <string name="gablestone_13">Beehive</string>
-    <string name="gablestone_14">Baker</string>
-    <string name="gablestone_15">Smith</string>
-    <string name="gablestone_16">Crowned Lilium Flower</string>
-    <string name="gablestone_17">Disappeared Cottages</string>
-    <string name="gablestone_18">Boat with 3 Men</string>
-    <string name="gablestone_19">The gilded fortune</string>
-    <string name="gablestone_20">Fox and Crab</string>
+    <!--<string name="gablestone_1">Two Chairs</string>-->
+    <!--<string name="gablestone_2">Rowing Boat</string>-->
+    <!--<string name="gablestone_3">Farmer</string>-->
+    <!--<string name="gablestone_4">The Linden</string>-->
+    <!--<string name="gablestone_5">Carriage House</string>-->
+    <!--<string name="gablestone_6">Horse stables</string>-->
+    <!--<string name="gablestone_7">Papermill</string>-->
+    <!--<string name="gablestone_8">Red Hat</string>-->
+    <!--<string name="gablestone_9">Hourglass</string>-->
+    <!--<string name="gablestone_10">Beer brewer</string>-->
+    <!--<string name="gablestone_11">The young carpenter</string>-->
+    <!--<string name="gablestone_12">Bright sun</string>-->
+    <!--<string name="gablestone_13">Beehive</string>-->
+    <!--<string name="gablestone_14">Baker</string>-->
+    <!--<string name="gablestone_15">Smith</string>-->
+    <!--<string name="gablestone_16">Crowned Lilium Flower</string>-->
+    <!--<string name="gablestone_17">Disappeared Cottages</string>-->
+    <!--<string name="gablestone_18">Boat with 3 Men</string>-->
+    <!--<string name="gablestone_19">The gilded fortune</string>-->
+    <!--<string name="gablestone_20">Fox and Crab</string>-->
 
-    <string name="lat_1" translatable="false">52.379295</string>
-    <string name="lng_1" translatable="false">4.892488</string>
+    <!--<string name="lat_1" translatable="false">52.379295</string>-->
+    <!--<string name="lng_1" translatable="false">4.892488</string>-->
 
     <!--Headers of fragments and activities-->
     <string name="stone_detail">Clue Detail</string>
@@ -77,13 +82,13 @@
 
     <!--Text-->
     <string name="welcome_msg">"Follow the quest, locate all gable stones. "</string>
-    <string name="title_activity_info" translatable="false">Info</string>
+    <string name="title_activity_info">Info</string>
     <string name="title_activity_confetti" translatable="true">Congratulations</string>
 
 
     <string name="header_colofon" translatable="false">Colofon</string>
     <string name="text_development" translatable="false">Design and Development: aleaf.nl</string>
-    <string name="text_version" translatable="false">Version: 1.0</string>
+    <string name="text_version" translatable="false">Version: 2.0</string>
     <string name="text_icons" translatable="false">Logo adapted from Noun Project (A. Vasiliev)</string>
     <string name="intro_enjoy">Discover and Enjoy!</string>
 

@@ -27,7 +27,7 @@
     <string name="action_settings">Info</string>
     <string name="explanation">Volg de zoektocht en ontdek de speciale gevelstenen. De zoektocht leid u door pittoreske straten en langs idyllische grachten.\nOntdek verborgen architecturale schatten en geniet van de unieke sfeer van het historische centrum van Amsterdam.</string>
     <string name="fragment_mission">Zoektocht</string>
-    <string name="fragment_map">Plan</string>
+    <string name="fragment_map">Kaart</string>
     <string name="fragment_about">Meer info</string>
     <string name="intro_enjoy">Ontdek en geniet!</string>
     <string name="topic_tour">Welkom bij de zoektocht gevelstenen in Amsterdam</string>
@@ -46,29 +46,30 @@
     <string name="play_again_desc">Om de uitleg nog een keer te bekijken, klik op: Settings - Zo werkt het</string>
     <string name="start">Hebbes</string>
     <string name="skip">Overslaan</string>
-    <string name="slide_1_desc">Volg de zoektocht, ondek alle gevelstenen en geniet van de unieke sfeer von het historische centrum van Amsterdam.\nBeleef Amsterdam op een leuke en onvergetelijke manier.</string>
+    <string name="slide_1_desc">Volg de zoektocht, ontdek alle gevelstenen en geniet van de unieke sfeer van het historische centrum.\nBeleef Amsterdam op een leuke en onvergetelijke manier.</string>
     <string name="slide_1_title">Zoektocht Gevelstenen \nAmsterdam</string>
-    <string name="slide_2_desc">Kom meer te weten over gevelstenen en de verhaalen de ze over de eigenaaren vertellen.</string>
+    <string name="slide_2_desc">Kom meer te weten over gevelstenen en de verhalen de ze over de eigenaren vertellen.</string>
     <string name="slide_2_title">Ervaar meer over Amsterdam</string>
     <string name="slide_3_desc">Zodra je een gevelsteen gevonden hebt, klik de groene \"check\" button.</string>
     <string name="slide_3_title">Gevonden</string>
     <string name="slide_4_desc">Gebruik de \"locate me\" button en zie waar je je bevindt en waar de volgende gevelsteen op je wacht.</string>
     <string name="slide_4_title">Locate Me</string>
     <string name="all_stones_located">Gefeliciteerd - je habt alle gevelstenen gevonden!</string>
-    <string name="please_leave_rating">Wij hopen dat je van de tour genoten hebt. Deel alstublieft uw ervaring in de Google Play Store - bedankt!</string>
+    <string name="please_leave_rating">We hopen dat je van de tour genoten hebt. Deel alstublieft uw ervaring <a href="https://play.google.com/store/apps/details?id=com.aleaf.gablestones"> in de Google Play Store</a> - bedankt!</string>
     <string name="title_activity_confetti">Gefeliciteerd</string>
     <string name="intro_end">Eindpunt:</string>
     <string name="intro_distance">Afstand:</string>
     <string name="intro_time">Duur:</string>
     <string name="intro_time_hours">2.5 uur</string>
     <string name="next">MEER</string>
-    <string name="slide_1a_title">Selecteer een Tour</string>
-    <string name="slide_1a_desc">Selecteer een tour. Elke tour is rond 2km en duurt rond 2.5 uur.</string>
-    <string name="title_activity_select_tour">Welkom to Gevelsteen zoektocht</string>
+    <string name="slide_1a_title">Kies een tour</string>
+    <string name="slide_1a_desc">Kies een tour. Elke tour is rond 2 km lang en duurt rond 2.5 uur.</string>
+    <string name="title_activity_select_tour">Gabelstone Quest Amsterdam</string>
     <string name="title_activity_maps">Kaart</string>
     <string name="title_activity_mission">Volg de zoektocht</string>
     <string name="title_activity_detail">Gevelsteen</string>
     <string name="button_tour_2">"Oud centrum: thuisbasis van handelaars "</string>
     <string name="button_tour_1">Jordaan: Charmante grachten en historische gebouwen</string>
     <string name="error_select_a_tour">Kies eerst een tour</string>
+    <string name="button_go_map">Kaart</string>
 </resources>
