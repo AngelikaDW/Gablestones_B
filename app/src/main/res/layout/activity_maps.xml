@@ -18,13 +18,12 @@
         android:layout_gravity="bottom|end"
         android:layout_marginTop="8dp"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:adUnitId="ca-app-pub-4982977673725984/7845168452"
         ads:layout_constraintBottom_toBottomOf="parent"
         ads:layout_constraintLeft_toLeftOf="parent"
         ads:layout_constraintRight_toRightOf="parent"
         ads:layout_constraintTop_toTopOf="@+id/map"
-        ads:layout_constraintVertical_bias="1.0"
-        adUnitId="ca-app-pub-4982977673725984/7845168452"/>
+        ads:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
 
