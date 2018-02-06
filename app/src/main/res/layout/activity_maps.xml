@@ -23,8 +23,8 @@
         ads:layout_constraintLeft_toLeftOf="parent"
         ads:layout_constraintRight_toRightOf="parent"
         ads:layout_constraintTop_toTopOf="@+id/map"
-        ads:layout_constraintVertical_bias="1.0" />
-    <!--adUnitId="ca-app-pub-4982977673725984/7845168452">-->
+        ads:layout_constraintVertical_bias="1.0"
+        adUnitId="ca-app-pub-4982977673725984/7845168452"/>
 
 </android.support.constraint.ConstraintLayout>
 

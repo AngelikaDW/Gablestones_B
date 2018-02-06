@@ -48,7 +48,7 @@
     <string name="skip">Überspringen</string>
     <string name="slide_1_desc">Folgen Sie der Route, finden Sie alle Giebelsteine und entdecken Sie einzigartige Details der Geschichte Amsterdams. Erkunden Sie das Zentrum Amsterdams auf eine einzigartige und unvergessliche Weise.</string>
     <string name="slide_1_title">Giebelsteine Amsterdam</string>
-    <string name="slide_2_desc">Erfahren Sie mehr über das Leben im histroischen Amsterdam. Durch die Giebelsteine erfahren Sie mehr über die ehemaligen Bewohen und ihr Leben.</string>
+    <string name="slide_2_desc">Erfahren Sie mehr über das Leben im histroischen Amsterdam. Durch die Giebelsteine erfahren Sie mehr über die ehemaligen Bewohner und ihr Leben.</string>
     <string name="slide_2_title">Erfahren Sie mehr</string>
     <string name="slide_3_desc">Sobald Sie einen Giebelstein gefunden haben, drücken Sie auf den grünen \"check\" Button.</string>
     <string name="slide_3_title">Gefunden</string>
@@ -66,7 +66,7 @@
     <string name="slide_1a_desc">Wählen Sie eine Tour aus. Alle Touren sind rund 2km lang und dauern rund 2.5 Stunden.</string>
     <string name="title_activity_select_tour">Willkommen bei Giebelstein Tour</string>
     <string name="title_activity_maps">Karte</string>
-    <string name="title_activity_mission">Folgen Sie der Route§</string>
+    <string name="title_activity_mission">Folgen Sie der Route</string>
     <string name="title_activity_detail">Giebelstein</string>
     <string name="button_tour_2">Altstadt: Seit jeher Heimat von Händlern und Kaufleuten</string>
     <string name="button_tour_1">Jordaan: Charmante Kanäle und historische Gebäude</string>

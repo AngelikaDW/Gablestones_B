@@ -43,8 +43,9 @@
         android:layout_height="wrap_content"
 
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-        <!--ads:adUnitId="ca-app-pub-4982977673725984/7625676608">-->
+        ads:adUnitId="ca-app-pub-4982977673725984/7625676608">
+        <!--ads:adUnitId="ca-app-pub-3940256099942544/6300978111">-->
+
     </com.google.android.gms.ads.AdView>
 
 </android.support.design.widget.CoordinatorLayout>

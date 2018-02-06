@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "248945146963",
+    "firebase_url": "https://gablestonequestamsterdam.firebaseio.com",
+    "project_id": "gablestonequestamsterdam",
+    "storage_bucket": "gablestonequestamsterdam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248945146963:android:1eb371755f6a9985",
+        "android_client_info": {
+          "package_name": "com.aleaf.gablestones"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248945146963-gr01sl4ldp16kvrv076lbuo89vgdfa52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aleaf.gablestones",
+            "certificate_hash": "f65fa5b3556171d5b3c718161854b09ea2d01867"
+          }
+        },
+        {
+          "client_id": "248945146963-5mac8197huu6hd58k5fat768k0n1uqiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCorSfgRDrz0Uvy3_tJtlcPOKny7LnWrLQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248945146963-5mac8197huu6hd58k5fat768k0n1uqiq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

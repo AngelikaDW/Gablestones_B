@@ -312,7 +312,7 @@ public class DetailActivity extends AppCompatActivity {
         public void onConnected(Bundle connectionHint) {
             mLocationRequest = LocationRequest.create();
             mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            mLocationRequest.setInterval(10*1000); //every 10 seconds
+            mLocationRequest.setInterval(8*1000); //every 8 seconds
             if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                     getContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -364,7 +364,7 @@ public class DetailActivity extends AppCompatActivity {
 
             float[] distance = new float[1];
             Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, distance);
-            if (distance[0] < 75) {
+            if (distance[0] < 50) {
                 Toast.makeText(getContext(), getString(R.string.stone_located),
                                Toast.LENGTH_SHORT).show();
                 mMatchResult = 1;

@@ -27,8 +27,8 @@ android {
         applicationId "com.aleaf.gablestones"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -57,3 +57,4 @@ dependencies {
     compile 'nl.dionsegijn:konfetti:1.1.0'
     testCompile 'junit:junit:4.12'
 }
+apply plugin: 'com.google.gms.google-services'
